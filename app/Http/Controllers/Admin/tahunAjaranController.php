@@ -73,10 +73,10 @@ class tahunAjaranController extends Controller
        ]);
 
     	$thnAJaran = tahunAjaran::where('slug','=',$slug)->first();
-    	$thnAjaran->name => $request->input('name');
-    	$thnAjaran->waktu_mulai => $request->input('waktu_mulai');
-    	$thnAjaran->waktu_berakhir => $request->input('waktu_berakhir');
-    	$thnAjaran->slug => str_replace(" ", "-", strtolower($request->input('name')));
+    	$thnAjaran->name = $request->input('name');
+    	$thnAjaran->waktu_mulai = $request->input('waktu_mulai');
+    	$thnAjaran->waktu_berakhir = $request->input('waktu_berakhir');
+    	$thnAjaran->slug = str_replace(" ", "-", strtolower($request->input('name')));
 
     	if($thnAjaran->save()){
     		$response = [

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class masalahLab extends Model
 {
     protected $fillable = [
-    	'id_user','id_thnajaran','name','keterangan','waktu_mulai','waktu_selesai','status','yang_bertugas','ruangan','slug',
+    	'id_user','id_thnajaran','name','keterangan','waktu_mulai','waktu_selesai','status','yang_bertugas','solusi_solved','ruangan','slug',
     ];
 
     protected $dates = ['waktu_mulai','waktu_selesai'];

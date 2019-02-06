@@ -69,9 +69,9 @@ class ruanganController extends Controller
        ]);
 
     	$ruangan = ruangan::where('slug','=',$slug)->first();
-    	$ruangan->name => $request->input('name');
-    	$ruangan->jumlah_kursi => $request->input('jumlah_kursi');
-    	$ruangan->slug => str_replace(" ", "-", strtolower($request->input('name')));
+    	$ruangan->name = $request->input('name');
+    	$ruangan->jumlah_kursi = $request->input('jumlah_kursi');
+    	$ruangan->slug = str_replace(" ", "-", strtolower($request->input('name')));
 
     	if($ruangan->save()){
     		$response = [

@@ -72,9 +72,9 @@ class inventoryController extends Controller
 
     	$inventory = inventory::findOrFail($id);
     	$inventory->id_user = Auth::User()->id;
-    	$inventory->name => $request->input('name');
-    	$inventory->jumlah => $request->input('jumlah');
-    	$inventory->keterangan => $request->input('keterangan');
+    	$inventory->name = $request->input('name');
+    	$inventory->jumlah = $request->input('jumlah');
+    	$inventory->keterangan = $request->input('keterangan');
 
     	if($inventory->save()){
     		$response = [

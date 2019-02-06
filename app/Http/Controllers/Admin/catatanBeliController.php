@@ -79,6 +79,7 @@ class catatanBeliController extends Controller
 	    			'id_user' => Auth::User()->id,
 	    			'id_pembelian' => $catatanBeli->id,
 	    			'name' => 'Pembelian ' .$catatanBeli->name,
+                    'kas_masuk' => 0,
 	    			'kas_keluar' => $jumlahBeli,
 	    			'saldo' => $saldoNow
 	    		]);
@@ -112,9 +113,9 @@ class catatanBeliController extends Controller
     	
     		$catatanBeli = catatanBeli::findOrFail($id);
     	$catatanBeli->id_user = Auth::User()->id;
-    	$catatanBeli->name => $request->input('name');
-    	$catatanBeli->harga => $request->input('harga');
-    	$catatanBeli->jumlah => $request->input('jumlah');
+    	$catatanBeli->name = $request->input('name');
+    	$catatanBeli->harga = $request->input('harga');
+    	$catatanBeli->jumlah = $request->input('jumlah');
     	
     	
 
@@ -135,6 +136,20 @@ class catatanBeliController extends Controller
     public function destroy($id)
     {
     	$catatanBeli = catatanBeli::findOrFail($id);
+
+        if($catatanBeli->status == 'Lunas'){
+            $uangKas = uangKas::where('id_pembelian','=',$catatanBeli->id)->first();
+            $idUangKas = $uangKas->id;
+            $uangKas->delete();
+                $updateAnotherSaldo = uangKas::orderBy('id','asc')->where('id','>',$idUangKas)->get();
+            foreach ($updateAnotherSaldo as $key) {
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$key->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo + $key->kas_masuk - $key->kas_keluar;
+                $key->saldo = $saldoNow;
+                $key->save();
+            }   
+        }
     	if($catatanBeli->delete()){
     		$response = [
                 'msg' => 'Catatan Beli ' .$catatanBeli->name .' berhasil di hapus!'
@@ -161,6 +176,7 @@ class catatanBeliController extends Controller
     			'id_user' => Auth::User()->id,
     			'id_pembelian' => $catatanBeli->id,
     			'name' => 'Pembelian ' .$catatanBeli->name,
+                'kas_masuk' => 0,
     			'kas_keluar' => $jumlahBeli,
     			'saldo' => $saldoNow
     		]);

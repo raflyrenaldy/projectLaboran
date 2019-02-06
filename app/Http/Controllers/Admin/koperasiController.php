@@ -58,6 +58,7 @@ class koperasiController extends Controller
 	    			'id_user' => Auth::User()->id,
 	    			'id_koperasi' => $koperasi->id,
 	    			'name' => 'Peminjaman uang kas dari ' .$userPinjam->name,
+                    'kas_masuk' => 0,
 	    			'kas_keluar' => $koperasi->jumlah,
 	    			'saldo' => $saldoNow
 	    		]);
@@ -94,24 +95,23 @@ class koperasiController extends Controller
     	}
     	if($koperasi->jumlah != $request->input('jumlah')){
     		$koperasi->jumlah = $request->input('jumlah');
-    		$idUangKasNow = $uangKas->id;
-    		$temp = uangKas::orderBy('id','asc')->first();
-    		$allUangKas = uangKas::orderBy('id','asc')->get();
-    		// foreach ($allUangKas as $key) {
-    		// 	if($allUangKas->id != $idUangKasNow){
-    		// 		if($allUangKas->id != $temp){
-    		// 			$temp1 = $allUangKas->id;
-    		// 		}
-    		// 	}
-    		// }
-    		{{Sampai sini}}
-    	}
+            $uangKas->kas_keluar = $request->input('jumlah');
 
-    	$koperasi->name => $request->input('name');
-    	$koperasi->harga => $request->input('harga');
-    	$koperasi->jumlah => $request->input('jumlah');
-    	
-    	
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$uangKas->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo - $request->input('jumlah');
+
+            $uangKas->saldo = $saldoNow;
+            $uangKas->save();
+                $updateAnotherSaldo = uangKas::orderBy('id','asc')->where('id','>',$uangKas->id)->get();
+            foreach ($updateAnotherSaldo as $key) {
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$key->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo + $key->kas_masuk - $key->kas_keluar;                
+                $key->saldo = $saldoNow;
+                $key->save();
+            }    		
+    	}   	
 
     	if($koperasi->save()){
     		$response = [
@@ -130,9 +130,20 @@ class koperasiController extends Controller
     public function destroy($id)
     {
     	$koperasi = koperasi::findOrFail($id);
+            $uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();
+            $idUangKas = $uangKas->id;
+            $uangKas->delete();
+                $updateAnotherSaldo = uangKas::orderBy('id','asc')->where('id','>',$idUangKas)->get();
+            foreach ($updateAnotherSaldo as $key) {
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$key->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo + $key->kas_masuk - $key->kas_keluar;                
+                $key->saldo = $saldoNow;
+                $key->save();
+            }   
     	if($koperasi->delete()){
     		$response = [
-                'msg' => 'Koperasi ' .$koperasi->name .' berhasil di hapus!'
+                'msg' => 'berhasil di hapus!'
             ];
             return response()->json($response,201);
     	}else{
@@ -143,23 +154,31 @@ class koperasiController extends Controller
     	}
     }
 
-    public function lunasin($id)
+    public function bayar($id)
     {
     	$koperasi = koperasi::findOrFail($id);
-    	$koperasi->status = 'Lunas';
+    	$koperasi->status = 'Sudah Di Bayar';
     	if($koperasi->save()){
-    		$getLastSaldo = uangKas::orderBy('id', 'desc')->first();
-    		$lastSaldo = $getLastSaldo->saldo;
-    		$jumlahBeli = $koperasi->harga * $koperasi->jumlah;
-    		$saldoNow = $lastSaldo - $jumlahBeli;
-    		$kaskeluar = new uangKas ([
-    			'id_user' => Auth::User()->id,
-    			'id_pembelian' => $koperasi->id,
-    			'name' => 'Pembelian ' .$koperasi->name,
-    			'kas_keluar' => $jumlahBeli,
-    			'saldo' => $saldoNow
-    		]);
-    		$kaskeluar->save();
+    		$uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();
+            $uangKas->kas_masuk = $koperasi->jumlah;
+            $uangKas->kas_keluar = 0;
+
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$uangKas->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo + $koperasi->jumlah;
+
+            $uangKas->saldo = $saldoNow;
+            $uangKas->save();
+
+            $updateAnotherSaldo = uangKas::orderBy('id','asc')->where('id','>',$uangKas->id)->get();
+            foreach ($updateAnotherSaldo as $key) {
+                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$key->id)->first();
+                $lastSaldo = $getLastSaldo->saldo;
+                $saldoNow = $lastSaldo + $key->kas_masuk - $key->kas_keluar;                
+                $key->saldo = $saldoNow;
+                $key->save();
+            }           
+
     		$response = [
                 'msg' => 'Koperasi ' .$koperasi->name .' berhasil di lunasi!'
             ];

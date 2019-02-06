@@ -19,8 +19,8 @@ class CreateUangKasTable extends Migration
             $table->unsignedInteger('id_koperasi')->nullable();
             $table->unsignedInteger('id_pembelian')->nullable();
             $table->string('name');
-            $table->bigInteger('kas_masuk')->nullable();
-            $table->bigInteger('kas_keluar')->nullable();
+            $table->bigInteger('kas_masuk')->default(0)->nullable();
+            $table->bigInteger('kas_keluar')->default(0)->nullable();
             $table->bigInteger('saldo');
             $table->timestamps();
             $table->foreign('id_user')
