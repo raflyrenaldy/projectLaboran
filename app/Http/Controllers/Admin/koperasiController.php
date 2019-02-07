@@ -26,6 +26,12 @@ class koperasiController extends Controller
     public function edit($id)
     {
     	$data = koperasi::findOrFail($id);
+          if(Auth::User()->id == $data->id_user_pinjam){
+            $response = [
+                'msg' => 'Gagal memperbarui data ini!'
+            ];
+            return response()->json($response,201);
+        }
     	$response = [
                 'msg' => 'Data Koperasi ' .$data->name,
                 'data' => $data
@@ -41,7 +47,12 @@ class koperasiController extends Controller
            'id_user_pinjam' => 'required',
            'jumlah' => 'required'
        ]);
-
+        if(Auth::User()->id == $request->input('id_user_pinjam')){
+            $response = [
+                'msg' => 'Data peminjaman ditolak! tidak bisa meminjam dengan akun yang sama!'
+            ];
+            return response()->json($response,201);
+        }
     		$koperasi = new koperasi ([
     		'id_user' => Auth::User()->id,
     		'id_user_pinjam' => $request->input('id_user_pinjam'),
@@ -85,10 +96,16 @@ class koperasiController extends Controller
 
     		$koperasi = koperasi::findOrFail($id);
     		$uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();
-
+      
     	$koperasi->id_user = Auth::User()->id;
 
     	if($koperasi->id_user != $request->input('id_user_pinjam')){
+            if(Auth::User()->id == $request->input('id_user_pinjam')){
+            $response = [
+                'msg' => 'Data peminjaman ditolak! tidak bisa meminjam dengan akun yang sama!'
+            ];
+            return response()->json($response,201);
+        }
 	    	$koperasi->id_user_pinjam = $request->input('id_user_pinjam');
 	    	$userPinjam = User::findOrFail($request->input('id_user_pinjam'));
 	    	$uangKas->name = 'Peminjaman uang kas dari ' .$userPinjam->name;
@@ -130,6 +147,14 @@ class koperasiController extends Controller
     public function destroy($id)
     {
     	$koperasi = koperasi::findOrFail($id);
+        if($koperasi->id_user_pinjam == Auth::User()->id){
+          
+            $response = [
+                'msg' => 'Gagal hapus karena id peminjam sama dengan akun yang login!'
+            ];
+            return response()->json($response,201);
+        
+        }
             $uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();
             $idUangKas = $uangKas->id;
             $uangKas->delete();
@@ -157,6 +182,14 @@ class koperasiController extends Controller
     public function bayar($id)
     {
     	$koperasi = koperasi::findOrFail($id);
+        if($koperasi->id_user_pinjam == Auth::User()->id){
+          
+            $response = [
+                'msg' => 'Gagal membayar karena id peminjam sama dengan akun yang login!'
+            ];
+            return response()->json($response,201);
+        
+        }
     	$koperasi->status = 'Sudah Di Bayar';
     	if($koperasi->save()){
     		$uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();

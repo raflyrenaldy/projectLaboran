@@ -18,4 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/tescode','Admin\masalahLabController@start');
+Route::get('/tescode','Admin\permintaanAplikasiController@index');

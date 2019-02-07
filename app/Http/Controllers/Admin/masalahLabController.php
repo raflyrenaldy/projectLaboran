@@ -28,7 +28,7 @@ class masalahLabController extends Controller
     {
     	$data = masalahLab::findOrFail($id);
     	$response = [
-                'msg' => 'Data Ruangan ' .$data->name,
+                'msg' => 'Data Masalah Lab ' .$data->name,
                 'data' => $data
             ];
 
@@ -159,6 +159,7 @@ class masalahLabController extends Controller
     		$masalahLab->name = $request->input('name');
     		$masalahLab->ruangan = $ruangan;
     		$masalahLab->keterangan = $request->input('keterangan');
+    		$masalahLab->slug = str_replace(" ", "-", strtolower($request->input('name')));
     	}else if($masalahLab->status == 'Proses'){
     		$this->validate($request,[
            'waktu_mulai' => 'required'
@@ -169,6 +170,7 @@ class masalahLabController extends Controller
     		$masalahLab->waktu_mulai = $request->input('waktu_mulai');
     		$masalahLab->ruangan = $ruangan;
     		$masalahLab->keterangan = $request->input('keterangan');
+    		$masalahLab->slug = str_replace(" ", "-", strtolower($request->input('name')));
     	}else{
     		$this->validate($request,[
     	   'waktu_mulai' => 'required',
@@ -194,6 +196,7 @@ class masalahLabController extends Controller
     		$masalahLab->solusi_solved = $request->input('solusi_solved');
     		$masalahLab->ruangan = $ruangan;
     		$masalahLab->keterangan = $request->input('keterangan');
+    		$masalahLab->slug = str_replace(" ", "-", strtolower($request->input('name')));
     	}
 
     	if($masalahLab->save()){
@@ -210,6 +213,35 @@ class masalahLabController extends Controller
     	}
 
 
+    }
+
+    public function destroy($id)
+    {
+    	$masalahLab = masalahLab::findOrFail($id);
+    	if($masalahLab->delete()){
+    		$response = [
+                'msg' => 'masalahLab ' .$masalahLab->name .' berhasil dihapus!',
+                'data' => $masalahLab
+            ];
+            return response()->json($response,201);
+    	}else{
+    		$response = [
+                'msg' => 'Gagal hapus data masalah lab!'
+            ];
+            return response()->json($response,201);
+    	}
+    }
+
+    public function filter($kelas)
+    {
+    	$data = masalahLab::where('ruangan','like','%' . $kelas .'%')->get();
+
+    	$response = [
+                'msg' => 'Data Masalah Lab' .$kelas,
+                'data' => $data
+            ];
+
+        return response()->json($response,201);
     }
 
 }
