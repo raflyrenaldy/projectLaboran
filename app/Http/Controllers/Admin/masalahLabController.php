@@ -86,7 +86,7 @@ class masalahLabController extends Controller
     	$masalahLab->id_user = Auth::User()->id;		
     	$masalahLab->waktu_mulai = now();
     	$masalahLab->status = 'Proses';
-    	$masalahLab->save()
+    	$masalahLab->save();
     	$response = [
                 'msg' => 'masalahLab berhasil dimulai!',
                 'data' => $masalahLab

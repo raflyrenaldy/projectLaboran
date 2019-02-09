@@ -108,7 +108,7 @@ class peminjamanInventoryController extends Controller
 
     	$peminjamanInventory->id_user = Auth::User()->id;		
     	$peminjamanInventory->status = 'Sudah Dikembalikan';
-    	$peminjamanInventory->save()
+    	$peminjamanInventory->save();
     	$response = [
                 'msg' => 'peminjamanInventory berhasil dimulai!',
                 'data' => $peminjamanInventory
