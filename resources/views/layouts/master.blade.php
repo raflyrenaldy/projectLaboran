@@ -28,16 +28,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
+          <button class="btn btn-navbar" @click="searchit">
             <i class="fa fa-search"></i>
           </button>
         </div>
       </div>
-    </form>
 
 
   </nav>
@@ -71,23 +69,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
                <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-tachometer-alt teal"></i>
               <p>
                 Dashboard
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-calendar-alt"></i>
+            <router-link to="/tahun-ajaran" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt purple"></i>
               <p>
                 Tahun Ajaran
               </p>
-            </a>
+            </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/ruangan" class="nav-link">
+              <i class="nav-icon fas fa-door-closed indigo"></i>
+              <p>
+                Ruangan
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/inventory" class="nav-link">
+              <i class="nav-icon fas fa-boxes blue"></i>
+              <p>
+                Inventory
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/permintaan-aplikasi" class="nav-link">
+              <i class="nav-icon fas fa-boxes blue"></i>
+              <p>
+                Permintaan App
+              </p>
+            </router-link>
+          </li>
+          @can('isAdmin')
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cogs"></i>
+              <i class="nav-icon fas fa-cogs blue"></i>
               <p>
                 Management
                 <i class="right fas fa-angle-left"></i>
@@ -96,18 +119,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/users" class="nav-link">
-                  <i class="fas fa-users nav-icon"></i>
+                  <i class="fas fa-users nav-icon orange"></i>
                   <p>Users</p>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/profile" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
+                  <i class="fas fa-user nav-icon cyan"></i>
                   <p>Profile</p>
                 </router-link>
               </li>
             </ul>
+          </li>          
+          <li class="nav-item">
+            <router-link to="/developer" class="nav-link">
+              <i class="nav-icon fas fa-cog green"></i>
+              <p>
+                Developer
+              </p>
+            </router-link>
           </li>
+          @endcan
            <li class="nav-item">         
             <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
@@ -164,6 +196,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 
+@auth
+<script>
+  window.user = @json(auth()->user())
+</script>
+@endauth
+
 <script src="/js/app.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,7 @@
+Personal access client created successfully.
+Client ID: 1
+Client secret: AK79AxUVO3aZRWcwggVHdouegDA4rZiYLMiAXzY0
+Password grant client created successfully.
+Client ID: 2
+Client secret: Uoa8aOGCAfLZzTxNx8fuG6ZtmSCJrIggLhTDLr5a
+PS C:\xampp\htdocs\projectLaboran>
