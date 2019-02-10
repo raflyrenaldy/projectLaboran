@@ -23,14 +23,18 @@
                     <th>Nama Aplikasi</th>
                     <th>Nama Dosen</th>
                     <th>Status</th>
+                    <th>Deadline</th>
                     <th>Modify</th>
                   </tr>
                   <tr v-for="permintaanAplikasi in permintaanAplikasis.data" :key="permintaanAplikasi.id">
                     <td>{{permintaanAplikasi.id}}</td>
                     <td>{{permintaanAplikasi.get_user.name}}</td>
+                    <td>{{permintaanAplikasi.get_thnajaran.name}}</td>
+                    <td>{{permintaanAplikasi.get_ruangan.name}}</td>
                     <td>{{permintaanAplikasi.name }}</td>
-                    <td>{{permintaanAplikasi.jumlah }}</td>
-                    <td>{{permintaanAplikasi.keterangan }}</td>
+                    <td>{{permintaanAplikasi.name_dosen }}</td>
+                    <td>{{permintaanAplikasi.status }}</td>
+                    <td>{{permintaanAplikasi.deadline | myDate }}</td>
                     <td>
                         <a href="#" @click="editModal(permintaanAplikasi)">
                             <i class="fa fa-edit blue"></i>
@@ -123,7 +127,7 @@
                 form: new Form({
                     id: '',
                     id_user : '',
-                    id_ruangan : '',
+                    id_ruangan : [],
                     id_thnajaran : '',
                     name : '',
                     name_dosen : '',

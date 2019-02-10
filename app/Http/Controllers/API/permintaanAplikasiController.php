@@ -81,12 +81,10 @@ class permintaanAplikasiController extends Controller
             'id_thnajaran' => 'required',
             'id_ruangan' => 'required',
             'name' => 'required',
-            'ruangan' => 'required',
             'name_dosen' => 'required',
             'deadline' => 'required'
         ]);
-        $ruangan = explode(",",$request->input('id_ruangan'));
-    	foreach ($ruangan as $key) {
+    	foreach ($request->id_ruangan as $key) {
     		$permintaanAplikasi = new permintaanAplikasi ([
     		'id_user' => Auth('api')->User()->id,
     		'id_ruangan' => $key,

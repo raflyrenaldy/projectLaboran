@@ -2235,6 +2235,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2245,7 +2249,7 @@ __webpack_require__.r(__webpack_exports__);
       form: new Form({
         id: '',
         id_user: '',
-        id_ruangan: '',
+        id_ruangan: [],
         id_thnajaran: '',
         name: '',
         name_dosen: '',
@@ -63269,12 +63273,30 @@ var render = function() {
                             _vm._v(_vm._s(permintaanAplikasi.get_user.name))
                           ]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(permintaanAplikasi.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(permintaanAplikasi.jumlah))]),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(permintaanAplikasi.get_thnajaran.name)
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("td", [
-                            _vm._v(_vm._s(permintaanAplikasi.keterangan))
+                            _vm._v(_vm._s(permintaanAplikasi.get_ruangan.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(permintaanAplikasi.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(permintaanAplikasi.name_dosen))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(permintaanAplikasi.status))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("myDate")(permintaanAplikasi.deadline)
+                              )
+                            )
                           ]),
                           _vm._v(" "),
                           _c("td", [
@@ -63706,6 +63728,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Nama Dosen")]),
       _vm._v(" "),
       _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Deadline")]),
       _vm._v(" "),
       _c("th", [_vm._v("Modify")])
     ])
@@ -81824,15 +81848,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./resources/js/components/PermintaanAplikasi.vue ***!
   \********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PermintaanAplikasi_vue_vue_type_template_id_24938b5c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PermintaanAplikasi.vue?vue&type=template&id=24938b5c& */ "./resources/js/components/PermintaanAplikasi.vue?vue&type=template&id=24938b5c&");
 /* harmony import */ var _PermintaanAplikasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PermintaanAplikasi.vue?vue&type=script&lang=js& */ "./resources/js/components/PermintaanAplikasi.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PermintaanAplikasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PermintaanAplikasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -81862,7 +81885,7 @@ component.options.__file = "resources/js/components/PermintaanAplikasi.vue"
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/PermintaanAplikasi.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
