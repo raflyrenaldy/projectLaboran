@@ -2239,6 +2239,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2259,16 +2278,34 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getResults: function getResults() {
+    selesaiPermintaanAplikasi: function selesaiPermintaanAplikasi(id) {
       var _this = this;
+
+      this.$Progress.start();
+      this.form.get('api/permintaanAplikasi/finish/' + id).then(function () {
+        Fire.$emit('AfterCreated');
+        Swal.fire('Selesai!', 'Aplikasi ini sudah Selesai!', 'success');
+
+        _this.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get('api/permintaanAplikasi?page=' + page).then(function (response) {
-        _this.permintaanAplikasis = response.data;
+        _this2.permintaanAplikasis = response.data;
       });
     },
     updatepermintaanAplikasis: function updatepermintaanAplikasis() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.put('api/permintaanAplikasi/' + this.form.id).then(function () {
@@ -2276,14 +2313,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#addNew').modal('hide');
         Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
 
-        _this2.$Progress.finish();
+        _this3.$Progress.finish();
       }).catch(function () {
         Toast.fire({
           type: 'error',
           title: 'Gagal Perbarui data!'
         });
 
-        _this2.$Progress.fail();
+        _this3.$Progress.fail();
       });
     },
     newModal: function newModal() {
@@ -2298,7 +2335,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(permintaanAplikasi);
     },
     deletepermintaanAplikasis: function deletepermintaanAplikasis(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       Swal.fire({
         title: 'Apakah Anda Yakin??',
@@ -2311,7 +2348,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           //send request to the server
-          _this3.form.delete('api/permintaanAplikasi/' + id).then(function () {
+          _this4.form.delete('api/permintaanAplikasi/' + id).then(function () {
             Fire.$emit('AfterCreated');
             Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
           }).catch(function () {});
@@ -2319,33 +2356,33 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadRuangan: function loadRuangan() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("api/app/ruangan").then(function (_ref) {
         var data = _ref.data;
-        return _this4.ruangan = data;
+        return _this5.ruangan = data;
       });
     },
     loadThnAjaran: function loadThnAjaran() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("api/app/thnajaran").then(function (_ref2) {
         var data = _ref2.data;
-        return _this5.tahunAjaran = data;
+        return _this6.tahunAjaran = data;
       });
     },
     loadpermintaanAplikasis: function loadpermintaanAplikasis() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.$gate.isAdminOrUser()) {
         axios.get("api/permintaanAplikasi").then(function (_ref3) {
           var data = _ref3.data;
-          return _this6.permintaanAplikasis = data;
+          return _this7.permintaanAplikasis = data;
         });
       }
     },
     createpermintaanAplikasis: function createpermintaanAplikasis() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.$Progress.start();
       this.form.post('api/permintaanAplikasi').then(function () {
@@ -2356,26 +2393,26 @@ __webpack_require__.r(__webpack_exports__);
           title: 'permintaanAplikasi Berhasil Dibuat!'
         });
 
-        _this7.$Progress.finish();
+        _this8.$Progress.finish();
       }).catch(function () {
-        _this7.$Progress.fail();
+        _this8.$Progress.fail();
       });
     }
   },
   mounted: function mounted() {
-    var _this8 = this;
+    var _this9 = this;
 
     Fire.$on('searching', function () {
-      var query = _this8.$parent.search;
+      var query = _this9.$parent.search;
       axios.get('api/findpermintaanAplikasi?q=' + query).then(function (data) {
-        _this8.permintaanAplikasis = data.data;
+        _this9.permintaanAplikasis = data.data;
       }).catch(function () {});
     });
     this.loadpermintaanAplikasis();
     this.loadRuangan();
     this.loadThnAjaran();
     Fire.$on('AfterCreated', function () {
-      _this8.loadpermintaanAplikasis();
+      _this9.loadpermintaanAplikasis();
     }); // setInterval(() => this.loadUsers(),3000);
   }
 });
@@ -63289,7 +63326,23 @@ var render = function() {
                             _vm._v(_vm._s(permintaanAplikasi.name_dosen))
                           ]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(permintaanAplikasi.status))]),
+                          _c("td", [
+                            permintaanAplikasi.status == "New"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(permintaanAplikasi.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            permintaanAplikasi.status == "Selesai"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(permintaanAplikasi.status))]
+                                )
+                              : _vm._e()
+                          ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
@@ -63328,7 +63381,42 @@ var render = function() {
                                 }
                               },
                               [_c("i", { staticClass: "fa fa-trash red" })]
-                            )
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            permintaanAplikasi.status == "Selesai"
+                              ? _c("a", { attrs: { href: "#" } }, [
+                                  permintaanAplikasi.status == "Selesai"
+                                    ? _c("i", {
+                                        staticClass: "fa fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            permintaanAplikasi.status == "New"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selesaiPermintaanAplikasi(
+                                          permintaanAplikasi.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    permintaanAplikasi.status == "New"
+                                      ? _c("i", {
+                                          staticClass: "fa fa-check red"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e()
                           ])
                         ])
                       })
@@ -63501,32 +63589,124 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "form-group" },
-                      _vm._l(_vm.ruangan, function(ruangans) {
-                        return _c(
-                          "p-check",
-                          {
-                            key: ruangans.id,
-                            staticClass: "p-default p-curve p-thick p-smooth",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("id_ruangan")
-                            },
-                            attrs: {
-                              name: "id_ruangan[]",
-                              color: "danger-o",
-                              value: ruangans.id
-                            },
-                            model: {
-                              value: _vm.form.id_ruangan,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "id_ruangan", $$v)
+                      [
+                        _vm._l(_vm.ruangan, function(ruangans) {
+                          return _c(
+                            "p-check",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.editMode,
+                                  expression: "!editMode"
+                                }
+                              ],
+                              key: ruangans.id,
+                              staticClass: "p-default p-curve p-thick p-smooth",
+                              class: {
+                                "is-invalid": _vm.form.errors.has("id_ruangan")
                               },
-                              expression: "form.id_ruangan"
-                            }
+                              attrs: {
+                                name: "id_ruangan[]",
+                                color: "danger-o",
+                                value: ruangans.id
+                              },
+                              model: {
+                                value: _vm.form.id_ruangan,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "id_ruangan", $$v)
+                                },
+                                expression: "form.id_ruangan"
+                              }
+                            },
+                            [_vm._v(_vm._s(ruangans.name))]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.editMode,
+                                expression: "editMode"
+                              }
+                            ],
+                            staticClass: "form-group"
                           },
-                          [_vm._v(_vm._s(ruangans.name))]
+                          [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.id_ruangan,
+                                    expression: "form.id_ruangan"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.form.errors.has(
+                                    "id_ruangan"
+                                  )
+                                },
+                                attrs: { name: "id_ruangan", id: "id_ruangan" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "id_ruangan",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Pilih Ruangan")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.ruangan, function(ruangans) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: ruangans.id } },
+                                    [
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(ruangans.name) +
+                                          "\n            "
+                                      )
+                                    ]
+                                  )
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "id_ruangan" }
+                            })
+                          ],
+                          1
                         )
-                      }),
-                      1
+                      ],
+                      2
                     ),
                     _vm._v(" "),
                     _c(

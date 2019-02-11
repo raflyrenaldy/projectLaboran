@@ -33,7 +33,10 @@
                     <td>{{permintaanAplikasi.get_ruangan.name}}</td>
                     <td>{{permintaanAplikasi.name }}</td>
                     <td>{{permintaanAplikasi.name_dosen }}</td>
-                    <td>{{permintaanAplikasi.status }}</td>
+                    <td>
+                      <span v-if="permintaanAplikasi.status == 'New'" class="badge badge-warning">{{permintaanAplikasi.status }}</span>
+                      <span v-if="permintaanAplikasi.status == 'Selesai'" class="badge badge-info">{{permintaanAplikasi.status }}</span>
+                    </td>
                     <td>{{permintaanAplikasi.deadline | myDate }}</td>
                     <td>
                         <a href="#" @click="editModal(permintaanAplikasi)">
@@ -42,6 +45,13 @@
                         /
                         <a href="#" @click="deletepermintaanAplikasis(permintaanAplikasi.id)">
                             <i class="fa fa-trash red"></i>
+                        </a>
+                        /
+                        <a href="#" v-if="permintaanAplikasi.status == 'Selesai'">
+                            <i v-if="permintaanAplikasi.status == 'Selesai'" class="fa fa-check green"></i>
+                            </a>
+                        <a href="#" v-if="permintaanAplikasi.status == 'New'" @click="selesaiPermintaanAplikasi(permintaanAplikasi.id)">
+                            <i v-if="permintaanAplikasi.status == 'New'" class="fa fa-check red"></i>
                         </a>
                     </td>
                   </tr>                 
@@ -82,7 +92,16 @@
     </div>
     <div class="form-group">
                  
-     <p-check name="id_ruangan[]" v-model="form.id_ruangan" class="p-default p-curve p-thick p-smooth" :class="{ 'is-invalid': form.errors.has('id_ruangan') }" color="danger-o" v-for="ruangans in ruangan" v-bind:key="ruangans.id" v-bind:value="ruangans.id">{{ ruangans.name }}</p-check>
+     <p-check name="id_ruangan[]" v-model="form.id_ruangan" class="p-default p-curve p-thick p-smooth" :class="{ 'is-invalid': form.errors.has('id_ruangan') }" color="danger-o" v-for="ruangans in ruangan" v-bind:key="ruangans.id" v-bind:value="ruangans.id" v-show="!editMode">{{ ruangans.name }}</p-check>
+     <div class="form-group" v-show="editMode">
+            <select name="id_ruangan" v-model="form.id_ruangan" id="id_ruangan" class="form-control" :class="{ 'is-invalid': form.errors.has('id_ruangan') }">
+            <option value="">Pilih Ruangan</option>
+            <option v-for="ruangans in ruangan" v-bind:value="ruangans.id">
+                {{ ruangans.name }}
+            </option>
+            </select>
+            <has-error :form="form" field="id_ruangan"></has-error>
+    </div>
     </div>
   
            
@@ -137,6 +156,28 @@
             }
         },
         methods: {
+          selesaiPermintaanAplikasi(id){
+            this.$Progress.start();
+            this.form.get('api/permintaanAplikasi/finish/'+id)
+            .then(()=>{
+               Fire.$emit('AfterCreated');
+               
+            Swal.fire(
+                          'Selesai!',
+                          'Aplikasi ini sudah Selesai!',
+                          'success'
+                        )
+            this.$Progress.finish();
+            })
+            .catch(()=> {
+                              Toast.fire({
+              type: 'error',
+              title: 'Gagal Perbarui data!'
+            })
+            this.$Progress.fail();
+
+            });
+          },
           getResults(page = 1) {
             axios.get('api/permintaanAplikasi?page=' + page)
               .then(response => {

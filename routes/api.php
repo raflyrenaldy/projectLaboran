@@ -39,5 +39,8 @@ Route::get('findInventory','API\inventoryController@search');
 //manage inventory
 Route::get('app/ruangan','API\permintaanAplikasiController@ruangan');
 Route::get('app/thnajaran','API\permintaanAplikasiController@thnAjaran');
-Route::get('findPermintaanAplikasi','API\permintaanAplikasiController@search');
+
+//manage permintaan aplikasi
+Route::get('permintaanAplikasi/finish/{id}','API\permintaanAplikasiController@finish');
+Route::get('findpermintaanAplikasi','API\permintaanAplikasiController@search');
 Route::apiResource('permintaanAplikasi','API\permintaanAplikasiController');

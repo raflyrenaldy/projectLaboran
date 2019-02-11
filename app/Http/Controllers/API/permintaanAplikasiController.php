@@ -24,7 +24,7 @@ class permintaanAplikasiController extends Controller
     public function search()
     {
         if ($search = \Request::get('q')) {
-            $permintaanAplikasi = permintaanAplikasi::with('get_user')
+            $permintaanAplikasi = permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')
                 ->whereHas('get_user', function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%");
               })->paginate(20);
@@ -32,11 +32,13 @@ class permintaanAplikasiController extends Controller
                 $permintaanAplikasi = permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->whereHas('get_thnajaran', function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%");
               })->paginate(20);
-              }else if ($permintaanAplikasi->isEmpty()){
+              }
+              if ($permintaanAplikasi->isEmpty()){
                 $permintaanAplikasi = permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->whereHas('get_ruangan', function ($query) use ($search) {
                     $query->where('name', 'like', "%$search%");
                   })->paginate(20);
-              }else{
+              }
+              if($permintaanAplikasi->isEmpty()){
                 $permintaanAplikasi = permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->where(function($query) use ($search){
                     $query->where('name','LIKE',"%$search%")
                     ->orWhere('name_dosen','LIKE',"%$search%")
@@ -47,8 +49,9 @@ class permintaanAplikasiController extends Controller
         }else{
             $permintaanAplikasi = permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->latest()->paginate(5);
         }
+        
         return $permintaanAplikasi;
-    }
+    }   
 
     public function ruangan()
     {
@@ -122,15 +125,28 @@ class permintaanAplikasiController extends Controller
         $this->validate($request,[
             'id_thnajaran' => 'required',
             'name' => 'required',
-            'ruangan' => 'sometimes',
+            'id_ruangan' => 'sometimes',
             'name_dosen' => 'required',
             'deadline' => 'sometimes'
         ]);
-        $permintaanAplikasi = permintaanAplikasi::findOrFail($id);
-    		
-        $permintaanAplikasi->update($request->all());
 
-        return ['message' => 'success'];
+        $permintaanAplikasi = permintaanAplikasi::findOrFail($id);
+    	if($request->id_ruangan != $permintaanAplikasi->id_ruangan){
+            $checkPermintaanAplikasi = permintaanAplikasi::where([
+                                                    ['id_ruangan','=',$request->id_ruangan],
+                                                    ['name','=',$permintaanAplikasi->name]
+                                                        ])->get();
+                if($checkPermintaanAplikasi->isEmpty()){                    
+                    $permintaanAplikasi->update($request->all());
+                    return ['message' => 'success'];
+                }else{
+                    return ['message' => 'Failure'];
+                }
+        }else{
+            $permintaanAplikasi->update($request->all());
+            return ['message' => 'success'];
+        }
+
     }
 
     /**
