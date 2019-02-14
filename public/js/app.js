@@ -1799,6 +1799,615 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BarangHilang.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BarangHilang.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datetimepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datetimepicker */ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    datetime: vuejs_datetimepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      diambil: false,
+      editMode: false,
+      ruangans: [],
+      barangHilangs: {},
+      form: new Form({
+        id: '',
+        id_user: '',
+        id_ruangan: '',
+        name: '',
+        keterangan: '',
+        waktu_penemuan: '',
+        waktu_diambil: '',
+        status: '',
+        npm: '',
+        phone: '',
+        foto: '',
+        name_mhs: ''
+      })
+    };
+  },
+  methods: {
+    fotoMhs: function fotoMhs(e) {
+      var _this = this;
+
+      // cons          fotoMhs"ole.log('uploading file...');
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          // console.log('RESULT', reader.result)
+          _this.form.foto = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        Swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You are uploading a large file'
+        });
+      }
+    },
+    ambilBarangHilangs: function ambilBarangHilangs() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/barangHilang/finish/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Selesai!', 'Sudah Di ambil!', 'success');
+
+        _this2.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this2.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this3 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/barangHilang?page=' + page).then(function (response) {
+        _this3.barangHilangs = response.data;
+      });
+    },
+    updateBarangHilangs: function updateBarangHilangs() {
+      var _this4 = this;
+
+      this.$Progress.start();
+      this.form.put('api/barangHilang/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this4.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this4.$Progress.fail();
+      });
+    },
+    loadRuangan: function loadRuangan() {
+      var _this5 = this;
+
+      axios.get("api/app/ruangan").then(function (_ref) {
+        var data = _ref.data;
+        return _this5.ruangans = data;
+      });
+    },
+    newModal: function newModal() {
+      this.diambil = false;
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    diambilModal: function diambilModal(barangHilang) {
+      this.diambil = true;
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(barangHilang);
+    },
+    editModal: function editModal(barangHilang) {
+      this.diambil = false;
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(barangHilang);
+    },
+    deleteBarangHilangs: function deleteBarangHilangs(id) {
+      var _this6 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this6.form.delete('api/barangHilang/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loadbarangHilangs: function loadbarangHilangs() {
+      var _this7 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/barangHilang").then(function (_ref2) {
+          var data = _ref2.data;
+          return _this7.barangHilangs = data;
+        });
+      }
+    },
+    createBarangHilangs: function createBarangHilangs() {
+      var _this8 = this;
+
+      if (this.diambil == true) {
+        this.ambilBarangHilangs();
+      } else {
+        this.$Progress.start();
+        this.form.post('api/barangHilang').then(function () {
+          Fire.$emit('AfterCreated');
+          $('#addNew').modal('hide');
+          Toast.fire({
+            type: 'success',
+            title: 'barangHilang Berhasil Dibuat!'
+          });
+
+          _this8.$Progress.finish();
+        }).catch(function () {
+          _this8.$Progress.fail();
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this9 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this9.$parent.search;
+      axios.get('api/findBarangHilang?q=' + query).then(function (data) {
+        _this9.barangHilangs = data.data;
+      }).catch(function () {});
+    });
+    this.loadRuangan();
+    this.loadbarangHilangs();
+    Fire.$on('AfterCreated', function () {
+      _this9.loadbarangHilangs();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      catatanBelis: {},
+      form: new Form({
+        id: '',
+        id_user: '',
+        name: '',
+        harga: '',
+        jumlah: '',
+        status: ''
+      })
+    };
+  },
+  methods: {
+    selesaiCatatanBeli: function selesaiCatatanBeli(id) {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.get('api/catatanBeli/finish/' + id).then(function () {
+        Fire.$emit('AfterCreated');
+        Swal.fire('Selesai!', 'Aplikasi ini sudah Selesai!', 'success');
+
+        _this.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/catatanBeli?page=' + page).then(function (response) {
+        _this2.catatanBelis = response.data;
+      });
+    },
+    updateCatatanBelis: function updateCatatanBelis() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.form.put('api/catatanBeli/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this3.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this3.$Progress.fail();
+      });
+    },
+    newModal: function newModal() {
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    editModal: function editModal(catatanBeli) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(catatanBeli);
+    },
+    deletecatatanBelis: function deletecatatanBelis(id) {
+      var _this4 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this4.form.delete('api/catatanBeli/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loadcatatanBelis: function loadcatatanBelis() {
+      var _this5 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/catatanBeli").then(function (_ref) {
+          var data = _ref.data;
+          return _this5.catatanBelis = data;
+        });
+      }
+    },
+    createCatatanBelis: function createCatatanBelis() {
+      var _this6 = this;
+
+      this.$Progress.start();
+      this.form.post('api/catatanBeli').then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'catatanBeli Berhasil Dibuat!'
+        });
+
+        _this6.$Progress.finish();
+      }).catch(function () {
+        _this6.$Progress.fail();
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this7 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this7.$parent.search;
+      axios.get('api/findCatatanBeli?q=' + query).then(function (data) {
+        _this7.catatanBelis = data.data;
+      }).catch(function () {});
+    });
+    this.loadcatatanBelis();
+    Fire.$on('AfterCreated', function () {
+      _this7.loadcatatanBelis();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -1819,6 +2428,277 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      ruangans: [],
+      form: new Form({
+        id: '',
+        id_user: '',
+        id_ruangan: '',
+        name: '',
+        keterangan: '',
+        waktu_penemuan: '',
+        waktu_diambil: '',
+        status: '',
+        npm: '',
+        phone: '',
+        foto: '',
+        name_mhs: '',
+        get_user: [],
+        get_ruangan: []
+      })
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    Fire.$on('AfterCreated', function () {
+      _this.created();
+    });
+  },
+  methods: {
+    changeEditMode: function changeEditMode() {
+      if (this.editMode == false) {
+        this.editMode = true;
+      } else {
+        this.editMode = false;
+      }
+    },
+    loadRuangan: function loadRuangan() {
+      var _this2 = this;
+
+      axios.get("/api/app/ruangan").then(function (_ref) {
+        var data = _ref.data;
+        return _this2.ruangans = data;
+      });
+    },
+    getProfilePhoto: function getProfilePhoto() {
+      var foto = this.form.foto.length > 200 ? this.form.foto : "../img/fotomhs/" + this.form.foto;
+      return foto;
+    },
+    updateDetailBarang: function updateDetailBarang() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.form.put("/api/barangHilang/" + this.form.id).then(function () {
+        Fire.$emit('AfterCreate');
+        Toast.fire({
+          type: 'success',
+          title: 'Barang Hilang Sudah diUpdate'
+        });
+        _this3.editMode = false;
+
+        _this3.$Progress.finish();
+      }).catch(function () {
+        _this3.$Progress.fail();
+      });
+    },
+    updateProfile: function updateProfile(e) {
+      var _this4 = this;
+
+      // console.log('uploading file...');
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          // console.log('RESULT', reader.result)
+          _this4.form.foto = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        Swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You are uploading a large file'
+        });
+      }
+    }
+  },
+  created: function created() {
+    var _this5 = this;
+
+    axios.get("/api/barangHilang/" + this.$route.params.id).then(function (_ref2) {
+      var data = _ref2.data;
+      return _this5.form.fill(data);
+    });
+    this.loadRuangan();
   }
 });
 
@@ -2106,6 +2986,949 @@ __webpack_require__.r(__webpack_exports__);
     this.loadInventories();
     Fire.$on('AfterCreated', function () {
       _this6.loadInventories();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Koperasi.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Koperasi.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      user: [],
+      koperasis: {},
+      form: new Form({
+        id: '',
+        id_user: '',
+        id_user_pinjam: '',
+        keterangan: '',
+        jumlah: '',
+        status: ''
+      })
+    };
+  },
+  methods: {
+    selesaiKoperasi: function selesaiKoperasi(id) {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.get('api/koperasi/finish/' + id).then(function () {
+        Fire.$emit('AfterCreated');
+        Swal.fire('Selesai!', 'Sudah Sudah Di Bayar!', 'success');
+
+        _this.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/koperasi?page=' + page).then(function (response) {
+        _this2.koperasis = response.data;
+      });
+    },
+    updateKoperasis: function updateKoperasis() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.form.put('api/koperasi/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this3.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this3.$Progress.fail();
+      });
+    },
+    loadUser: function loadUser() {
+      var _this4 = this;
+
+      axios.get("api/app/user").then(function (_ref) {
+        var data = _ref.data;
+        return _this4.user = data;
+      });
+    },
+    newModal: function newModal() {
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    editModal: function editModal(koperasi) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(koperasi);
+    },
+    deletekoperasis: function deletekoperasis(id) {
+      var _this5 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this5.form.delete('api/koperasi/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loadkoperasis: function loadkoperasis() {
+      var _this6 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/koperasi").then(function (_ref2) {
+          var data = _ref2.data;
+          return _this6.koperasis = data;
+        });
+      }
+    },
+    createKoperasis: function createKoperasis() {
+      var _this7 = this;
+
+      this.$Progress.start();
+      this.form.post('api/koperasi').then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'koperasi Berhasil Dibuat!'
+        });
+
+        _this7.$Progress.finish();
+      }).catch(function () {
+        _this7.$Progress.fail();
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this8 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this8.$parent.search;
+      axios.get('api/findKoperasi?q=' + query).then(function (data) {
+        _this8.koperasis = data.data;
+      }).catch(function () {});
+    });
+    this.loadUser();
+    this.loadkoperasis();
+    Fire.$on('AfterCreated', function () {
+      _this8.loadkoperasis();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MasalahLab.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MasalahLab.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      ruangan: [],
+      tahunAjaran: [],
+      user: [],
+      masalahLabs: {},
+      form: new Form({
+        id: '',
+        id_user: '',
+        id_thnajaran: '',
+        name: '',
+        keterangan: '',
+        waktu_mulai: '',
+        waktu_selesai: '',
+        status: '',
+        yang_bertugas: '',
+        solusi_solved: '',
+        ruangan: []
+      })
+    };
+  },
+  methods: {
+    finishMasalahLab: function finishMasalahLab() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.post('api/masalahLab/finish/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#finishMasalahLab').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'masalah berhasil diselesaikan!'
+        });
+
+        _this.$Progress.finish();
+      }).catch(function () {
+        _this.$Progress.fail();
+      });
+    },
+    finishMasalah: function finishMasalah(masalahLab) {
+      this.form.reset();
+      $('#finishMasalahLab').modal('show');
+      this.form.fill(masalahLab);
+    },
+    startMasalahLab: function startMasalahLab(id) {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.get('api/masalahLab/start/' + id).then(function () {
+        Fire.$emit('AfterCreated');
+        Swal.fire('Selesai!', 'Mulai Memecahkan Masalah Lab!', 'success');
+
+        _this2.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this2.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this3 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/masalahLab?page=' + page).then(function (response) {
+        _this3.masalahLabs = response.data;
+      });
+    },
+    updatemasalahLabs: function updatemasalahLabs() {
+      var _this4 = this;
+
+      this.$Progress.start();
+      this.form.put('api/masalahLab/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this4.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this4.$Progress.fail();
+      });
+    },
+    newModal: function newModal() {
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    editModal: function editModal(masalahLab) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(masalahLab);
+    },
+    deletemasalahLabs: function deletemasalahLabs(id) {
+      var _this5 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this5.form.delete('api/masalahLab/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loadUser: function loadUser() {
+      var _this6 = this;
+
+      axios.get("api/app/user").then(function (_ref) {
+        var data = _ref.data;
+        return _this6.user = data;
+      });
+    },
+    loadRuangan: function loadRuangan() {
+      var _this7 = this;
+
+      axios.get("api/app/ruangan").then(function (_ref2) {
+        var data = _ref2.data;
+        return _this7.ruangan = data;
+      });
+    },
+    loadThnAjaran: function loadThnAjaran() {
+      var _this8 = this;
+
+      axios.get("api/app/thnajaran").then(function (_ref3) {
+        var data = _ref3.data;
+        return _this8.tahunAjaran = data;
+      });
+    },
+    loadmasalahLabs: function loadmasalahLabs() {
+      var _this9 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/masalahLab").then(function (_ref4) {
+          var data = _ref4.data;
+          return _this9.masalahLabs = data;
+        });
+      }
+    },
+    createmasalahLabs: function createmasalahLabs() {
+      var _this10 = this;
+
+      this.$Progress.start();
+      this.form.post('api/masalahLab').then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'masalahLab Berhasil Dibuat!'
+        });
+
+        _this10.$Progress.finish();
+      }).catch(function () {
+        _this10.$Progress.fail();
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this11 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this11.$parent.search;
+      axios.get('api/findMasalahLab?q=' + query).then(function (data) {
+        _this11.masalahLabs = data.data;
+      }).catch(function () {});
+    });
+    this.loadmasalahLabs();
+    this.loadUser();
+    this.loadRuangan();
+    this.loadThnAjaran();
+    Fire.$on('AfterCreated', function () {
+      _this11.loadmasalahLabs();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      user: [],
+      inventories: [],
+      peminjamanInventories: {},
+      form: new Form({
+        id: '',
+        id_user: '',
+        id_user_pinjam: '',
+        id_inventory: '',
+        keterangan: '',
+        jumlah: '',
+        status: ''
+      })
+    };
+  },
+  methods: {
+    selesaipeminjamanInventory: function selesaipeminjamanInventory(id) {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.get('api/peminjamanInventory/finish/' + id).then(function () {
+        Fire.$emit('AfterCreated');
+        Swal.fire('Selesai!', 'Sudah Sudah Di Bayar!', 'success');
+
+        _this.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this.$Progress.fail();
+      });
+    },
+    getResults: function getResults() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/peminjamanInventory?page=' + page).then(function (response) {
+        _this2.peminjamanInventories = response.data;
+      });
+    },
+    updatePeminjamanInventories: function updatePeminjamanInventories() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.form.put('api/peminjamanInventory/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this3.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this3.$Progress.fail();
+      });
+    },
+    loadUser: function loadUser() {
+      var _this4 = this;
+
+      axios.get("api/app/user").then(function (_ref) {
+        var data = _ref.data;
+        return _this4.user = data;
+      });
+    },
+    loadInventory: function loadInventory() {
+      var _this5 = this;
+
+      axios.get("api/app/inventory").then(function (_ref2) {
+        var data = _ref2.data;
+        return _this5.inventories = data;
+      });
+    },
+    newModal: function newModal() {
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    editModal: function editModal(peminjamanInventory) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(peminjamanInventory);
+    },
+    deletepeminjamanInventories: function deletepeminjamanInventories(id) {
+      var _this6 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this6.form.delete('api/peminjamanInventory/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loadpeminjamanInventories: function loadpeminjamanInventories() {
+      var _this7 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/peminjamanInventory").then(function (_ref3) {
+          var data = _ref3.data;
+          return _this7.peminjamanInventories = data;
+        });
+      }
+    },
+    createPeminjamanInventories: function createPeminjamanInventories() {
+      var _this8 = this;
+
+      this.$Progress.start();
+      this.form.post('api/peminjamanInventory').then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'peminjamanInventory Berhasil Dibuat!'
+        });
+
+        _this8.$Progress.finish();
+      }).catch(function () {
+        _this8.$Progress.fail();
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this9 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this9.$parent.search;
+      axios.get('api/findPeminjamanInventory?q=' + query).then(function (data) {
+        _this9.peminjamanInventories = data.data;
+      }).catch(function () {});
+    });
+    this.loadInventory();
+    this.loadUser();
+    this.loadpeminjamanInventories();
+    Fire.$on('AfterCreated', function () {
+      _this9.loadpeminjamanInventories();
     }); // setInterval(() => this.loadUsers(),3000);
   }
 });
@@ -3113,6 +4936,240 @@ __webpack_require__.r(__webpack_exports__);
     this.loadTahunAjaran();
     Fire.$on('AfterCreated', function () {
       _this6.loadTahunAjaran();
+    }); // setInterval(() => this.loadUsers(),3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UangKas.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UangKas.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      uangKass: {},
+      form: new Form({
+        id: '',
+        id_koperasi: '',
+        id_pembelian: '',
+        name: '',
+        kas_masuk: '',
+        kas_keluar: '',
+        saldo: ''
+      })
+    };
+  },
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/uangKas?page=' + page).then(function (response) {
+        _this.uangKass = response.data;
+      });
+    },
+    updateUangKass: function updateUangKass() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/uangKas/' + this.form.id).then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Swal.fire('Telah Diperbarui!', 'Data sudah berhasil diperbarui!', 'success');
+
+        _this2.$Progress.finish();
+      }).catch(function () {
+        Toast.fire({
+          type: 'error',
+          title: 'Gagal Perbarui data!'
+        });
+
+        _this2.$Progress.fail();
+      });
+    },
+    newModal: function newModal() {
+      this.editMode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    editModal: function editModal(uangKas) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(uangKas);
+    },
+    deleteUangKass: function deleteUangKass(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Apakah Anda Yakin??',
+        text: "Anda Akan Menghapus Data ini!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus Data Ini!'
+      }).then(function (result) {
+        if (result.value) {
+          //send request to the server
+          _this3.form.delete('api/uangKas/' + id).then(function () {
+            Fire.$emit('AfterCreated');
+            Swal.fire('Sudah Dihapus!', 'Data Sudah Berhasil Dihapus', 'success');
+          }).catch(function () {});
+        }
+      });
+    },
+    loaduangKass: function loaduangKass() {
+      var _this4 = this;
+
+      if (this.$gate.isAdminOrUser()) {
+        axios.get("api/uangKas").then(function (_ref) {
+          var data = _ref.data;
+          return _this4.uangKass = data;
+        });
+      }
+    },
+    createUangKass: function createUangKass() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/uangKas').then(function () {
+        Fire.$emit('AfterCreated');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          type: 'success',
+          title: 'uangKas Berhasil Dibuat!'
+        });
+
+        _this5.$Progress.finish();
+      }).catch(function () {
+        _this5.$Progress.fail();
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this6 = this;
+
+    Fire.$on('searching', function () {
+      var query = _this6.$parent.search;
+      axios.get('api/findUangKas?q=' + query).then(function (data) {
+        _this6.uangKass = data.data;
+      }).catch(function () {});
+    });
+    this.loaduangKass();
+    Fire.$on('AfterCreated', function () {
+      _this6.loaduangKass();
     }); // setInterval(() => this.loadUsers(),3000);
   }
 });
@@ -8389,6 +10446,44 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.year-month-wrapper[data-v-4bd11526]{\n  background-color: #ed4d00;\n}\ninput[data-v-4bd11526]{\n  min-width: 226px;\n  width:100%;\n  height: 30px;\n  padding: 3px;\n  border: 1px solid #ddd;\n}\n.datetime-picker[data-v-4bd11526]{\n  position: relative;\n}\n.calender-div[data-v-4bd11526]{\n  min-width: 270px;\n  box-shadow: 1px 2px 5px #ccc;\n  background: #FFF;\n  position: absolute;\n  display: inline-block;\n  left: 0;\n  top: 35px;\n  color: #444;\n  font-size: 14px;\n  padding-bottom: 10px;\n}\n.port[data-v-4bd11526], .days[data-v-4bd11526]{\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  padding: 5px 3px;\n  margin: 2px;\n  border-radius: 2px;\n  text-align: center;\n  vertical-align: top;\n  cursor: pointer;\n}\n.days[data-v-4bd11526]{\n  color: #ed4d00;\n  font-weight: bold;\n}\n.port[data-v-4bd11526]:hover{\n  color: #ed4d00;\n  font-weight: bold;\n}\n.activePort[data-v-4bd11526], .activePort[data-v-4bd11526]:hover {\n  background-color: #ed4d00;\n  color: white;\n}\n.month-setter[data-v-4bd11526], .year-setter[data-v-4bd11526]{\n  margin: 0 1px;\n  width: 48.2%;\n  color: white;\n  font-weight: 900;\n  display: inline-block;\n}\n.nav-l[data-v-4bd11526]:hover, .nav-r[data-v-4bd11526]:hover {\n  background-color: #dc3c00;\n}\n.nav-l[data-v-4bd11526], .nav-r[data-v-4bd11526] {\n  display: inline-block;\n  width: 25px;\n  background-color: #ed4d00;\n  color: white;\n  font-size: 16px;\n  cursor: pointer;\n  border: 0;\n  padding: 7px;\n  margin:0;\n}\n.nav-l[data-v-4bd11526]:focus, .nav-r[data-v-4bd11526]:focus{\n  outline: none;\n}\n.nav-l[data-v-4bd11526]{\n  float: left;\n}\n.nav-r[data-v-4bd11526]{\n  float: right;\n}\n.month[data-v-4bd11526], .year[data-v-4bd11526]{\n  width: 40px;\n  text-align: right;\n  display: inline-block;\n  color: white;\n  padding: 7px 0;\n}\n.headers>span[data-v-4bd11526]{\n}\n.hour-selector[data-v-4bd11526], .minute-selector[data-v-4bd11526]{\n  width: 30px;\n  display: inline-block;\n  text-align: center;\n  font-weight: bold;\n  position: relative;\n  cursor: pointer;\n}\n.time-separator[data-v-4bd11526]{\n  display: inline-block;\n  font-weight: bold;\n}\n.time-picker[data-v-4bd11526]{\n  margin: 10px\n}\n.nav-t[data-v-4bd11526], .nav-d[data-v-4bd11526]{\n  font-weight: bold;\n  cursor: pointer;\n}\n.scroll-hider[data-v-4bd11526] {\n  display: none;\n  vertical-align:top;\n  overflow:hidden;\n  border:0;\n  position: absolute;\n  top: -40px;\n  left: 0;\n  box-shadow: 0 0 3px #333;\n  background-color: white;\n}\n.scroll-hider ul[data-v-4bd11526] {\n  padding:5px;\n  margin:-5px -13px -5px -5px;\n  list-style-type: none;\n  height: 100px;\n  overflow: auto;\n  width:55px;\n  color: #999;\n  overflow-x: hidden;\n}\n.showSelector[data-v-4bd11526]{\n  display:inline-block;\n}\nli.active[data-v-4bd11526]{\n  background-color: #ed4d00;\n  color: white;\n}\nli[data-v-4bd11526]{\n  padding: 4px;\n  font-size: 16px;\n  width: 100%;\n  cursor: pointer;\n}\n.time-picker[data-v-4bd11526]{\n  display: inline-block;\n}\n.noDisplay[data-v-4bd11526]{\n  display: none;\n}\n.okButton[data-v-4bd11526]{\n  color: #ed4d00;\n  font-size: 15px;\n  font-weight: bold;\n  padding: 0;\n  float: right;\n  border: 0;\n  margin-right: 10px;\n  margin-top: 10px;\n  cursor: pointer;\n  background: transparent;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.widget-user-header{\r\n    background-position: center center;\r\n    background-size: cover;\r\n    height: 200px !important;\n}\n.widget-user .card-footer{\r\n    padding: 0;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css& ***!
@@ -8529,6 +10624,1674 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds/index.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds/index.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var MILLISECONDS_IN_MINUTE = 60000
+
+/**
+ * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
+ * They usually appear for dates that denote time before the timezones were introduced
+ * (e.g. for 'Europe/Prague' timezone the offset is GMT+00:57:44 before 1 October 1891
+ * and GMT+01:00:00 after that date)
+ *
+ * Date#getTimezoneOffset returns the offset in minutes and would return 57 for the example above,
+ * which would lead to incorrect calculations.
+ *
+ * This function returns the timezone offset in milliseconds that takes seconds in account.
+ */
+module.exports = function getTimezoneOffsetInMilliseconds (dirtyDate) {
+  var date = new Date(dirtyDate.getTime())
+  var baseTimezoneOffset = date.getTimezoneOffset()
+  date.setSeconds(0, 0)
+  var millisecondsPartOfTimezoneOffset = date.getTime() % MILLISECONDS_IN_MINUTE
+
+  return baseTimezoneOffset * MILLISECONDS_IN_MINUTE + millisecondsPartOfTimezoneOffset
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/difference_in_calendar_days/index.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/difference_in_calendar_days/index.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var startOfDay = __webpack_require__(/*! ../start_of_day/index.js */ "./node_modules/date-fns/start_of_day/index.js")
+
+var MILLISECONDS_IN_MINUTE = 60000
+var MILLISECONDS_IN_DAY = 86400000
+
+/**
+ * @category Day Helpers
+ * @summary Get the number of calendar days between the given dates.
+ *
+ * @description
+ * Get the number of calendar days between the given dates.
+ *
+ * @param {Date|String|Number} dateLeft - the later date
+ * @param {Date|String|Number} dateRight - the earlier date
+ * @returns {Number} the number of calendar days
+ *
+ * @example
+ * // How many calendar days are between
+ * // 2 July 2011 23:00:00 and 2 July 2012 00:00:00?
+ * var result = differenceInCalendarDays(
+ *   new Date(2012, 6, 2, 0, 0),
+ *   new Date(2011, 6, 2, 23, 0)
+ * )
+ * //=> 366
+ */
+function differenceInCalendarDays (dirtyDateLeft, dirtyDateRight) {
+  var startOfDayLeft = startOfDay(dirtyDateLeft)
+  var startOfDayRight = startOfDay(dirtyDateRight)
+
+  var timestampLeft = startOfDayLeft.getTime() -
+    startOfDayLeft.getTimezoneOffset() * MILLISECONDS_IN_MINUTE
+  var timestampRight = startOfDayRight.getTime() -
+    startOfDayRight.getTimezoneOffset() * MILLISECONDS_IN_MINUTE
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a day is not constant
+  // (e.g. it's different in the day of the daylight saving time clock shift)
+  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY)
+}
+
+module.exports = differenceInCalendarDays
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/each_day/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/date-fns/each_day/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Day Helpers
+ * @summary Return the array of dates within the specified range.
+ *
+ * @description
+ * Return the array of dates within the specified range.
+ *
+ * @param {Date|String|Number} startDate - the first date
+ * @param {Date|String|Number} endDate - the last date
+ * @param {Number} [step=1] - the step between each day
+ * @returns {Date[]} the array with starts of days from the day of startDate to the day of endDate
+ * @throws {Error} startDate cannot be after endDate
+ *
+ * @example
+ * // Each day between 6 October 2014 and 10 October 2014:
+ * var result = eachDay(
+ *   new Date(2014, 9, 6),
+ *   new Date(2014, 9, 10)
+ * )
+ * //=> [
+ * //   Mon Oct 06 2014 00:00:00,
+ * //   Tue Oct 07 2014 00:00:00,
+ * //   Wed Oct 08 2014 00:00:00,
+ * //   Thu Oct 09 2014 00:00:00,
+ * //   Fri Oct 10 2014 00:00:00
+ * // ]
+ */
+function eachDay (dirtyStartDate, dirtyEndDate, dirtyStep) {
+  var startDate = parse(dirtyStartDate)
+  var endDate = parse(dirtyEndDate)
+  var step = dirtyStep !== undefined ? dirtyStep : 1
+
+  var endTime = endDate.getTime()
+
+  if (startDate.getTime() > endTime) {
+    throw new Error('The first date cannot be after the second date')
+  }
+
+  var dates = []
+
+  var currentDate = startDate
+  currentDate.setHours(0, 0, 0, 0)
+
+  while (currentDate.getTime() <= endTime) {
+    dates.push(parse(currentDate))
+    currentDate.setDate(currentDate.getDate() + step)
+  }
+
+  return dates
+}
+
+module.exports = eachDay
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/end_of_month/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/date-fns/end_of_month/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Month Helpers
+ * @summary Return the end of a month for the given date.
+ *
+ * @description
+ * Return the end of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the end of a month
+ *
+ * @example
+ * // The end of a month for 2 September 2014 11:55:00:
+ * var result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 30 2014 23:59:59.999
+ */
+function endOfMonth (dirtyDate) {
+  var date = parse(dirtyDate)
+  var month = date.getMonth()
+  date.setFullYear(date.getFullYear(), month + 1, 0)
+  date.setHours(23, 59, 59, 999)
+  return date
+}
+
+module.exports = endOfMonth
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/format/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/date-fns/format/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getDayOfYear = __webpack_require__(/*! ../get_day_of_year/index.js */ "./node_modules/date-fns/get_day_of_year/index.js")
+var getISOWeek = __webpack_require__(/*! ../get_iso_week/index.js */ "./node_modules/date-fns/get_iso_week/index.js")
+var getISOYear = __webpack_require__(/*! ../get_iso_year/index.js */ "./node_modules/date-fns/get_iso_year/index.js")
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+var isValid = __webpack_require__(/*! ../is_valid/index.js */ "./node_modules/date-fns/is_valid/index.js")
+var enLocale = __webpack_require__(/*! ../locale/en/index.js */ "./node_modules/date-fns/locale/en/index.js")
+
+/**
+ * @category Common Helpers
+ * @summary Format the date.
+ *
+ * @description
+ * Return the formatted date string in the given format.
+ *
+ * Accepted tokens:
+ * | Unit                    | Token | Result examples                  |
+ * |-------------------------|-------|----------------------------------|
+ * | Month                   | M     | 1, 2, ..., 12                    |
+ * |                         | Mo    | 1st, 2nd, ..., 12th              |
+ * |                         | MM    | 01, 02, ..., 12                  |
+ * |                         | MMM   | Jan, Feb, ..., Dec               |
+ * |                         | MMMM  | January, February, ..., December |
+ * | Quarter                 | Q     | 1, 2, 3, 4                       |
+ * |                         | Qo    | 1st, 2nd, 3rd, 4th               |
+ * | Day of month            | D     | 1, 2, ..., 31                    |
+ * |                         | Do    | 1st, 2nd, ..., 31st              |
+ * |                         | DD    | 01, 02, ..., 31                  |
+ * | Day of year             | DDD   | 1, 2, ..., 366                   |
+ * |                         | DDDo  | 1st, 2nd, ..., 366th             |
+ * |                         | DDDD  | 001, 002, ..., 366               |
+ * | Day of week             | d     | 0, 1, ..., 6                     |
+ * |                         | do    | 0th, 1st, ..., 6th               |
+ * |                         | dd    | Su, Mo, ..., Sa                  |
+ * |                         | ddd   | Sun, Mon, ..., Sat               |
+ * |                         | dddd  | Sunday, Monday, ..., Saturday    |
+ * | Day of ISO week         | E     | 1, 2, ..., 7                     |
+ * | ISO week                | W     | 1, 2, ..., 53                    |
+ * |                         | Wo    | 1st, 2nd, ..., 53rd              |
+ * |                         | WW    | 01, 02, ..., 53                  |
+ * | Year                    | YY    | 00, 01, ..., 99                  |
+ * |                         | YYYY  | 1900, 1901, ..., 2099            |
+ * | ISO week-numbering year | GG    | 00, 01, ..., 99                  |
+ * |                         | GGGG  | 1900, 1901, ..., 2099            |
+ * | AM/PM                   | A     | AM, PM                           |
+ * |                         | a     | am, pm                           |
+ * |                         | aa    | a.m., p.m.                       |
+ * | Hour                    | H     | 0, 1, ... 23                     |
+ * |                         | HH    | 00, 01, ... 23                   |
+ * |                         | h     | 1, 2, ..., 12                    |
+ * |                         | hh    | 01, 02, ..., 12                  |
+ * | Minute                  | m     | 0, 1, ..., 59                    |
+ * |                         | mm    | 00, 01, ..., 59                  |
+ * | Second                  | s     | 0, 1, ..., 59                    |
+ * |                         | ss    | 00, 01, ..., 59                  |
+ * | 1/10 of second          | S     | 0, 1, ..., 9                     |
+ * | 1/100 of second         | SS    | 00, 01, ..., 99                  |
+ * | Millisecond             | SSS   | 000, 001, ..., 999               |
+ * | Timezone                | Z     | -01:00, +00:00, ... +12:00       |
+ * |                         | ZZ    | -0100, +0000, ..., +1200         |
+ * | Seconds timestamp       | X     | 512969520                        |
+ * | Milliseconds timestamp  | x     | 512969520900                     |
+ *
+ * The characters wrapped in square brackets are escaped.
+ *
+ * The result may vary by locale.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {String} [format='YYYY-MM-DDTHH:mm:ss.SSSZ'] - the string of tokens
+ * @param {Object} [options] - the object with options
+ * @param {Object} [options.locale=enLocale] - the locale object
+ * @returns {String} the formatted date string
+ *
+ * @example
+ * // Represent 11 February 2014 in middle-endian format:
+ * var result = format(
+ *   new Date(2014, 1, 11),
+ *   'MM/DD/YYYY'
+ * )
+ * //=> '02/11/2014'
+ *
+ * @example
+ * // Represent 2 July 2014 in Esperanto:
+ * var eoLocale = require('date-fns/locale/eo')
+ * var result = format(
+ *   new Date(2014, 6, 2),
+ *   'Do [de] MMMM YYYY',
+ *   {locale: eoLocale}
+ * )
+ * //=> '2-a de julio 2014'
+ */
+function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
+  var formatStr = dirtyFormatStr ? String(dirtyFormatStr) : 'YYYY-MM-DDTHH:mm:ss.SSSZ'
+  var options = dirtyOptions || {}
+
+  var locale = options.locale
+  var localeFormatters = enLocale.format.formatters
+  var formattingTokensRegExp = enLocale.format.formattingTokensRegExp
+  if (locale && locale.format && locale.format.formatters) {
+    localeFormatters = locale.format.formatters
+
+    if (locale.format.formattingTokensRegExp) {
+      formattingTokensRegExp = locale.format.formattingTokensRegExp
+    }
+  }
+
+  var date = parse(dirtyDate)
+
+  if (!isValid(date)) {
+    return 'Invalid Date'
+  }
+
+  var formatFn = buildFormatFn(formatStr, localeFormatters, formattingTokensRegExp)
+
+  return formatFn(date)
+}
+
+var formatters = {
+  // Month: 1, 2, ..., 12
+  'M': function (date) {
+    return date.getMonth() + 1
+  },
+
+  // Month: 01, 02, ..., 12
+  'MM': function (date) {
+    return addLeadingZeros(date.getMonth() + 1, 2)
+  },
+
+  // Quarter: 1, 2, 3, 4
+  'Q': function (date) {
+    return Math.ceil((date.getMonth() + 1) / 3)
+  },
+
+  // Day of month: 1, 2, ..., 31
+  'D': function (date) {
+    return date.getDate()
+  },
+
+  // Day of month: 01, 02, ..., 31
+  'DD': function (date) {
+    return addLeadingZeros(date.getDate(), 2)
+  },
+
+  // Day of year: 1, 2, ..., 366
+  'DDD': function (date) {
+    return getDayOfYear(date)
+  },
+
+  // Day of year: 001, 002, ..., 366
+  'DDDD': function (date) {
+    return addLeadingZeros(getDayOfYear(date), 3)
+  },
+
+  // Day of week: 0, 1, ..., 6
+  'd': function (date) {
+    return date.getDay()
+  },
+
+  // Day of ISO week: 1, 2, ..., 7
+  'E': function (date) {
+    return date.getDay() || 7
+  },
+
+  // ISO week: 1, 2, ..., 53
+  'W': function (date) {
+    return getISOWeek(date)
+  },
+
+  // ISO week: 01, 02, ..., 53
+  'WW': function (date) {
+    return addLeadingZeros(getISOWeek(date), 2)
+  },
+
+  // Year: 00, 01, ..., 99
+  'YY': function (date) {
+    return addLeadingZeros(date.getFullYear(), 4).substr(2)
+  },
+
+  // Year: 1900, 1901, ..., 2099
+  'YYYY': function (date) {
+    return addLeadingZeros(date.getFullYear(), 4)
+  },
+
+  // ISO week-numbering year: 00, 01, ..., 99
+  'GG': function (date) {
+    return String(getISOYear(date)).substr(2)
+  },
+
+  // ISO week-numbering year: 1900, 1901, ..., 2099
+  'GGGG': function (date) {
+    return getISOYear(date)
+  },
+
+  // Hour: 0, 1, ... 23
+  'H': function (date) {
+    return date.getHours()
+  },
+
+  // Hour: 00, 01, ..., 23
+  'HH': function (date) {
+    return addLeadingZeros(date.getHours(), 2)
+  },
+
+  // Hour: 1, 2, ..., 12
+  'h': function (date) {
+    var hours = date.getHours()
+    if (hours === 0) {
+      return 12
+    } else if (hours > 12) {
+      return hours % 12
+    } else {
+      return hours
+    }
+  },
+
+  // Hour: 01, 02, ..., 12
+  'hh': function (date) {
+    return addLeadingZeros(formatters['h'](date), 2)
+  },
+
+  // Minute: 0, 1, ..., 59
+  'm': function (date) {
+    return date.getMinutes()
+  },
+
+  // Minute: 00, 01, ..., 59
+  'mm': function (date) {
+    return addLeadingZeros(date.getMinutes(), 2)
+  },
+
+  // Second: 0, 1, ..., 59
+  's': function (date) {
+    return date.getSeconds()
+  },
+
+  // Second: 00, 01, ..., 59
+  'ss': function (date) {
+    return addLeadingZeros(date.getSeconds(), 2)
+  },
+
+  // 1/10 of second: 0, 1, ..., 9
+  'S': function (date) {
+    return Math.floor(date.getMilliseconds() / 100)
+  },
+
+  // 1/100 of second: 00, 01, ..., 99
+  'SS': function (date) {
+    return addLeadingZeros(Math.floor(date.getMilliseconds() / 10), 2)
+  },
+
+  // Millisecond: 000, 001, ..., 999
+  'SSS': function (date) {
+    return addLeadingZeros(date.getMilliseconds(), 3)
+  },
+
+  // Timezone: -01:00, +00:00, ... +12:00
+  'Z': function (date) {
+    return formatTimezone(date.getTimezoneOffset(), ':')
+  },
+
+  // Timezone: -0100, +0000, ... +1200
+  'ZZ': function (date) {
+    return formatTimezone(date.getTimezoneOffset())
+  },
+
+  // Seconds timestamp: 512969520
+  'X': function (date) {
+    return Math.floor(date.getTime() / 1000)
+  },
+
+  // Milliseconds timestamp: 512969520900
+  'x': function (date) {
+    return date.getTime()
+  }
+}
+
+function buildFormatFn (formatStr, localeFormatters, formattingTokensRegExp) {
+  var array = formatStr.match(formattingTokensRegExp)
+  var length = array.length
+
+  var i
+  var formatter
+  for (i = 0; i < length; i++) {
+    formatter = localeFormatters[array[i]] || formatters[array[i]]
+    if (formatter) {
+      array[i] = formatter
+    } else {
+      array[i] = removeFormattingTokens(array[i])
+    }
+  }
+
+  return function (date) {
+    var output = ''
+    for (var i = 0; i < length; i++) {
+      if (array[i] instanceof Function) {
+        output += array[i](date, formatters)
+      } else {
+        output += array[i]
+      }
+    }
+    return output
+  }
+}
+
+function removeFormattingTokens (input) {
+  if (input.match(/\[[\s\S]/)) {
+    return input.replace(/^\[|]$/g, '')
+  }
+  return input.replace(/\\/g, '')
+}
+
+function formatTimezone (offset, delimeter) {
+  delimeter = delimeter || ''
+  var sign = offset > 0 ? '-' : '+'
+  var absOffset = Math.abs(offset)
+  var hours = Math.floor(absOffset / 60)
+  var minutes = absOffset % 60
+  return sign + addLeadingZeros(hours, 2) + delimeter + addLeadingZeros(minutes, 2)
+}
+
+function addLeadingZeros (number, targetLength) {
+  var output = Math.abs(number).toString()
+  while (output.length < targetLength) {
+    output = '0' + output
+  }
+  return output
+}
+
+module.exports = format
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/get_day/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/date-fns/get_day/index.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Weekday Helpers
+ * @summary Get the day of the week of the given date.
+ *
+ * @description
+ * Get the day of the week of the given date.
+ *
+ * @param {Date|String|Number} date - the given date
+ * @returns {Number} the day of week
+ *
+ * @example
+ * // Which day of the week is 29 February 2012?
+ * var result = getDay(new Date(2012, 1, 29))
+ * //=> 3
+ */
+function getDay (dirtyDate) {
+  var date = parse(dirtyDate)
+  var day = date.getDay()
+  return day
+}
+
+module.exports = getDay
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/get_day_of_year/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/date-fns/get_day_of_year/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+var startOfYear = __webpack_require__(/*! ../start_of_year/index.js */ "./node_modules/date-fns/start_of_year/index.js")
+var differenceInCalendarDays = __webpack_require__(/*! ../difference_in_calendar_days/index.js */ "./node_modules/date-fns/difference_in_calendar_days/index.js")
+
+/**
+ * @category Day Helpers
+ * @summary Get the day of the year of the given date.
+ *
+ * @description
+ * Get the day of the year of the given date.
+ *
+ * @param {Date|String|Number} date - the given date
+ * @returns {Number} the day of year
+ *
+ * @example
+ * // Which day of the year is 2 July 2014?
+ * var result = getDayOfYear(new Date(2014, 6, 2))
+ * //=> 183
+ */
+function getDayOfYear (dirtyDate) {
+  var date = parse(dirtyDate)
+  var diff = differenceInCalendarDays(date, startOfYear(date))
+  var dayOfYear = diff + 1
+  return dayOfYear
+}
+
+module.exports = getDayOfYear
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/get_iso_week/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/date-fns/get_iso_week/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+var startOfISOWeek = __webpack_require__(/*! ../start_of_iso_week/index.js */ "./node_modules/date-fns/start_of_iso_week/index.js")
+var startOfISOYear = __webpack_require__(/*! ../start_of_iso_year/index.js */ "./node_modules/date-fns/start_of_iso_year/index.js")
+
+var MILLISECONDS_IN_WEEK = 604800000
+
+/**
+ * @category ISO Week Helpers
+ * @summary Get the ISO week of the given date.
+ *
+ * @description
+ * Get the ISO week of the given date.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * @param {Date|String|Number} date - the given date
+ * @returns {Number} the ISO week
+ *
+ * @example
+ * // Which week of the ISO-week numbering year is 2 January 2005?
+ * var result = getISOWeek(new Date(2005, 0, 2))
+ * //=> 53
+ */
+function getISOWeek (dirtyDate) {
+  var date = parse(dirtyDate)
+  var diff = startOfISOWeek(date).getTime() - startOfISOYear(date).getTime()
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1
+}
+
+module.exports = getISOWeek
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/get_iso_year/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/date-fns/get_iso_year/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+var startOfISOWeek = __webpack_require__(/*! ../start_of_iso_week/index.js */ "./node_modules/date-fns/start_of_iso_week/index.js")
+
+/**
+ * @category ISO Week-Numbering Year Helpers
+ * @summary Get the ISO week-numbering year of the given date.
+ *
+ * @description
+ * Get the ISO week-numbering year of the given date,
+ * which always starts 3 days before the year's first Thursday.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * @param {Date|String|Number} date - the given date
+ * @returns {Number} the ISO week-numbering year
+ *
+ * @example
+ * // Which ISO-week numbering year is 2 January 2005?
+ * var result = getISOYear(new Date(2005, 0, 2))
+ * //=> 2004
+ */
+function getISOYear (dirtyDate) {
+  var date = parse(dirtyDate)
+  var year = date.getFullYear()
+
+  var fourthOfJanuaryOfNextYear = new Date(0)
+  fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4)
+  fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0)
+  var startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear)
+
+  var fourthOfJanuaryOfThisYear = new Date(0)
+  fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4)
+  fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0)
+  var startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear)
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year
+  } else {
+    return year - 1
+  }
+}
+
+module.exports = getISOYear
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/is_date/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/date-fns/is_date/index.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * @category Common Helpers
+ * @summary Is the given argument an instance of Date?
+ *
+ * @description
+ * Is the given argument an instance of Date?
+ *
+ * @param {*} argument - the argument to check
+ * @returns {Boolean} the given argument is an instance of Date
+ *
+ * @example
+ * // Is 'mayonnaise' a Date?
+ * var result = isDate('mayonnaise')
+ * //=> false
+ */
+function isDate (argument) {
+  return argument instanceof Date
+}
+
+module.exports = isDate
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/is_equal/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/date-fns/is_equal/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Common Helpers
+ * @summary Are the given dates equal?
+ *
+ * @description
+ * Are the given dates equal?
+ *
+ * @param {Date|String|Number} dateLeft - the first date to compare
+ * @param {Date|String|Number} dateRight - the second date to compare
+ * @returns {Boolean} the dates are equal
+ *
+ * @example
+ * // Are 2 July 2014 06:30:45.000 and 2 July 2014 06:30:45.500 equal?
+ * var result = isEqual(
+ *   new Date(2014, 6, 2, 6, 30, 45, 0)
+ *   new Date(2014, 6, 2, 6, 30, 45, 500)
+ * )
+ * //=> false
+ */
+function isEqual (dirtyLeftDate, dirtyRightDate) {
+  var dateLeft = parse(dirtyLeftDate)
+  var dateRight = parse(dirtyRightDate)
+  return dateLeft.getTime() === dateRight.getTime()
+}
+
+module.exports = isEqual
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/is_valid/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/date-fns/is_valid/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isDate = __webpack_require__(/*! ../is_date/index.js */ "./node_modules/date-fns/is_date/index.js")
+
+/**
+ * @category Common Helpers
+ * @summary Is the given date valid?
+ *
+ * @description
+ * Returns false if argument is Invalid Date and true otherwise.
+ * Invalid Date is a Date, whose time value is NaN.
+ *
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * @param {Date} date - the date to check
+ * @returns {Boolean} the date is valid
+ * @throws {TypeError} argument must be an instance of Date
+ *
+ * @example
+ * // For the valid date:
+ * var result = isValid(new Date(2014, 1, 31))
+ * //=> true
+ *
+ * @example
+ * // For the invalid date:
+ * var result = isValid(new Date(''))
+ * //=> false
+ */
+function isValid (dirtyDate) {
+  if (isDate(dirtyDate)) {
+    return !isNaN(dirtyDate)
+  } else {
+    throw new TypeError(toString.call(dirtyDate) + ' is not an instance of Date')
+  }
+}
+
+module.exports = isValid
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/locale/_lib/build_formatting_tokens_reg_exp/index.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/date-fns/locale/_lib/build_formatting_tokens_reg_exp/index.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var commonFormatterKeys = [
+  'M', 'MM', 'Q', 'D', 'DD', 'DDD', 'DDDD', 'd',
+  'E', 'W', 'WW', 'YY', 'YYYY', 'GG', 'GGGG',
+  'H', 'HH', 'h', 'hh', 'm', 'mm',
+  's', 'ss', 'S', 'SS', 'SSS',
+  'Z', 'ZZ', 'X', 'x'
+]
+
+function buildFormattingTokensRegExp (formatters) {
+  var formatterKeys = []
+  for (var key in formatters) {
+    if (formatters.hasOwnProperty(key)) {
+      formatterKeys.push(key)
+    }
+  }
+
+  var formattingTokens = commonFormatterKeys
+    .concat(formatterKeys)
+    .sort()
+    .reverse()
+  var formattingTokensRegExp = new RegExp(
+    '(\\[[^\\[]*\\])|(\\\\)?' + '(' + formattingTokens.join('|') + '|.)', 'g'
+  )
+
+  return formattingTokensRegExp
+}
+
+module.exports = buildFormattingTokensRegExp
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/locale/en/build_distance_in_words_locale/index.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/date-fns/locale/en/build_distance_in_words_locale/index.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function buildDistanceInWordsLocale () {
+  var distanceInWordsLocale = {
+    lessThanXSeconds: {
+      one: 'less than a second',
+      other: 'less than {{count}} seconds'
+    },
+
+    xSeconds: {
+      one: '1 second',
+      other: '{{count}} seconds'
+    },
+
+    halfAMinute: 'half a minute',
+
+    lessThanXMinutes: {
+      one: 'less than a minute',
+      other: 'less than {{count}} minutes'
+    },
+
+    xMinutes: {
+      one: '1 minute',
+      other: '{{count}} minutes'
+    },
+
+    aboutXHours: {
+      one: 'about 1 hour',
+      other: 'about {{count}} hours'
+    },
+
+    xHours: {
+      one: '1 hour',
+      other: '{{count}} hours'
+    },
+
+    xDays: {
+      one: '1 day',
+      other: '{{count}} days'
+    },
+
+    aboutXMonths: {
+      one: 'about 1 month',
+      other: 'about {{count}} months'
+    },
+
+    xMonths: {
+      one: '1 month',
+      other: '{{count}} months'
+    },
+
+    aboutXYears: {
+      one: 'about 1 year',
+      other: 'about {{count}} years'
+    },
+
+    xYears: {
+      one: '1 year',
+      other: '{{count}} years'
+    },
+
+    overXYears: {
+      one: 'over 1 year',
+      other: 'over {{count}} years'
+    },
+
+    almostXYears: {
+      one: 'almost 1 year',
+      other: 'almost {{count}} years'
+    }
+  }
+
+  function localize (token, count, options) {
+    options = options || {}
+
+    var result
+    if (typeof distanceInWordsLocale[token] === 'string') {
+      result = distanceInWordsLocale[token]
+    } else if (count === 1) {
+      result = distanceInWordsLocale[token].one
+    } else {
+      result = distanceInWordsLocale[token].other.replace('{{count}}', count)
+    }
+
+    if (options.addSuffix) {
+      if (options.comparison > 0) {
+        return 'in ' + result
+      } else {
+        return result + ' ago'
+      }
+    }
+
+    return result
+  }
+
+  return {
+    localize: localize
+  }
+}
+
+module.exports = buildDistanceInWordsLocale
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/locale/en/build_format_locale/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/date-fns/locale/en/build_format_locale/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var buildFormattingTokensRegExp = __webpack_require__(/*! ../../_lib/build_formatting_tokens_reg_exp/index.js */ "./node_modules/date-fns/locale/_lib/build_formatting_tokens_reg_exp/index.js")
+
+function buildFormatLocale () {
+  // Note: in English, the names of days of the week and months are capitalized.
+  // If you are making a new locale based on this one, check if the same is true for the language you're working on.
+  // Generally, formatted dates should look like they are in the middle of a sentence,
+  // e.g. in Spanish language the weekdays and months should be in the lowercase.
+  var months3char = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  var monthsFull = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  var weekdays2char = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  var weekdays3char = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  var weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  var meridiemUppercase = ['AM', 'PM']
+  var meridiemLowercase = ['am', 'pm']
+  var meridiemFull = ['a.m.', 'p.m.']
+
+  var formatters = {
+    // Month: Jan, Feb, ..., Dec
+    'MMM': function (date) {
+      return months3char[date.getMonth()]
+    },
+
+    // Month: January, February, ..., December
+    'MMMM': function (date) {
+      return monthsFull[date.getMonth()]
+    },
+
+    // Day of week: Su, Mo, ..., Sa
+    'dd': function (date) {
+      return weekdays2char[date.getDay()]
+    },
+
+    // Day of week: Sun, Mon, ..., Sat
+    'ddd': function (date) {
+      return weekdays3char[date.getDay()]
+    },
+
+    // Day of week: Sunday, Monday, ..., Saturday
+    'dddd': function (date) {
+      return weekdaysFull[date.getDay()]
+    },
+
+    // AM, PM
+    'A': function (date) {
+      return (date.getHours() / 12) >= 1 ? meridiemUppercase[1] : meridiemUppercase[0]
+    },
+
+    // am, pm
+    'a': function (date) {
+      return (date.getHours() / 12) >= 1 ? meridiemLowercase[1] : meridiemLowercase[0]
+    },
+
+    // a.m., p.m.
+    'aa': function (date) {
+      return (date.getHours() / 12) >= 1 ? meridiemFull[1] : meridiemFull[0]
+    }
+  }
+
+  // Generate ordinal version of formatters: M -> Mo, D -> Do, etc.
+  var ordinalFormatters = ['M', 'D', 'DDD', 'd', 'Q', 'W']
+  ordinalFormatters.forEach(function (formatterToken) {
+    formatters[formatterToken + 'o'] = function (date, formatters) {
+      return ordinal(formatters[formatterToken](date))
+    }
+  })
+
+  return {
+    formatters: formatters,
+    formattingTokensRegExp: buildFormattingTokensRegExp(formatters)
+  }
+}
+
+function ordinal (number) {
+  var rem100 = number % 100
+  if (rem100 > 20 || rem100 < 10) {
+    switch (rem100 % 10) {
+      case 1:
+        return number + 'st'
+      case 2:
+        return number + 'nd'
+      case 3:
+        return number + 'rd'
+    }
+  }
+  return number + 'th'
+}
+
+module.exports = buildFormatLocale
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/locale/en/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/date-fns/locale/en/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var buildDistanceInWordsLocale = __webpack_require__(/*! ./build_distance_in_words_locale/index.js */ "./node_modules/date-fns/locale/en/build_distance_in_words_locale/index.js")
+var buildFormatLocale = __webpack_require__(/*! ./build_format_locale/index.js */ "./node_modules/date-fns/locale/en/build_format_locale/index.js")
+
+/**
+ * @category Locales
+ * @summary English locale.
+ */
+module.exports = {
+  distanceInWords: buildDistanceInWordsLocale(),
+  format: buildFormatLocale()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/parse/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/date-fns/parse/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getTimezoneOffsetInMilliseconds = __webpack_require__(/*! ../_lib/getTimezoneOffsetInMilliseconds/index.js */ "./node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds/index.js")
+var isDate = __webpack_require__(/*! ../is_date/index.js */ "./node_modules/date-fns/is_date/index.js")
+
+var MILLISECONDS_IN_HOUR = 3600000
+var MILLISECONDS_IN_MINUTE = 60000
+var DEFAULT_ADDITIONAL_DIGITS = 2
+
+var parseTokenDateTimeDelimeter = /[T ]/
+var parseTokenPlainTime = /:/
+
+// year tokens
+var parseTokenYY = /^(\d{2})$/
+var parseTokensYYY = [
+  /^([+-]\d{2})$/, // 0 additional digits
+  /^([+-]\d{3})$/, // 1 additional digit
+  /^([+-]\d{4})$/ // 2 additional digits
+]
+
+var parseTokenYYYY = /^(\d{4})/
+var parseTokensYYYYY = [
+  /^([+-]\d{4})/, // 0 additional digits
+  /^([+-]\d{5})/, // 1 additional digit
+  /^([+-]\d{6})/ // 2 additional digits
+]
+
+// date tokens
+var parseTokenMM = /^-(\d{2})$/
+var parseTokenDDD = /^-?(\d{3})$/
+var parseTokenMMDD = /^-?(\d{2})-?(\d{2})$/
+var parseTokenWww = /^-?W(\d{2})$/
+var parseTokenWwwD = /^-?W(\d{2})-?(\d{1})$/
+
+// time tokens
+var parseTokenHH = /^(\d{2}([.,]\d*)?)$/
+var parseTokenHHMM = /^(\d{2}):?(\d{2}([.,]\d*)?)$/
+var parseTokenHHMMSS = /^(\d{2}):?(\d{2}):?(\d{2}([.,]\d*)?)$/
+
+// timezone tokens
+var parseTokenTimezone = /([Z+-].*)$/
+var parseTokenTimezoneZ = /^(Z)$/
+var parseTokenTimezoneHH = /^([+-])(\d{2})$/
+var parseTokenTimezoneHHMM = /^([+-])(\d{2}):?(\d{2})$/
+
+/**
+ * @category Common Helpers
+ * @summary Convert the given argument to an instance of Date.
+ *
+ * @description
+ * Convert the given argument to an instance of Date.
+ *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If an argument is a string, the function tries to parse it.
+ * Function accepts complete ISO 8601 formats as well as partial implementations.
+ * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
+ *
+ * If all above fails, the function passes the given argument to Date constructor.
+ *
+ * @param {Date|String|Number} argument - the value to convert
+ * @param {Object} [options] - the object with options
+ * @param {0 | 1 | 2} [options.additionalDigits=2] - the additional number of digits in the extended year format
+ * @returns {Date} the parsed date in the local time zone
+ *
+ * @example
+ * // Convert string '2014-02-11T11:30:30' to date:
+ * var result = parse('2014-02-11T11:30:30')
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Parse string '+02014101',
+ * // if the additional number of digits in the extended year format is 1:
+ * var result = parse('+02014101', {additionalDigits: 1})
+ * //=> Fri Apr 11 2014 00:00:00
+ */
+function parse (argument, dirtyOptions) {
+  if (isDate(argument)) {
+    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
+    return new Date(argument.getTime())
+  } else if (typeof argument !== 'string') {
+    return new Date(argument)
+  }
+
+  var options = dirtyOptions || {}
+  var additionalDigits = options.additionalDigits
+  if (additionalDigits == null) {
+    additionalDigits = DEFAULT_ADDITIONAL_DIGITS
+  } else {
+    additionalDigits = Number(additionalDigits)
+  }
+
+  var dateStrings = splitDateString(argument)
+
+  var parseYearResult = parseYear(dateStrings.date, additionalDigits)
+  var year = parseYearResult.year
+  var restDateString = parseYearResult.restDateString
+
+  var date = parseDate(restDateString, year)
+
+  if (date) {
+    var timestamp = date.getTime()
+    var time = 0
+    var offset
+
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time)
+    }
+
+    if (dateStrings.timezone) {
+      offset = parseTimezone(dateStrings.timezone) * MILLISECONDS_IN_MINUTE
+    } else {
+      var fullTime = timestamp + time
+      var fullTimeDate = new Date(fullTime)
+
+      offset = getTimezoneOffsetInMilliseconds(fullTimeDate)
+
+      // Adjust time when it's coming from DST
+      var fullTimeDateNextDay = new Date(fullTime)
+      fullTimeDateNextDay.setDate(fullTimeDate.getDate() + 1)
+      var offsetDiff =
+        getTimezoneOffsetInMilliseconds(fullTimeDateNextDay) -
+        getTimezoneOffsetInMilliseconds(fullTimeDate)
+      if (offsetDiff > 0) {
+        offset += offsetDiff
+      }
+    }
+
+    return new Date(timestamp + time + offset)
+  } else {
+    return new Date(argument)
+  }
+}
+
+function splitDateString (dateString) {
+  var dateStrings = {}
+  var array = dateString.split(parseTokenDateTimeDelimeter)
+  var timeString
+
+  if (parseTokenPlainTime.test(array[0])) {
+    dateStrings.date = null
+    timeString = array[0]
+  } else {
+    dateStrings.date = array[0]
+    timeString = array[1]
+  }
+
+  if (timeString) {
+    var token = parseTokenTimezone.exec(timeString)
+    if (token) {
+      dateStrings.time = timeString.replace(token[1], '')
+      dateStrings.timezone = token[1]
+    } else {
+      dateStrings.time = timeString
+    }
+  }
+
+  return dateStrings
+}
+
+function parseYear (dateString, additionalDigits) {
+  var parseTokenYYY = parseTokensYYY[additionalDigits]
+  var parseTokenYYYYY = parseTokensYYYYY[additionalDigits]
+
+  var token
+
+  // YYYY or ±YYYYY
+  token = parseTokenYYYY.exec(dateString) || parseTokenYYYYY.exec(dateString)
+  if (token) {
+    var yearString = token[1]
+    return {
+      year: parseInt(yearString, 10),
+      restDateString: dateString.slice(yearString.length)
+    }
+  }
+
+  // YY or ±YYY
+  token = parseTokenYY.exec(dateString) || parseTokenYYY.exec(dateString)
+  if (token) {
+    var centuryString = token[1]
+    return {
+      year: parseInt(centuryString, 10) * 100,
+      restDateString: dateString.slice(centuryString.length)
+    }
+  }
+
+  // Invalid ISO-formatted year
+  return {
+    year: null
+  }
+}
+
+function parseDate (dateString, year) {
+  // Invalid ISO-formatted year
+  if (year === null) {
+    return null
+  }
+
+  var token
+  var date
+  var month
+  var week
+
+  // YYYY
+  if (dateString.length === 0) {
+    date = new Date(0)
+    date.setUTCFullYear(year)
+    return date
+  }
+
+  // YYYY-MM
+  token = parseTokenMM.exec(dateString)
+  if (token) {
+    date = new Date(0)
+    month = parseInt(token[1], 10) - 1
+    date.setUTCFullYear(year, month)
+    return date
+  }
+
+  // YYYY-DDD or YYYYDDD
+  token = parseTokenDDD.exec(dateString)
+  if (token) {
+    date = new Date(0)
+    var dayOfYear = parseInt(token[1], 10)
+    date.setUTCFullYear(year, 0, dayOfYear)
+    return date
+  }
+
+  // YYYY-MM-DD or YYYYMMDD
+  token = parseTokenMMDD.exec(dateString)
+  if (token) {
+    date = new Date(0)
+    month = parseInt(token[1], 10) - 1
+    var day = parseInt(token[2], 10)
+    date.setUTCFullYear(year, month, day)
+    return date
+  }
+
+  // YYYY-Www or YYYYWww
+  token = parseTokenWww.exec(dateString)
+  if (token) {
+    week = parseInt(token[1], 10) - 1
+    return dayOfISOYear(year, week)
+  }
+
+  // YYYY-Www-D or YYYYWwwD
+  token = parseTokenWwwD.exec(dateString)
+  if (token) {
+    week = parseInt(token[1], 10) - 1
+    var dayOfWeek = parseInt(token[2], 10) - 1
+    return dayOfISOYear(year, week, dayOfWeek)
+  }
+
+  // Invalid ISO-formatted date
+  return null
+}
+
+function parseTime (timeString) {
+  var token
+  var hours
+  var minutes
+
+  // hh
+  token = parseTokenHH.exec(timeString)
+  if (token) {
+    hours = parseFloat(token[1].replace(',', '.'))
+    return (hours % 24) * MILLISECONDS_IN_HOUR
+  }
+
+  // hh:mm or hhmm
+  token = parseTokenHHMM.exec(timeString)
+  if (token) {
+    hours = parseInt(token[1], 10)
+    minutes = parseFloat(token[2].replace(',', '.'))
+    return (hours % 24) * MILLISECONDS_IN_HOUR +
+      minutes * MILLISECONDS_IN_MINUTE
+  }
+
+  // hh:mm:ss or hhmmss
+  token = parseTokenHHMMSS.exec(timeString)
+  if (token) {
+    hours = parseInt(token[1], 10)
+    minutes = parseInt(token[2], 10)
+    var seconds = parseFloat(token[3].replace(',', '.'))
+    return (hours % 24) * MILLISECONDS_IN_HOUR +
+      minutes * MILLISECONDS_IN_MINUTE +
+      seconds * 1000
+  }
+
+  // Invalid ISO-formatted time
+  return null
+}
+
+function parseTimezone (timezoneString) {
+  var token
+  var absoluteOffset
+
+  // Z
+  token = parseTokenTimezoneZ.exec(timezoneString)
+  if (token) {
+    return 0
+  }
+
+  // ±hh
+  token = parseTokenTimezoneHH.exec(timezoneString)
+  if (token) {
+    absoluteOffset = parseInt(token[2], 10) * 60
+    return (token[1] === '+') ? -absoluteOffset : absoluteOffset
+  }
+
+  // ±hh:mm or ±hhmm
+  token = parseTokenTimezoneHHMM.exec(timezoneString)
+  if (token) {
+    absoluteOffset = parseInt(token[2], 10) * 60 + parseInt(token[3], 10)
+    return (token[1] === '+') ? -absoluteOffset : absoluteOffset
+  }
+
+  return 0
+}
+
+function dayOfISOYear (isoYear, week, day) {
+  week = week || 0
+  day = day || 0
+  var date = new Date(0)
+  date.setUTCFullYear(isoYear, 0, 4)
+  var fourthOfJanuaryDay = date.getUTCDay() || 7
+  var diff = week * 7 + day + 1 - fourthOfJanuaryDay
+  date.setUTCDate(date.getUTCDate() + diff)
+  return date
+}
+
+module.exports = parse
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_day/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/date-fns/start_of_day/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Day Helpers
+ * @summary Return the start of a day for the given date.
+ *
+ * @description
+ * Return the start of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the start of a day
+ *
+ * @example
+ * // The start of a day for 2 September 2014 11:55:00:
+ * var result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 00:00:00
+ */
+function startOfDay (dirtyDate) {
+  var date = parse(dirtyDate)
+  date.setHours(0, 0, 0, 0)
+  return date
+}
+
+module.exports = startOfDay
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_iso_week/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/date-fns/start_of_iso_week/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var startOfWeek = __webpack_require__(/*! ../start_of_week/index.js */ "./node_modules/date-fns/start_of_week/index.js")
+
+/**
+ * @category ISO Week Helpers
+ * @summary Return the start of an ISO week for the given date.
+ *
+ * @description
+ * Return the start of an ISO week for the given date.
+ * The result will be in the local timezone.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the start of an ISO week
+ *
+ * @example
+ * // The start of an ISO week for 2 September 2014 11:55:00:
+ * var result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfISOWeek (dirtyDate) {
+  return startOfWeek(dirtyDate, {weekStartsOn: 1})
+}
+
+module.exports = startOfISOWeek
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_iso_year/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/date-fns/start_of_iso_year/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getISOYear = __webpack_require__(/*! ../get_iso_year/index.js */ "./node_modules/date-fns/get_iso_year/index.js")
+var startOfISOWeek = __webpack_require__(/*! ../start_of_iso_week/index.js */ "./node_modules/date-fns/start_of_iso_week/index.js")
+
+/**
+ * @category ISO Week-Numbering Year Helpers
+ * @summary Return the start of an ISO week-numbering year for the given date.
+ *
+ * @description
+ * Return the start of an ISO week-numbering year,
+ * which always starts 3 days before the year's first Thursday.
+ * The result will be in the local timezone.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the start of an ISO year
+ *
+ * @example
+ * // The start of an ISO week-numbering year for 2 July 2005:
+ * var result = startOfISOYear(new Date(2005, 6, 2))
+ * //=> Mon Jan 03 2005 00:00:00
+ */
+function startOfISOYear (dirtyDate) {
+  var year = getISOYear(dirtyDate)
+  var fourthOfJanuary = new Date(0)
+  fourthOfJanuary.setFullYear(year, 0, 4)
+  fourthOfJanuary.setHours(0, 0, 0, 0)
+  var date = startOfISOWeek(fourthOfJanuary)
+  return date
+}
+
+module.exports = startOfISOYear
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_month/index.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/date-fns/start_of_month/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the start of a month
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * var result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth (dirtyDate) {
+  var date = parse(dirtyDate)
+  date.setDate(1)
+  date.setHours(0, 0, 0, 0)
+  return date
+}
+
+module.exports = startOfMonth
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_week/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/date-fns/start_of_week/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Week Helpers
+ * @summary Return the start of a week for the given date.
+ *
+ * @description
+ * Return the start of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Object} [options] - the object with options
+ * @param {Number} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @returns {Date} the start of a week
+ *
+ * @example
+ * // The start of a week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sun Aug 31 2014 00:00:00
+ *
+ * @example
+ * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfWeek (dirtyDate, dirtyOptions) {
+  var weekStartsOn = dirtyOptions ? (Number(dirtyOptions.weekStartsOn) || 0) : 0
+
+  var date = parse(dirtyDate)
+  var day = date.getDay()
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn
+
+  date.setDate(date.getDate() - diff)
+  date.setHours(0, 0, 0, 0)
+  return date
+}
+
+module.exports = startOfWeek
+
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/start_of_year/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/date-fns/start_of_year/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ../parse/index.js */ "./node_modules/date-fns/parse/index.js")
+
+/**
+ * @category Year Helpers
+ * @summary Return the start of a year for the given date.
+ *
+ * @description
+ * Return the start of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @returns {Date} the start of a year
+ *
+ * @example
+ * // The start of a year for 2 September 2014 11:55:00:
+ * var result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+ * //=> Wed Jan 01 2014 00:00:00
+ */
+function startOfYear (dirtyDate) {
+  var cleanDate = parse(dirtyDate)
+  var date = new Date(0)
+  date.setFullYear(cleanDate.getFullYear(), 0, 1)
+  date.setHours(0, 0, 0, 0)
+  return date
+}
+
+module.exports = startOfYear
 
 
 /***/ }),
@@ -37363,6 +41126,7712 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 
 /***/ }),
 
+/***/ "./node_modules/luxon/build/cjs-browser/luxon.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/luxon/build/cjs-browser/luxon.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _construct(Parent, args, Class) {
+  if (isNativeReflectConstruct()) {
+    _construct = Reflect.construct;
+  } else {
+    _construct = function _construct(Parent, args, Class) {
+      var a = [null];
+      a.push.apply(a, args);
+      var Constructor = Function.bind.apply(Parent, a);
+      var instance = new Constructor();
+      if (Class) _setPrototypeOf(instance, Class.prototype);
+      return instance;
+    };
+  }
+
+  return _construct.apply(null, arguments);
+}
+
+function _isNativeFunction(fn) {
+  return Function.toString.call(fn).indexOf("[native code]") !== -1;
+}
+
+function _wrapNativeSuper(Class) {
+  var _cache = typeof Map === "function" ? new Map() : undefined;
+
+  _wrapNativeSuper = function _wrapNativeSuper(Class) {
+    if (Class === null || !_isNativeFunction(Class)) return Class;
+
+    if (typeof Class !== "function") {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    if (typeof _cache !== "undefined") {
+      if (_cache.has(Class)) return _cache.get(Class);
+
+      _cache.set(Class, Wrapper);
+    }
+
+    function Wrapper() {
+      return _construct(Class, arguments, _getPrototypeOf(this).constructor);
+    }
+
+    Wrapper.prototype = Object.create(Class.prototype, {
+      constructor: {
+        value: Wrapper,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    return _setPrototypeOf(Wrapper, Class);
+  };
+
+  return _wrapNativeSuper(Class);
+}
+
+/*
+  This is just a junk drawer, containing anything used across multiple classes.
+  Because Luxon is small(ish), this should stay small and we won't worry about splitting
+  it up into, say, parsingUtil.js and basicUtil.js and so on. But they are divided up by feature area.
+*/
+
+/**
+ * @private
+ */
+// TYPES
+function isUndefined(o) {
+  return typeof o === "undefined";
+}
+function isNumber(o) {
+  return typeof o === "number";
+}
+function isString(o) {
+  return typeof o === "string";
+}
+function isDate(o) {
+  return Object.prototype.toString.call(o) === "[object Date]";
+} // CAPABILITIES
+
+function hasIntl() {
+  return typeof Intl !== "undefined" && Intl.DateTimeFormat;
+}
+function hasFormatToParts() {
+  return !isUndefined(Intl.DateTimeFormat.prototype.formatToParts);
+}
+function hasRelative() {
+  return typeof Intl !== "undefined" && !!Intl.RelativeTimeFormat;
+} // OBJECTS AND ARRAYS
+
+function maybeArray(thing) {
+  return Array.isArray(thing) ? thing : [thing];
+}
+function bestBy(arr, by, compare) {
+  if (arr.length === 0) {
+    return undefined;
+  }
+
+  return arr.reduce(function (best, next) {
+    var pair = [by(next), next];
+
+    if (!best) {
+      return pair;
+    } else if (compare(best[0], pair[0]) === best[0]) {
+      return best;
+    } else {
+      return pair;
+    }
+  }, null)[1];
+}
+function pick(obj, keys) {
+  return keys.reduce(function (a, k) {
+    a[k] = obj[k];
+    return a;
+  }, {});
+} // NUMBERS AND STRINGS
+
+function numberBetween(thing, bottom, top) {
+  return isNumber(thing) && thing >= bottom && thing <= top;
+} // x % n but takes the sign of n instead of x
+
+function floorMod(x, n) {
+  return x - n * Math.floor(x / n);
+}
+function padStart(input, n) {
+  if (n === void 0) {
+    n = 2;
+  }
+
+  if (input.toString().length < n) {
+    return ("0".repeat(n) + input).slice(-n);
+  } else {
+    return input.toString();
+  }
+}
+function parseMillis(fraction) {
+  if (isUndefined(fraction)) {
+    return NaN;
+  } else {
+    var f = parseFloat("0." + fraction) * 1000;
+    return Math.floor(f);
+  }
+}
+function roundTo(number, digits, towardZero) {
+  if (towardZero === void 0) {
+    towardZero = false;
+  }
+
+  var factor = Math.pow(10, digits),
+      rounder = towardZero ? Math.trunc : Math.round;
+  return rounder(number * factor) / factor;
+} // DATE BASICS
+
+function isLeapYear(year) {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+function daysInYear(year) {
+  return isLeapYear(year) ? 366 : 365;
+}
+function daysInMonth(year, month) {
+  var modMonth = floorMod(month - 1, 12) + 1,
+      modYear = year + (month - modMonth) / 12;
+
+  if (modMonth === 2) {
+    return isLeapYear(modYear) ? 29 : 28;
+  } else {
+    return [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][modMonth - 1];
+  }
+} // covert a calendar object to a local timestamp (epoch, but with the offset baked in)
+
+function objToLocalTS(obj) {
+  var d = Date.UTC(obj.year, obj.month - 1, obj.day, obj.hour, obj.minute, obj.second, obj.millisecond); // for legacy reasons, years between 0 and 99 are interpreted as 19XX; revert that
+
+  if (obj.year < 100 && obj.year >= 0) {
+    d = new Date(d);
+    d.setUTCFullYear(d.getUTCFullYear() - 1900);
+  }
+
+  return +d;
+}
+function weeksInWeekYear(weekYear) {
+  var p1 = (weekYear + Math.floor(weekYear / 4) - Math.floor(weekYear / 100) + Math.floor(weekYear / 400)) % 7,
+      last = weekYear - 1,
+      p2 = (last + Math.floor(last / 4) - Math.floor(last / 100) + Math.floor(last / 400)) % 7;
+  return p1 === 4 || p2 === 3 ? 53 : 52;
+}
+function untruncateYear(year) {
+  if (year > 99) {
+    return year;
+  } else return year > 60 ? 1900 + year : 2000 + year;
+} // PARSING
+
+function parseZoneInfo(ts, offsetFormat, locale, timeZone) {
+  if (timeZone === void 0) {
+    timeZone = null;
+  }
+
+  var date = new Date(ts),
+      intlOpts = {
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  };
+
+  if (timeZone) {
+    intlOpts.timeZone = timeZone;
+  }
+
+  var modified = Object.assign({
+    timeZoneName: offsetFormat
+  }, intlOpts),
+      intl = hasIntl();
+
+  if (intl && hasFormatToParts()) {
+    var parsed = new Intl.DateTimeFormat(locale, modified).formatToParts(date).find(function (m) {
+      return m.type.toLowerCase() === "timezonename";
+    });
+    return parsed ? parsed.value : null;
+  } else if (intl) {
+    // this probably doesn't work for all locales
+    var without = new Intl.DateTimeFormat(locale, intlOpts).format(date),
+        included = new Intl.DateTimeFormat(locale, modified).format(date),
+        diffed = included.substring(without.length),
+        trimmed = diffed.replace(/^[, \u200e]+/, "");
+    return trimmed;
+  } else {
+    return null;
+  }
+} // signedOffset('-5', '30') -> -330
+
+function signedOffset(offHourStr, offMinuteStr) {
+  var offHour = parseInt(offHourStr, 10) || 0,
+      offMin = parseInt(offMinuteStr, 10) || 0,
+      offMinSigned = offHour < 0 ? -offMin : offMin;
+  return offHour * 60 + offMinSigned;
+} // COERCION
+
+function normalizeObject(obj, normalizer, ignoreUnknown) {
+  if (ignoreUnknown === void 0) {
+    ignoreUnknown = false;
+  }
+
+  var normalized = {};
+
+  for (var u in obj) {
+    if (obj.hasOwnProperty(u)) {
+      var v = obj[u];
+      var numericValue = Number(v);
+
+      if (v !== null && !Number.isNaN(numericValue)) {
+        var mapped = normalizer(u, ignoreUnknown);
+
+        if (mapped) {
+          normalized[mapped] = numericValue;
+        }
+      }
+    }
+  }
+
+  return normalized;
+}
+function timeObject(obj) {
+  return pick(obj, ["hour", "minute", "second", "millisecond"]);
+}
+var ianaRegex = /[A-Za-z_+-]{1,256}(:?\/[A-Za-z_+-]{1,256}(\/[A-Za-z_+-]{1,256})?)?/;
+
+/**
+ * @private
+ */
+var n = "numeric",
+    s = "short",
+    l = "long",
+    d2 = "2-digit";
+var DATE_SHORT = {
+  year: n,
+  month: n,
+  day: n
+};
+var DATE_MED = {
+  year: n,
+  month: s,
+  day: n
+};
+var DATE_FULL = {
+  year: n,
+  month: l,
+  day: n
+};
+var DATE_HUGE = {
+  year: n,
+  month: l,
+  day: n,
+  weekday: l
+};
+var TIME_SIMPLE = {
+  hour: n,
+  minute: d2
+};
+var TIME_WITH_SECONDS = {
+  hour: n,
+  minute: d2,
+  second: d2
+};
+var TIME_WITH_SHORT_OFFSET = {
+  hour: n,
+  minute: d2,
+  second: d2,
+  timeZoneName: s
+};
+var TIME_WITH_LONG_OFFSET = {
+  hour: n,
+  minute: d2,
+  second: d2,
+  timeZoneName: l
+};
+var TIME_24_SIMPLE = {
+  hour: n,
+  minute: d2,
+  hour12: false
+};
+/**
+ * {@link toLocaleString}; format like '09:30:23', always 24-hour.
+ */
+
+var TIME_24_WITH_SECONDS = {
+  hour: n,
+  minute: d2,
+  second: d2,
+  hour12: false
+};
+/**
+ * {@link toLocaleString}; format like '09:30:23 EDT', always 24-hour.
+ */
+
+var TIME_24_WITH_SHORT_OFFSET = {
+  hour: n,
+  minute: d2,
+  second: d2,
+  hour12: false,
+  timeZoneName: s
+};
+/**
+ * {@link toLocaleString}; format like '09:30:23 Eastern Daylight Time', always 24-hour.
+ */
+
+var TIME_24_WITH_LONG_OFFSET = {
+  hour: n,
+  minute: d2,
+  second: d2,
+  hour12: false,
+  timeZoneName: l
+};
+/**
+ * {@link toLocaleString}; format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.
+ */
+
+var DATETIME_SHORT = {
+  year: n,
+  month: n,
+  day: n,
+  hour: n,
+  minute: d2
+};
+/**
+ * {@link toLocaleString}; format like '10/14/1983, 9:30:33 AM'. Only 12-hour if the locale is.
+ */
+
+var DATETIME_SHORT_WITH_SECONDS = {
+  year: n,
+  month: n,
+  day: n,
+  hour: n,
+  minute: d2,
+  second: d2
+};
+var DATETIME_MED = {
+  year: n,
+  month: s,
+  day: n,
+  hour: n,
+  minute: d2
+};
+var DATETIME_MED_WITH_SECONDS = {
+  year: n,
+  month: s,
+  day: n,
+  hour: n,
+  minute: d2,
+  second: d2
+};
+var DATETIME_FULL = {
+  year: n,
+  month: l,
+  day: n,
+  hour: n,
+  minute: d2,
+  timeZoneName: s
+};
+var DATETIME_FULL_WITH_SECONDS = {
+  year: n,
+  month: l,
+  day: n,
+  hour: n,
+  minute: d2,
+  second: d2,
+  timeZoneName: s
+};
+var DATETIME_HUGE = {
+  year: n,
+  month: l,
+  day: n,
+  weekday: l,
+  hour: n,
+  minute: d2,
+  timeZoneName: l
+};
+var DATETIME_HUGE_WITH_SECONDS = {
+  year: n,
+  month: l,
+  day: n,
+  weekday: l,
+  hour: n,
+  minute: d2,
+  second: d2,
+  timeZoneName: l
+};
+
+function stringify(obj) {
+  return JSON.stringify(obj, Object.keys(obj).sort());
+}
+/**
+ * @private
+ */
+
+
+var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var monthsShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var monthsNarrow = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+function months(length) {
+  switch (length) {
+    case "narrow":
+      return monthsNarrow;
+
+    case "short":
+      return monthsShort;
+
+    case "long":
+      return monthsLong;
+
+    case "numeric":
+      return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+
+    case "2-digit":
+      return ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+
+    default:
+      return null;
+  }
+}
+var weekdaysLong = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+var weekdaysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+var weekdaysNarrow = ["M", "T", "W", "T", "F", "S", "S"];
+function weekdays(length) {
+  switch (length) {
+    case "narrow":
+      return weekdaysNarrow;
+
+    case "short":
+      return weekdaysShort;
+
+    case "long":
+      return weekdaysLong;
+
+    case "numeric":
+      return ["1", "2", "3", "4", "5", "6", "7"];
+
+    default:
+      return null;
+  }
+}
+var meridiems = ["AM", "PM"];
+var erasLong = ["Before Christ", "Anno Domini"];
+var erasShort = ["BC", "AD"];
+var erasNarrow = ["B", "A"];
+function eras(length) {
+  switch (length) {
+    case "narrow":
+      return erasNarrow;
+
+    case "short":
+      return erasShort;
+
+    case "long":
+      return erasLong;
+
+    default:
+      return null;
+  }
+}
+function meridiemForDateTime(dt) {
+  return meridiems[dt.hour < 12 ? 0 : 1];
+}
+function weekdayForDateTime(dt, length) {
+  return weekdays(length)[dt.weekday - 1];
+}
+function monthForDateTime(dt, length) {
+  return months(length)[dt.month - 1];
+}
+function eraForDateTime(dt, length) {
+  return eras(length)[dt.year < 0 ? 0 : 1];
+}
+function formatRelativeTime(unit, count, numeric, narrow) {
+  if (numeric === void 0) {
+    numeric = "always";
+  }
+
+  if (narrow === void 0) {
+    narrow = false;
+  }
+
+  var units = {
+    years: ["year", "yr."],
+    quarters: ["quarer", "qtr."],
+    months: ["month", "mo."],
+    weeks: ["week", "wk."],
+    days: ["day", "day"],
+    hours: ["hour", "hr."],
+    minutes: ["minute", "min."],
+    seconds: ["second", "sec."]
+  };
+  var lastable = ["hours", "minutes", "seconds"].indexOf(unit) === -1;
+
+  if (numeric === "auto" && lastable) {
+    var isDay = unit === "days";
+
+    switch (count) {
+      case 1:
+        return isDay ? "tomorrow" : "next " + units[unit][0];
+
+      case -1:
+        return isDay ? "yesterday" : "last " + units[unit][0];
+
+      case 0:
+        return isDay ? "today" : "this " + units[unit][0];
+
+      default: // fall through
+
+    }
+  }
+
+  var isInPast = Object.is(count, -0) || count < 0,
+      fmtValue = Math.abs(count),
+      fmtUnit = narrow ? units[unit][1] : fmtValue === 1 ? units[unit][0] : unit;
+  return isInPast ? fmtValue + " " + fmtUnit + " ago" : "in " + fmtValue + " " + fmtUnit;
+}
+function formatString(knownFormat) {
+  // these all have the offsets removed because we don't have access to them
+  // without all the intl stuff this is backfilling
+  var filtered = pick(knownFormat, ["weekday", "era", "year", "month", "day", "hour", "minute", "second", "timeZoneName", "hour12"]),
+      key = stringify(filtered),
+      dateTimeHuge = "EEEE, LLLL d, yyyy, h:mm a";
+
+  switch (key) {
+    case stringify(DATE_SHORT):
+      return "M/d/yyyy";
+
+    case stringify(DATE_MED):
+      return "LLL d, yyyy";
+
+    case stringify(DATE_FULL):
+      return "LLLL d, yyyy";
+
+    case stringify(DATE_HUGE):
+      return "EEEE, LLLL d, yyyy";
+
+    case stringify(TIME_SIMPLE):
+      return "h:mm a";
+
+    case stringify(TIME_WITH_SECONDS):
+      return "h:mm:ss a";
+
+    case stringify(TIME_WITH_SHORT_OFFSET):
+      return "h:mm a";
+
+    case stringify(TIME_WITH_LONG_OFFSET):
+      return "h:mm a";
+
+    case stringify(TIME_24_SIMPLE):
+      return "HH:mm";
+
+    case stringify(TIME_24_WITH_SECONDS):
+      return "HH:mm:ss";
+
+    case stringify(TIME_24_WITH_SHORT_OFFSET):
+      return "HH:mm";
+
+    case stringify(TIME_24_WITH_LONG_OFFSET):
+      return "HH:mm";
+
+    case stringify(DATETIME_SHORT):
+      return "M/d/yyyy, h:mm a";
+
+    case stringify(DATETIME_MED):
+      return "LLL d, yyyy, h:mm a";
+
+    case stringify(DATETIME_FULL):
+      return "LLLL d, yyyy, h:mm a";
+
+    case stringify(DATETIME_HUGE):
+      return dateTimeHuge;
+
+    case stringify(DATETIME_SHORT_WITH_SECONDS):
+      return "M/d/yyyy, h:mm:ss a";
+
+    case stringify(DATETIME_MED_WITH_SECONDS):
+      return "LLL d, yyyy, h:mm:ss a";
+
+    case stringify(DATETIME_FULL_WITH_SECONDS):
+      return "LLLL d, yyyy, h:mm:ss a";
+
+    case stringify(DATETIME_HUGE_WITH_SECONDS):
+      return "EEEE, LLLL d, yyyy, h:mm:ss a";
+
+    default:
+      return dateTimeHuge;
+  }
+}
+
+// these aren't really private, but nor are they really useful to document
+
+/**
+ * @private
+ */
+var LuxonError =
+/*#__PURE__*/
+function (_Error) {
+  _inheritsLoose(LuxonError, _Error);
+
+  function LuxonError() {
+    return _Error.apply(this, arguments) || this;
+  }
+
+  return LuxonError;
+}(_wrapNativeSuper(Error));
+/**
+ * @private
+ */
+
+
+var InvalidDateTimeError =
+/*#__PURE__*/
+function (_LuxonError) {
+  _inheritsLoose(InvalidDateTimeError, _LuxonError);
+
+  function InvalidDateTimeError(reason) {
+    return _LuxonError.call(this, "Invalid DateTime: " + reason.toMessage()) || this;
+  }
+
+  return InvalidDateTimeError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var InvalidIntervalError =
+/*#__PURE__*/
+function (_LuxonError2) {
+  _inheritsLoose(InvalidIntervalError, _LuxonError2);
+
+  function InvalidIntervalError(reason) {
+    return _LuxonError2.call(this, "Invalid Interval: " + reason.toMessage()) || this;
+  }
+
+  return InvalidIntervalError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var InvalidDurationError =
+/*#__PURE__*/
+function (_LuxonError3) {
+  _inheritsLoose(InvalidDurationError, _LuxonError3);
+
+  function InvalidDurationError(reason) {
+    return _LuxonError3.call(this, "Invalid Duration: " + reason.toMessage()) || this;
+  }
+
+  return InvalidDurationError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var ConflictingSpecificationError =
+/*#__PURE__*/
+function (_LuxonError4) {
+  _inheritsLoose(ConflictingSpecificationError, _LuxonError4);
+
+  function ConflictingSpecificationError() {
+    return _LuxonError4.apply(this, arguments) || this;
+  }
+
+  return ConflictingSpecificationError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var InvalidUnitError =
+/*#__PURE__*/
+function (_LuxonError5) {
+  _inheritsLoose(InvalidUnitError, _LuxonError5);
+
+  function InvalidUnitError(unit) {
+    return _LuxonError5.call(this, "Invalid unit " + unit) || this;
+  }
+
+  return InvalidUnitError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var InvalidArgumentError =
+/*#__PURE__*/
+function (_LuxonError6) {
+  _inheritsLoose(InvalidArgumentError, _LuxonError6);
+
+  function InvalidArgumentError() {
+    return _LuxonError6.apply(this, arguments) || this;
+  }
+
+  return InvalidArgumentError;
+}(LuxonError);
+/**
+ * @private
+ */
+
+var ZoneIsAbstractError =
+/*#__PURE__*/
+function (_LuxonError7) {
+  _inheritsLoose(ZoneIsAbstractError, _LuxonError7);
+
+  function ZoneIsAbstractError() {
+    return _LuxonError7.call(this, "Zone is an abstract class") || this;
+  }
+
+  return ZoneIsAbstractError;
+}(LuxonError);
+
+/**
+ * @interface
+ */
+
+var Zone =
+/*#__PURE__*/
+function () {
+  function Zone() {}
+
+  var _proto = Zone.prototype;
+
+  /**
+   * Returns the offset's common name (such as EST) at the specified timestamp
+   * @abstract
+   * @param {number} ts - Epoch milliseconds for which to get the name
+   * @param {Object} opts - Options to affect the format
+   * @param {string} opts.format - What style of offset to return. Accepts 'long' or 'short'.
+   * @param {string} opts.locale - What locale to return the offset name in.
+   * @return {string}
+   */
+  _proto.offsetName = function offsetName(ts, opts) {
+    throw new ZoneIsAbstractError();
+  };
+  /**
+   * Return the offset in minutes for this zone at the specified timestamp.
+   * @abstract
+   * @param {number} ts - Epoch milliseconds for which to compute the offset
+   * @return {number}
+   */
+
+
+  _proto.offset = function offset(ts) {
+    throw new ZoneIsAbstractError();
+  };
+  /**
+   * Return whether this Zone is equal to another zone
+   * @abstract
+   * @param {Zone} otherZone - the zone to compare
+   * @return {boolean}
+   */
+
+
+  _proto.equals = function equals(otherZone) {
+    throw new ZoneIsAbstractError();
+  };
+  /**
+   * Return whether this Zone is valid.
+   * @abstract
+   * @type {boolean}
+   */
+
+
+  _createClass(Zone, [{
+    key: "type",
+
+    /**
+     * The type of zone
+     * @abstract
+     * @type {string}
+     */
+    get: function get() {
+      throw new ZoneIsAbstractError();
+    }
+    /**
+     * The name of this zone.
+     * @abstract
+     * @type {string}
+     */
+
+  }, {
+    key: "name",
+    get: function get() {
+      throw new ZoneIsAbstractError();
+    }
+    /**
+     * Returns whether the offset is known to be fixed for the whole year.
+     * @abstract
+     * @type {boolean}
+     */
+
+  }, {
+    key: "universal",
+    get: function get() {
+      throw new ZoneIsAbstractError();
+    }
+  }, {
+    key: "isValid",
+    get: function get() {
+      throw new ZoneIsAbstractError();
+    }
+  }]);
+
+  return Zone;
+}();
+
+var singleton = null;
+
+var LocalZone =
+/*#__PURE__*/
+function (_Zone) {
+  _inheritsLoose(LocalZone, _Zone);
+
+  function LocalZone() {
+    return _Zone.apply(this, arguments) || this;
+  }
+
+  var _proto = LocalZone.prototype;
+
+  _proto.offsetName = function offsetName(ts, _ref) {
+    var format = _ref.format,
+        locale = _ref.locale;
+    return parseZoneInfo(ts, format, locale);
+  };
+
+  _proto.offset = function offset(ts) {
+    return -new Date(ts).getTimezoneOffset();
+  };
+
+  _proto.equals = function equals(otherZone) {
+    return otherZone.type === "local";
+  };
+
+  _createClass(LocalZone, [{
+    key: "type",
+    get: function get() {
+      return "local";
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      if (hasIntl()) {
+        return new Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } else return "local";
+    }
+  }, {
+    key: "universal",
+    get: function get() {
+      return false;
+    }
+  }, {
+    key: "isValid",
+    get: function get() {
+      return true;
+    }
+  }], [{
+    key: "instance",
+    get: function get() {
+      if (singleton === null) {
+        singleton = new LocalZone();
+      }
+
+      return singleton;
+    }
+  }]);
+
+  return LocalZone;
+}(Zone);
+
+var matchingRegex = RegExp("^" + ianaRegex.source + "$");
+var dtfCache = {};
+
+function makeDTF(zone) {
+  if (!dtfCache[zone]) {
+    dtfCache[zone] = new Intl.DateTimeFormat("en-US", {
+      hour12: false,
+      timeZone: zone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
+
+  return dtfCache[zone];
+}
+
+var typeToPos = {
+  year: 0,
+  month: 1,
+  day: 2,
+  hour: 3,
+  minute: 4,
+  second: 5
+};
+
+function hackyOffset(dtf, date) {
+  var formatted = dtf.format(date).replace(/\u200E/g, ""),
+      parsed = /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+)/.exec(formatted),
+      fMonth = parsed[1],
+      fDay = parsed[2],
+      fYear = parsed[3],
+      fHour = parsed[4],
+      fMinute = parsed[5],
+      fSecond = parsed[6];
+  return [fYear, fMonth, fDay, fHour, fMinute, fSecond];
+}
+
+function partsOffset(dtf, date) {
+  var formatted = dtf.formatToParts(date),
+      filled = [];
+
+  for (var i = 0; i < formatted.length; i++) {
+    var _formatted$i = formatted[i],
+        type = _formatted$i.type,
+        value = _formatted$i.value,
+        pos = typeToPos[type];
+
+    if (!isUndefined(pos)) {
+      filled[pos] = parseInt(value, 10);
+    }
+  }
+
+  return filled;
+}
+
+var IANAZone =
+/*#__PURE__*/
+function (_Zone) {
+  _inheritsLoose(IANAZone, _Zone);
+
+  IANAZone.isValidSpecifier = function isValidSpecifier(s) {
+    return s && s.match(matchingRegex);
+  };
+
+  IANAZone.isValidZone = function isValidZone(zone) {
+    try {
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: zone
+      }).format();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }; // Etc/GMT+8 -> -480
+
+
+  IANAZone.parseGMTOffset = function parseGMTOffset(specifier) {
+    if (specifier) {
+      var match = specifier.match(/^Etc\/GMT([+-]\d{1,2})$/i);
+
+      if (match) {
+        return -60 * parseInt(match[1]);
+      }
+    }
+
+    return null;
+  };
+
+  function IANAZone(name) {
+    var _this;
+
+    _this = _Zone.call(this) || this;
+    _this.zoneName = name;
+    _this.valid = IANAZone.isValidZone(name);
+    return _this;
+  }
+
+  var _proto = IANAZone.prototype;
+
+  _proto.offsetName = function offsetName(ts, _ref) {
+    var format = _ref.format,
+        locale = _ref.locale;
+    return parseZoneInfo(ts, format, locale, this.zoneName);
+  };
+
+  _proto.offset = function offset(ts) {
+    var date = new Date(ts),
+        dtf = makeDTF(this.zoneName),
+        _ref2 = dtf.formatToParts ? partsOffset(dtf, date) : hackyOffset(dtf, date),
+        year = _ref2[0],
+        month = _ref2[1],
+        day = _ref2[2],
+        hour = _ref2[3],
+        minute = _ref2[4],
+        second = _ref2[5];
+
+    var asUTC = objToLocalTS({
+      year: year,
+      month: month,
+      day: day,
+      hour: hour,
+      minute: minute,
+      second: second,
+      millisecond: 0
+    });
+    var asTS = date.valueOf();
+    asTS -= asTS % 1000;
+    return (asUTC - asTS) / (60 * 1000);
+  };
+
+  _proto.equals = function equals(otherZone) {
+    return otherZone.type === "iana" && otherZone.zoneName === this.zoneName;
+  };
+
+  _createClass(IANAZone, [{
+    key: "type",
+    get: function get() {
+      return "iana";
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.zoneName;
+    }
+  }, {
+    key: "universal",
+    get: function get() {
+      return false;
+    }
+  }, {
+    key: "isValid",
+    get: function get() {
+      return this.valid;
+    }
+  }]);
+
+  return IANAZone;
+}(Zone);
+
+var singleton$1 = null;
+
+function hoursMinutesOffset(z) {
+  var hours = Math.trunc(z.fixed / 60),
+      minutes = Math.abs(z.fixed % 60),
+      sign = hours > 0 ? "+" : "-",
+      base = sign + Math.abs(hours);
+  return minutes > 0 ? base + ":" + padStart(minutes, 2) : base;
+}
+
+var FixedOffsetZone =
+/*#__PURE__*/
+function (_Zone) {
+  _inheritsLoose(FixedOffsetZone, _Zone);
+
+  FixedOffsetZone.instance = function instance(offset) {
+    return offset === 0 ? FixedOffsetZone.utcInstance : new FixedOffsetZone(offset);
+  };
+
+  FixedOffsetZone.parseSpecifier = function parseSpecifier(s) {
+    if (s) {
+      var r = s.match(/^utc(?:([+-]\d{1,2})(?::(\d{2}))?)?$/i);
+
+      if (r) {
+        return new FixedOffsetZone(signedOffset(r[1], r[2]));
+      }
+    }
+
+    return null;
+  };
+
+  _createClass(FixedOffsetZone, null, [{
+    key: "utcInstance",
+    get: function get() {
+      if (singleton$1 === null) {
+        singleton$1 = new FixedOffsetZone(0);
+      }
+
+      return singleton$1;
+    }
+  }]);
+
+  function FixedOffsetZone(offset) {
+    var _this;
+
+    _this = _Zone.call(this) || this;
+    _this.fixed = offset;
+    return _this;
+  }
+
+  var _proto = FixedOffsetZone.prototype;
+
+  _proto.offsetName = function offsetName() {
+    return this.name;
+  };
+
+  _proto.offset = function offset() {
+    return this.fixed;
+  };
+
+  _proto.equals = function equals(otherZone) {
+    return otherZone.type === "fixed" && otherZone.fixed === this.fixed;
+  };
+
+  _createClass(FixedOffsetZone, [{
+    key: "type",
+    get: function get() {
+      return "fixed";
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.fixed === 0 ? "UTC" : "UTC" + hoursMinutesOffset(this);
+    }
+  }, {
+    key: "universal",
+    get: function get() {
+      return true;
+    }
+  }, {
+    key: "isValid",
+    get: function get() {
+      return true;
+    }
+  }]);
+
+  return FixedOffsetZone;
+}(Zone);
+
+var InvalidZone =
+/*#__PURE__*/
+function (_Zone) {
+  _inheritsLoose(InvalidZone, _Zone);
+
+  function InvalidZone(zoneName) {
+    var _this;
+
+    _this = _Zone.call(this) || this;
+    _this.zoneName = zoneName;
+    return _this;
+  }
+
+  var _proto = InvalidZone.prototype;
+
+  _proto.offsetName = function offsetName() {
+    return null;
+  };
+
+  _proto.offset = function offset() {
+    return NaN;
+  };
+
+  _proto.equals = function equals() {
+    return false;
+  };
+
+  _createClass(InvalidZone, [{
+    key: "type",
+    get: function get() {
+      return "invalid";
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.zoneName;
+    }
+  }, {
+    key: "universal",
+    get: function get() {
+      return false;
+    }
+  }, {
+    key: "isValid",
+    get: function get() {
+      return false;
+    }
+  }]);
+
+  return InvalidZone;
+}(Zone);
+
+/**
+ * @private
+ */
+function normalizeZone(input, defaultZone) {
+  var offset;
+
+  if (isUndefined(input) || input === null) {
+    return defaultZone;
+  } else if (input instanceof Zone) {
+    return input;
+  } else if (isString(input)) {
+    var lowered = input.toLowerCase();
+    if (lowered === "local") return LocalZone.instance;else if (lowered === "utc" || lowered === "gmt") return FixedOffsetZone.utcInstance;else if ((offset = IANAZone.parseGMTOffset(input)) != null) {
+      // handle Etc/GMT-4, which V8 chokes on
+      return FixedOffsetZone.instance(offset);
+    } else if (IANAZone.isValidSpecifier(lowered)) return new IANAZone(input);else return FixedOffsetZone.parseSpecifier(lowered) || new InvalidZone(input);
+  } else if (isNumber(input)) {
+    return FixedOffsetZone.instance(input);
+  } else if (typeof input === "object" && input.offset && typeof input.offset === "number") {
+    // This is dumb, but the instanceof check above doesn't seem to really work
+    // so we're duck checking it
+    return input;
+  } else {
+    return new InvalidZone(input);
+  }
+}
+
+var now = function now() {
+  return Date.now();
+},
+    defaultZone = null,
+    // not setting this directly to LocalZone.instance bc loading order issues
+defaultLocale = null,
+    defaultNumberingSystem = null,
+    defaultOutputCalendar = null,
+    throwOnInvalid = false;
+/**
+ * Settings contains static getters and setters that control Luxon's overall behavior. Luxon is a simple library with few options, but the ones it does have live here.
+ */
+
+
+var Settings =
+/*#__PURE__*/
+function () {
+  function Settings() {}
+
+  /**
+   * Reset Luxon's global caches. Should only be necessary in testing scenarios.
+   * @return {void}
+   */
+  Settings.resetCaches = function resetCaches() {
+    Locale.resetCache();
+  };
+
+  _createClass(Settings, null, [{
+    key: "now",
+
+    /**
+     * Get the callback for returning the current timestamp.
+     * @type {function}
+     */
+    get: function get() {
+      return now;
+    }
+    /**
+     * Set the callback for returning the current timestamp.
+     * The function should return a number, which will be interpreted as an Epoch millisecond count
+     * @type {function}
+     * @example Settings.now = () => Date.now() + 3000 // pretend it is 3 seconds in the future
+     * @example Settings.now = () => 0 // always pretend it's Jan 1, 1970 at midnight in UTC time
+     */
+    ,
+    set: function set(n) {
+      now = n;
+    }
+    /**
+     * Get the default time zone to create DateTimes in.
+     * @type {string}
+     */
+
+  }, {
+    key: "defaultZoneName",
+    get: function get() {
+      return (defaultZone || LocalZone.instance).name;
+    }
+    /**
+     * Set the default time zone to create DateTimes in. Does not affect existing instances.
+     * @type {string}
+     */
+    ,
+    set: function set(z) {
+      if (!z) {
+        defaultZone = null;
+      } else {
+        defaultZone = normalizeZone(z);
+      }
+    }
+    /**
+     * Get the default time zone object to create DateTimes in. Does not affect existing instances.
+     * @type {Zone}
+     */
+
+  }, {
+    key: "defaultZone",
+    get: function get() {
+      return defaultZone || LocalZone.instance;
+    }
+    /**
+     * Get the default locale to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+
+  }, {
+    key: "defaultLocale",
+    get: function get() {
+      return defaultLocale;
+    }
+    /**
+     * Set the default locale to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+    ,
+    set: function set(locale) {
+      defaultLocale = locale;
+    }
+    /**
+     * Get the default numbering system to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+
+  }, {
+    key: "defaultNumberingSystem",
+    get: function get() {
+      return defaultNumberingSystem;
+    }
+    /**
+     * Set the default numbering system to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+    ,
+    set: function set(numberingSystem) {
+      defaultNumberingSystem = numberingSystem;
+    }
+    /**
+     * Get the default output calendar to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+
+  }, {
+    key: "defaultOutputCalendar",
+    get: function get() {
+      return defaultOutputCalendar;
+    }
+    /**
+     * Set the default output calendar to create DateTimes with. Does not affect existing instances.
+     * @type {string}
+     */
+    ,
+    set: function set(outputCalendar) {
+      defaultOutputCalendar = outputCalendar;
+    }
+    /**
+     * Get whether Luxon will throw when it encounters invalid DateTimes, Durations, or Intervals
+     * @type {boolean}
+     */
+
+  }, {
+    key: "throwOnInvalid",
+    get: function get() {
+      return throwOnInvalid;
+    }
+    /**
+     * Set whether Luxon will throw when it encounters invalid DateTimes, Durations, or Intervals
+     * @type {boolean}
+     */
+    ,
+    set: function set(t) {
+      throwOnInvalid = t;
+    }
+  }]);
+
+  return Settings;
+}();
+
+function stringifyTokens(splits, tokenToString) {
+  var s = "";
+
+  for (var _iterator = splits, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref;
+
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref = _i.value;
+    }
+
+    var token = _ref;
+
+    if (token.literal) {
+      s += token.val;
+    } else {
+      s += tokenToString(token.val);
+    }
+  }
+
+  return s;
+}
+
+var tokenToObject = {
+  D: DATE_SHORT,
+  DD: DATE_MED,
+  DDD: DATE_FULL,
+  DDDD: DATE_HUGE,
+  t: TIME_SIMPLE,
+  tt: TIME_WITH_SECONDS,
+  ttt: TIME_WITH_SHORT_OFFSET,
+  tttt: TIME_WITH_LONG_OFFSET,
+  T: TIME_24_SIMPLE,
+  TT: TIME_24_WITH_SECONDS,
+  TTT: TIME_24_WITH_SHORT_OFFSET,
+  TTTT: TIME_24_WITH_LONG_OFFSET,
+  f: DATETIME_SHORT,
+  ff: DATETIME_MED,
+  fff: DATETIME_FULL,
+  ffff: DATETIME_HUGE,
+  F: DATETIME_SHORT_WITH_SECONDS,
+  FF: DATETIME_MED_WITH_SECONDS,
+  FFF: DATETIME_FULL_WITH_SECONDS,
+  FFFF: DATETIME_HUGE_WITH_SECONDS
+};
+/**
+ * @private
+ */
+
+var Formatter =
+/*#__PURE__*/
+function () {
+  Formatter.create = function create(locale, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return new Formatter(locale, opts);
+  };
+
+  Formatter.parseFormat = function parseFormat(fmt) {
+    var current = null,
+        currentFull = "",
+        bracketed = false;
+    var splits = [];
+
+    for (var i = 0; i < fmt.length; i++) {
+      var c = fmt.charAt(i);
+
+      if (c === "'") {
+        if (currentFull.length > 0) {
+          splits.push({
+            literal: bracketed,
+            val: currentFull
+          });
+        }
+
+        current = null;
+        currentFull = "";
+        bracketed = !bracketed;
+      } else if (bracketed) {
+        currentFull += c;
+      } else if (c === current) {
+        currentFull += c;
+      } else {
+        if (currentFull.length > 0) {
+          splits.push({
+            literal: false,
+            val: currentFull
+          });
+        }
+
+        currentFull = c;
+        current = c;
+      }
+    }
+
+    if (currentFull.length > 0) {
+      splits.push({
+        literal: bracketed,
+        val: currentFull
+      });
+    }
+
+    return splits;
+  };
+
+  function Formatter(locale, formatOpts) {
+    this.opts = formatOpts;
+    this.loc = locale;
+    this.systemLoc = null;
+  }
+
+  var _proto = Formatter.prototype;
+
+  _proto.formatWithSystemDefault = function formatWithSystemDefault(dt, opts) {
+    if (this.systemLoc === null) {
+      this.systemLoc = this.loc.redefaultToSystem();
+    }
+
+    var df = this.systemLoc.dtFormatter(dt, Object.assign({}, this.opts, opts));
+    return df.format();
+  };
+
+  _proto.formatDateTime = function formatDateTime(dt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var df = this.loc.dtFormatter(dt, Object.assign({}, this.opts, opts));
+    return df.format();
+  };
+
+  _proto.formatDateTimeParts = function formatDateTimeParts(dt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var df = this.loc.dtFormatter(dt, Object.assign({}, this.opts, opts));
+    return df.formatToParts();
+  };
+
+  _proto.resolvedOptions = function resolvedOptions(dt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var df = this.loc.dtFormatter(dt, Object.assign({}, this.opts, opts));
+    return df.resolvedOptions();
+  };
+
+  _proto.num = function num(n, p) {
+    if (p === void 0) {
+      p = 0;
+    }
+
+    // we get some perf out of doing this here, annoyingly
+    if (this.opts.forceSimple) {
+      return padStart(n, p);
+    }
+
+    var opts = Object.assign({}, this.opts);
+
+    if (p > 0) {
+      opts.padTo = p;
+    }
+
+    return this.loc.numberFormatter(opts).format(n);
+  };
+
+  _proto.formatDateTimeFromString = function formatDateTimeFromString(dt, fmt) {
+    var _this = this;
+
+    var knownEnglish = this.loc.listingMode() === "en";
+
+    var string = function string(opts, extract) {
+      return _this.loc.extract(dt, opts, extract);
+    },
+        formatOffset = function formatOffset(opts) {
+      if (dt.isOffsetFixed && dt.offset === 0 && opts.allowZ) {
+        return "Z";
+      }
+
+      var hours = Math.trunc(dt.offset / 60),
+          minutes = Math.abs(dt.offset % 60),
+          sign = hours >= 0 ? "+" : "-",
+          base = "" + sign + Math.abs(hours);
+
+      switch (opts.format) {
+        case "short":
+          return "" + sign + _this.num(Math.abs(hours), 2) + ":" + _this.num(minutes, 2);
+
+        case "narrow":
+          return minutes > 0 ? base + ":" + minutes : base;
+
+        case "techie":
+          return "" + sign + _this.num(Math.abs(hours), 2) + _this.num(minutes, 2);
+
+        default:
+          throw new RangeError("Value format " + opts.format + " is out of range for property format");
+      }
+    },
+        meridiem = function meridiem() {
+      return knownEnglish ? meridiemForDateTime(dt) : string({
+        hour: "numeric",
+        hour12: true
+      }, "dayperiod");
+    },
+        month = function month(length, standalone) {
+      return knownEnglish ? monthForDateTime(dt, length) : string(standalone ? {
+        month: length
+      } : {
+        month: length,
+        day: "numeric"
+      }, "month");
+    },
+        weekday = function weekday(length, standalone) {
+      return knownEnglish ? weekdayForDateTime(dt, length) : string(standalone ? {
+        weekday: length
+      } : {
+        weekday: length,
+        month: "long",
+        day: "numeric"
+      }, "weekday");
+    },
+        maybeMacro = function maybeMacro(token) {
+      var macro = tokenToObject[token];
+
+      if (macro) {
+        return _this.formatWithSystemDefault(dt, macro);
+      } else {
+        return token;
+      }
+    },
+        era = function era(length) {
+      return knownEnglish ? eraForDateTime(dt, length) : string({
+        era: length
+      }, "era");
+    },
+        tokenToString = function tokenToString(token) {
+      var outputCal = _this.loc.outputCalendar; // Where possible: http://cldr.unicode.org/translation/date-time#TOC-Stand-Alone-vs.-Format-Styles
+
+      switch (token) {
+        // ms
+        case "S":
+          return _this.num(dt.millisecond);
+
+        case "u": // falls through
+
+        case "SSS":
+          return _this.num(dt.millisecond, 3);
+        // seconds
+
+        case "s":
+          return _this.num(dt.second);
+
+        case "ss":
+          return _this.num(dt.second, 2);
+        // minutes
+
+        case "m":
+          return _this.num(dt.minute);
+
+        case "mm":
+          return _this.num(dt.minute, 2);
+        // hours
+
+        case "h":
+          return _this.num(dt.hour % 12 === 0 ? 12 : dt.hour % 12);
+
+        case "hh":
+          return _this.num(dt.hour % 12 === 0 ? 12 : dt.hour % 12, 2);
+
+        case "H":
+          return _this.num(dt.hour);
+
+        case "HH":
+          return _this.num(dt.hour, 2);
+        // offset
+
+        case "Z":
+          // like +6
+          return formatOffset({
+            format: "narrow",
+            allowZ: _this.opts.allowZ
+          });
+
+        case "ZZ":
+          // like +06:00
+          return formatOffset({
+            format: "short",
+            allowZ: _this.opts.allowZ
+          });
+
+        case "ZZZ":
+          // like +0600
+          return formatOffset({
+            format: "techie",
+            allowZ: false
+          });
+
+        case "ZZZZ":
+          // like EST
+          return dt.offsetNameShort;
+
+        case "ZZZZZ":
+          // like Eastern Standard Time
+          return dt.offsetNameLong;
+        // zone
+
+        case "z":
+          // like America/New_York
+          return dt.zoneName;
+        // meridiems
+
+        case "a":
+          return meridiem();
+        // dates
+
+        case "d":
+          return outputCal ? string({
+            day: "numeric"
+          }, "day") : _this.num(dt.day);
+
+        case "dd":
+          return outputCal ? string({
+            day: "2-digit"
+          }, "day") : _this.num(dt.day, 2);
+        // weekdays - standalone
+
+        case "c":
+          // like 1
+          return _this.num(dt.weekday);
+
+        case "ccc":
+          // like 'Tues'
+          return weekday("short", true);
+
+        case "cccc":
+          // like 'Tuesday'
+          return weekday("long", true);
+
+        case "ccccc":
+          // like 'T'
+          return weekday("narrow", true);
+        // weekdays - format
+
+        case "E":
+          // like 1
+          return _this.num(dt.weekday);
+
+        case "EEE":
+          // like 'Tues'
+          return weekday("short", false);
+
+        case "EEEE":
+          // like 'Tuesday'
+          return weekday("long", false);
+
+        case "EEEEE":
+          // like 'T'
+          return weekday("narrow", false);
+        // months - standalone
+
+        case "L":
+          // like 1
+          return outputCal ? string({
+            month: "numeric",
+            day: "numeric"
+          }, "month") : _this.num(dt.month);
+
+        case "LL":
+          // like 01, doesn't seem to work
+          return outputCal ? string({
+            month: "2-digit",
+            day: "numeric"
+          }, "month") : _this.num(dt.month, 2);
+
+        case "LLL":
+          // like Jan
+          return month("short", true);
+
+        case "LLLL":
+          // like January
+          return month("long", true);
+
+        case "LLLLL":
+          // like J
+          return month("narrow", true);
+        // months - format
+
+        case "M":
+          // like 1
+          return outputCal ? string({
+            month: "numeric"
+          }, "month") : _this.num(dt.month);
+
+        case "MM":
+          // like 01
+          return outputCal ? string({
+            month: "2-digit"
+          }, "month") : _this.num(dt.month, 2);
+
+        case "MMM":
+          // like Jan
+          return month("short", false);
+
+        case "MMMM":
+          // like January
+          return month("long", false);
+
+        case "MMMMM":
+          // like J
+          return month("narrow", false);
+        // years
+
+        case "y":
+          // like 2014
+          return outputCal ? string({
+            year: "numeric"
+          }, "year") : _this.num(dt.year);
+
+        case "yy":
+          // like 14
+          return outputCal ? string({
+            year: "2-digit"
+          }, "year") : _this.num(dt.year.toString().slice(-2), 2);
+
+        case "yyyy":
+          // like 0012
+          return outputCal ? string({
+            year: "numeric"
+          }, "year") : _this.num(dt.year, 4);
+
+        case "yyyyyy":
+          // like 000012
+          return outputCal ? string({
+            year: "numeric"
+          }, "year") : _this.num(dt.year, 6);
+        // eras
+
+        case "G":
+          // like AD
+          return era("short");
+
+        case "GG":
+          // like Anno Domini
+          return era("long");
+
+        case "GGGGG":
+          return era("narrow");
+
+        case "kk":
+          return _this.num(dt.weekYear.toString().slice(-2), 2);
+
+        case "kkkk":
+          return _this.num(dt.weekYear, 4);
+
+        case "W":
+          return _this.num(dt.weekNumber);
+
+        case "WW":
+          return _this.num(dt.weekNumber, 2);
+
+        case "o":
+          return _this.num(dt.ordinal);
+
+        case "ooo":
+          return _this.num(dt.ordinal, 3);
+
+        case "q":
+          // like 1
+          return _this.num(dt.quarter);
+
+        case "qq":
+          // like 01
+          return _this.num(dt.quarter, 2);
+
+        case "X":
+          return _this.num(Math.floor(dt.ts / 1000));
+
+        case "x":
+          return _this.num(dt.ts);
+
+        default:
+          return maybeMacro(token);
+      }
+    };
+
+    return stringifyTokens(Formatter.parseFormat(fmt), tokenToString);
+  };
+
+  _proto.formatDurationFromString = function formatDurationFromString(dur, fmt) {
+    var _this2 = this;
+
+    var tokenToField = function tokenToField(token) {
+      switch (token[0]) {
+        case "S":
+          return "millisecond";
+
+        case "s":
+          return "second";
+
+        case "m":
+          return "minute";
+
+        case "h":
+          return "hour";
+
+        case "d":
+          return "day";
+
+        case "M":
+          return "month";
+
+        case "y":
+          return "year";
+
+        default:
+          return null;
+      }
+    },
+        tokenToString = function tokenToString(lildur) {
+      return function (token) {
+        var mapped = tokenToField(token);
+
+        if (mapped) {
+          return _this2.num(lildur.get(mapped), token.length);
+        } else {
+          return token;
+        }
+      };
+    },
+        tokens = Formatter.parseFormat(fmt),
+        realTokens = tokens.reduce(function (found, _ref2) {
+      var literal = _ref2.literal,
+          val = _ref2.val;
+      return literal ? found : found.concat(val);
+    }, []),
+        collapsed = dur.shiftTo.apply(dur, realTokens.map(tokenToField).filter(function (t) {
+      return t;
+    }));
+
+    return stringifyTokens(tokens, tokenToString(collapsed));
+  };
+
+  return Formatter;
+}();
+
+var intlDTCache = {};
+
+function getCachedDTF(locString, opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+
+  var key = JSON.stringify([locString, opts]);
+  var dtf = intlDTCache[key];
+
+  if (!dtf) {
+    dtf = new Intl.DateTimeFormat(locString, opts);
+    intlDTCache[key] = dtf;
+  }
+
+  return dtf;
+}
+
+var intlNumCache = {};
+
+function getCachendINF(locString, opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+
+  var key = JSON.stringify([locString, opts]);
+  var inf = intlNumCache[key];
+
+  if (!inf) {
+    inf = new Intl.NumberFormat(locString, opts);
+    intlNumCache[key] = inf;
+  }
+
+  return inf;
+}
+
+var intlRelCache = {};
+
+function getCachendRTF(locString, opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+
+  var key = JSON.stringify([locString, opts]);
+  var inf = intlRelCache[key];
+
+  if (!inf) {
+    inf = new Intl.RelativeTimeFormat(locString, opts);
+    intlRelCache[key] = inf;
+  }
+
+  return inf;
+}
+
+var sysLocaleCache = null;
+
+function systemLocale() {
+  if (sysLocaleCache) {
+    return sysLocaleCache;
+  } else if (hasIntl()) {
+    var computedSys = new Intl.DateTimeFormat().resolvedOptions().locale; // node sometimes defaults to "und". Override that because that is dumb
+
+    sysLocaleCache = computedSys === "und" ? "en-US" : computedSys;
+    return sysLocaleCache;
+  } else {
+    sysLocaleCache = "en-US";
+    return sysLocaleCache;
+  }
+}
+
+function parseLocaleString(localeStr) {
+  // I really want to avoid writing a BCP 47 parser
+  // see, e.g. https://github.com/wooorm/bcp-47
+  // Instead, we'll do this:
+  // a) if the string has no -u extensions, just leave it alone
+  // b) if it does, use Intl to resolve everything
+  // c) if Intl fails, try again without the -u
+  var uIndex = localeStr.indexOf("-u-");
+
+  if (uIndex === -1) {
+    return [localeStr];
+  } else {
+    var options;
+    var smaller = localeStr.substring(0, uIndex);
+
+    try {
+      options = getCachedDTF(localeStr).resolvedOptions();
+    } catch (e) {
+      options = getCachedDTF(smaller).resolvedOptions();
+    }
+
+    var _options = options,
+        numberingSystem = _options.numberingSystem,
+        calendar = _options.calendar; // return the smaller one so that we can append the calendar and numbering overrides to it
+
+    return [smaller, numberingSystem, calendar];
+  }
+}
+
+function intlConfigString(localeStr, numberingSystem, outputCalendar) {
+  if (hasIntl()) {
+    if (outputCalendar || numberingSystem) {
+      localeStr += "-u";
+
+      if (outputCalendar) {
+        localeStr += "-ca-" + outputCalendar;
+      }
+
+      if (numberingSystem) {
+        localeStr += "-nu-" + numberingSystem;
+      }
+
+      return localeStr;
+    } else {
+      return localeStr;
+    }
+  } else {
+    return [];
+  }
+}
+
+function mapMonths(f) {
+  var ms = [];
+
+  for (var i = 1; i <= 12; i++) {
+    var dt = DateTime.utc(2016, i, 1);
+    ms.push(f(dt));
+  }
+
+  return ms;
+}
+
+function mapWeekdays(f) {
+  var ms = [];
+
+  for (var i = 1; i <= 7; i++) {
+    var dt = DateTime.utc(2016, 11, 13 + i);
+    ms.push(f(dt));
+  }
+
+  return ms;
+}
+
+function listStuff(loc, length, defaultOK, englishFn, intlFn) {
+  var mode = loc.listingMode(defaultOK);
+
+  if (mode === "error") {
+    return null;
+  } else if (mode === "en") {
+    return englishFn(length);
+  } else {
+    return intlFn(length);
+  }
+}
+
+function supportsFastNumbers(loc) {
+  if (loc.numberingSystem && loc.numberingSystem !== "latn") {
+    return false;
+  } else {
+    return loc.numberingSystem === "latn" || !loc.locale || loc.locale.startsWith("en") || hasIntl() && Intl.DateTimeFormat(loc.intl).resolvedOptions().numberingSystem === "latn";
+  }
+}
+/**
+ * @private
+ */
+
+
+var PolyeNumberFormatter =
+/*#__PURE__*/
+function () {
+  function PolyeNumberFormatter(intl, forceSimple, opts) {
+    this.padTo = opts.padTo || 0;
+    this.floor = opts.floor || false;
+
+    if (!forceSimple && hasIntl()) {
+      var intlOpts = {
+        useGrouping: false
+      };
+      if (opts.padTo > 0) intlOpts.minimumIntegerDigits = opts.padTo;
+      this.inf = getCachendINF(intl, intlOpts);
+    }
+  }
+
+  var _proto = PolyeNumberFormatter.prototype;
+
+  _proto.format = function format(i) {
+    if (this.inf) {
+      var fixed = this.floor ? Math.floor(i) : i;
+      return this.inf.format(fixed);
+    } else {
+      // to match the browser's numberformatter defaults
+      var _fixed = this.floor ? Math.floor(i) : roundTo(i, 3);
+
+      return padStart(_fixed, this.padTo);
+    }
+  };
+
+  return PolyeNumberFormatter;
+}();
+/**
+ * @private
+ */
+
+
+var PolyDateFormatter =
+/*#__PURE__*/
+function () {
+  function PolyDateFormatter(dt, intl, opts) {
+    this.opts = opts;
+    this.hasIntl = hasIntl();
+    var z;
+
+    if (dt.zone.universal && this.hasIntl) {
+      // Chromium doesn't support fixed-offset zones like Etc/GMT+8 in its formatter,
+      // See https://bugs.chromium.org/p/chromium/issues/detail?id=364374.
+      // So we have to make do. Two cases:
+      // 1. The format options tell us to show the zone. We can't do that, so the best
+      // we can do is format the date in UTC.
+      // 2. The format options don't tell us to show the zone. Then we can adjust them
+      // the time and tell the formatter to show it to us in UTC, so that the time is right
+      // and the bad zone doesn't show up.
+      // We can clean all this up when Chrome fixes this.
+      z = "UTC";
+
+      if (opts.timeZoneName) {
+        this.dt = dt;
+      } else {
+        this.dt = dt.offset === 0 ? dt : DateTime.fromMillis(dt.ts + dt.offset * 60 * 1000);
+      }
+    } else if (dt.zone.type === "local") {
+      this.dt = dt;
+    } else {
+      this.dt = dt;
+      z = dt.zone.name;
+    }
+
+    if (this.hasIntl) {
+      var intlOpts = Object.assign({}, this.opts);
+
+      if (z) {
+        intlOpts.timeZone = z;
+      }
+
+      this.dtf = getCachedDTF(intl, intlOpts);
+    }
+  }
+
+  var _proto2 = PolyDateFormatter.prototype;
+
+  _proto2.format = function format() {
+    if (this.hasIntl) {
+      return this.dtf.format(this.dt.toJSDate());
+    } else {
+      var tokenFormat = formatString(this.opts),
+          loc = Locale.create("en-US");
+      return Formatter.create(loc).formatDateTimeFromString(this.dt, tokenFormat);
+    }
+  };
+
+  _proto2.formatToParts = function formatToParts() {
+    if (this.hasIntl && hasFormatToParts()) {
+      return this.dtf.formatToParts(this.dt.toJSDate());
+    } else {
+      // This is kind of a cop out. We actually could do this for English. However, we couldn't do it for intl strings
+      // and IMO it's too weird to have an uncanny valley like that
+      return [];
+    }
+  };
+
+  _proto2.resolvedOptions = function resolvedOptions() {
+    if (this.hasIntl) {
+      return this.dtf.resolvedOptions();
+    } else {
+      return {
+        locale: "en-US",
+        numberingSystem: "latn",
+        outputCalendar: "gregory"
+      };
+    }
+  };
+
+  return PolyDateFormatter;
+}();
+/**
+ * @private
+ */
+
+
+var PolyRelFormatter =
+/*#__PURE__*/
+function () {
+  function PolyRelFormatter(intl, isEnglish, opts) {
+    this.opts = Object.assign({
+      style: "long"
+    }, opts);
+
+    if (!isEnglish && hasRelative()) {
+      this.rtf = getCachendRTF(intl, opts);
+    }
+  }
+
+  var _proto3 = PolyRelFormatter.prototype;
+
+  _proto3.format = function format(count, unit) {
+    if (this.rtf) {
+      return this.rtf.format(count, unit);
+    } else {
+      return formatRelativeTime(unit, count, this.opts.numeric, this.opts.style !== "long");
+    }
+  };
+
+  _proto3.formatToParts = function formatToParts(count, unit) {
+    if (this.rtf) {
+      return this.rtf.formatToParts(count, unit);
+    } else {
+      return [];
+    }
+  };
+
+  return PolyRelFormatter;
+}();
+/**
+ * @private
+ */
+
+
+var Locale =
+/*#__PURE__*/
+function () {
+  Locale.fromOpts = function fromOpts(opts) {
+    return Locale.create(opts.locale, opts.numberingSystem, opts.outputCalendar, opts.defaultToEN);
+  };
+
+  Locale.create = function create(locale, numberingSystem, outputCalendar, defaultToEN) {
+    if (defaultToEN === void 0) {
+      defaultToEN = false;
+    }
+
+    var specifiedLocale = locale || Settings.defaultLocale,
+        // the system locale is useful for human readable strings but annoying for parsing/formatting known formats
+    localeR = specifiedLocale || (defaultToEN ? "en-US" : systemLocale()),
+        numberingSystemR = numberingSystem || Settings.defaultNumberingSystem,
+        outputCalendarR = outputCalendar || Settings.defaultOutputCalendar;
+    return new Locale(localeR, numberingSystemR, outputCalendarR, specifiedLocale);
+  };
+
+  Locale.resetCache = function resetCache() {
+    sysLocaleCache = null;
+    intlDTCache = {};
+    intlNumCache = {};
+  };
+
+  Locale.fromObject = function fromObject(_temp) {
+    var _ref = _temp === void 0 ? {} : _temp,
+        locale = _ref.locale,
+        numberingSystem = _ref.numberingSystem,
+        outputCalendar = _ref.outputCalendar;
+
+    return Locale.create(locale, numberingSystem, outputCalendar);
+  };
+
+  function Locale(locale, numbering, outputCalendar, specifiedLocale) {
+    var _parseLocaleString = parseLocaleString(locale),
+        parsedLocale = _parseLocaleString[0],
+        parsedNumberingSystem = _parseLocaleString[1],
+        parsedOutputCalendar = _parseLocaleString[2];
+
+    this.locale = parsedLocale;
+    this.numberingSystem = numbering || parsedNumberingSystem || null;
+    this.outputCalendar = outputCalendar || parsedOutputCalendar || null;
+    this.intl = intlConfigString(this.locale, this.numberingSystem, this.outputCalendar);
+    this.weekdaysCache = {
+      format: {},
+      standalone: {}
+    };
+    this.monthsCache = {
+      format: {},
+      standalone: {}
+    };
+    this.meridiemCache = null;
+    this.eraCache = {};
+    this.specifiedLocale = specifiedLocale;
+    this.fastNumbersCached = null;
+  }
+
+  var _proto4 = Locale.prototype;
+
+  _proto4.listingMode = function listingMode(defaultOK) {
+    if (defaultOK === void 0) {
+      defaultOK = true;
+    }
+
+    var intl = hasIntl(),
+        hasFTP = intl && hasFormatToParts(),
+        isActuallyEn = this.isEnglish(),
+        hasNoWeirdness = (this.numberingSystem === null || this.numberingSystem === "latn") && (this.outputCalendar === null || this.outputCalendar === "gregory");
+
+    if (!hasFTP && !(isActuallyEn && hasNoWeirdness) && !defaultOK) {
+      return "error";
+    } else if (!hasFTP || isActuallyEn && hasNoWeirdness) {
+      return "en";
+    } else {
+      return "intl";
+    }
+  };
+
+  _proto4.clone = function clone(alts) {
+    if (!alts || Object.getOwnPropertyNames(alts).length === 0) {
+      return this;
+    } else {
+      return Locale.create(alts.locale || this.specifiedLocale, alts.numberingSystem || this.numberingSystem, alts.outputCalendar || this.outputCalendar, alts.defaultToEN || false);
+    }
+  };
+
+  _proto4.redefaultToEN = function redefaultToEN(alts) {
+    if (alts === void 0) {
+      alts = {};
+    }
+
+    return this.clone(Object.assign({}, alts, {
+      defaultToEN: true
+    }));
+  };
+
+  _proto4.redefaultToSystem = function redefaultToSystem(alts) {
+    if (alts === void 0) {
+      alts = {};
+    }
+
+    return this.clone(Object.assign({}, alts, {
+      defaultToEN: false
+    }));
+  };
+
+  _proto4.months = function months$$1(length, format, defaultOK) {
+    var _this = this;
+
+    if (format === void 0) {
+      format = false;
+    }
+
+    if (defaultOK === void 0) {
+      defaultOK = true;
+    }
+
+    return listStuff(this, length, defaultOK, months, function () {
+      var intl = format ? {
+        month: length,
+        day: "numeric"
+      } : {
+        month: length
+      },
+          formatStr = format ? "format" : "standalone";
+
+      if (!_this.monthsCache[formatStr][length]) {
+        _this.monthsCache[formatStr][length] = mapMonths(function (dt) {
+          return _this.extract(dt, intl, "month");
+        });
+      }
+
+      return _this.monthsCache[formatStr][length];
+    });
+  };
+
+  _proto4.weekdays = function weekdays$$1(length, format, defaultOK) {
+    var _this2 = this;
+
+    if (format === void 0) {
+      format = false;
+    }
+
+    if (defaultOK === void 0) {
+      defaultOK = true;
+    }
+
+    return listStuff(this, length, defaultOK, weekdays, function () {
+      var intl = format ? {
+        weekday: length,
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      } : {
+        weekday: length
+      },
+          formatStr = format ? "format" : "standalone";
+
+      if (!_this2.weekdaysCache[formatStr][length]) {
+        _this2.weekdaysCache[formatStr][length] = mapWeekdays(function (dt) {
+          return _this2.extract(dt, intl, "weekday");
+        });
+      }
+
+      return _this2.weekdaysCache[formatStr][length];
+    });
+  };
+
+  _proto4.meridiems = function meridiems$$1(defaultOK) {
+    var _this3 = this;
+
+    if (defaultOK === void 0) {
+      defaultOK = true;
+    }
+
+    return listStuff(this, undefined, defaultOK, function () {
+      return meridiems;
+    }, function () {
+      // In theory there could be aribitrary day periods. We're gonna assume there are exactly two
+      // for AM and PM. This is probably wrong, but it's makes parsing way easier.
+      if (!_this3.meridiemCache) {
+        var intl = {
+          hour: "numeric",
+          hour12: true
+        };
+        _this3.meridiemCache = [DateTime.utc(2016, 11, 13, 9), DateTime.utc(2016, 11, 13, 19)].map(function (dt) {
+          return _this3.extract(dt, intl, "dayperiod");
+        });
+      }
+
+      return _this3.meridiemCache;
+    });
+  };
+
+  _proto4.eras = function eras$$1(length, defaultOK) {
+    var _this4 = this;
+
+    if (defaultOK === void 0) {
+      defaultOK = true;
+    }
+
+    return listStuff(this, length, defaultOK, eras, function () {
+      var intl = {
+        era: length
+      }; // This is utter bullshit. Different calendars are going to define eras totally differently. What I need is the minimum set of dates
+      // to definitely enumerate them.
+
+      if (!_this4.eraCache[length]) {
+        _this4.eraCache[length] = [DateTime.utc(-40, 1, 1), DateTime.utc(2017, 1, 1)].map(function (dt) {
+          return _this4.extract(dt, intl, "era");
+        });
+      }
+
+      return _this4.eraCache[length];
+    });
+  };
+
+  _proto4.extract = function extract(dt, intlOpts, field) {
+    var df = this.dtFormatter(dt, intlOpts),
+        results = df.formatToParts(),
+        matching = results.find(function (m) {
+      return m.type.toLowerCase() === field;
+    });
+    return matching ? matching.value : null;
+  };
+
+  _proto4.numberFormatter = function numberFormatter(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    // this forcesimple option is never used (the only caller short-circuits on it, but it seems safer to leave)
+    // (in contrast, the rest of the condition is used heavily)
+    return new PolyeNumberFormatter(this.intl, opts.forceSimple || this.fastNumbers, opts);
+  };
+
+  _proto4.dtFormatter = function dtFormatter(dt, intlOpts) {
+    if (intlOpts === void 0) {
+      intlOpts = {};
+    }
+
+    return new PolyDateFormatter(dt, this.intl, intlOpts);
+  };
+
+  _proto4.relFormatter = function relFormatter(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return new PolyRelFormatter(this.intl, this.isEnglish(), opts);
+  };
+
+  _proto4.isEnglish = function isEnglish() {
+    return this.locale === "en" || this.locale.toLowerCase() === "en-us" || hasIntl() && Intl.DateTimeFormat(this.intl).resolvedOptions().locale.startsWith("en-us");
+  };
+
+  _proto4.equals = function equals(other) {
+    return this.locale === other.locale && this.numberingSystem === other.numberingSystem && this.outputCalendar === other.outputCalendar;
+  };
+
+  _createClass(Locale, [{
+    key: "fastNumbers",
+    get: function get() {
+      if (this.fastNumbersCached == null) {
+        this.fastNumbersCached = supportsFastNumbers(this);
+      }
+
+      return this.fastNumbersCached;
+    }
+  }]);
+
+  return Locale;
+}();
+
+/*
+ * This file handles parsing for well-specified formats. Here's how it works:
+ * Two things go into parsing: a regex to match with and an extractor to take apart the groups in the match.
+ * An extractor is just a function that takes a regex match array and returns a { year: ..., month: ... } object
+ * parse() does the work of executing the regex and applying the extractor. It takes multiple regex/extractor pairs to try in sequence.
+ * Extractors can take a "cursor" representing the offset in the match to look at. This makes it easy to combine extractors.
+ * combineExtractors() does the work of combining them, keeping track of the cursor through multiple extractions.
+ * Some extractions are super dumb and simpleParse and fromStrings help DRY them.
+ */
+
+function combineRegexes() {
+  for (var _len = arguments.length, regexes = new Array(_len), _key = 0; _key < _len; _key++) {
+    regexes[_key] = arguments[_key];
+  }
+
+  var full = regexes.reduce(function (f, r) {
+    return f + r.source;
+  }, "");
+  return RegExp("^" + full + "$");
+}
+
+function combineExtractors() {
+  for (var _len2 = arguments.length, extractors = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    extractors[_key2] = arguments[_key2];
+  }
+
+  return function (m) {
+    return extractors.reduce(function (_ref, ex) {
+      var mergedVals = _ref[0],
+          mergedZone = _ref[1],
+          cursor = _ref[2];
+
+      var _ex = ex(m, cursor),
+          val = _ex[0],
+          zone = _ex[1],
+          next = _ex[2];
+
+      return [Object.assign(mergedVals, val), mergedZone || zone, next];
+    }, [{}, null, 1]).slice(0, 2);
+  };
+}
+
+function parse(s) {
+  if (s == null) {
+    return [null, null];
+  }
+
+  for (var _len3 = arguments.length, patterns = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+    patterns[_key3 - 1] = arguments[_key3];
+  }
+
+  for (var _i = 0; _i < patterns.length; _i++) {
+    var _patterns$_i = patterns[_i],
+        regex = _patterns$_i[0],
+        extractor = _patterns$_i[1];
+    var m = regex.exec(s);
+
+    if (m) {
+      return extractor(m);
+    }
+  }
+
+  return [null, null];
+}
+
+function simpleParse() {
+  for (var _len4 = arguments.length, keys = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+    keys[_key4] = arguments[_key4];
+  }
+
+  return function (match, cursor) {
+    var ret = {};
+    var i;
+
+    for (i = 0; i < keys.length; i++) {
+      ret[keys[i]] = parseInt(match[cursor + i]);
+    }
+
+    return [ret, null, cursor + i];
+  };
+} // ISO and SQL parsing
+
+
+var offsetRegex = /(?:(Z)|([+-]\d\d)(?::?(\d\d))?)/,
+    isoTimeBaseRegex = /(\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d{1,9}))?)?)?/,
+    isoTimeRegex = RegExp("" + isoTimeBaseRegex.source + offsetRegex.source + "?"),
+    isoTimeExtensionRegex = RegExp("(?:T" + isoTimeRegex.source + ")?"),
+    isoYmdRegex = /([+-]\d{6}|\d{4})(?:-?(\d\d)(?:-?(\d\d))?)?/,
+    isoWeekRegex = /(\d{4})-?W(\d\d)(?:-?(\d))?/,
+    isoOrdinalRegex = /(\d{4})-?(\d{3})/,
+    extractISOWeekData = simpleParse("weekYear", "weekNumber", "weekDay"),
+    extractISOOrdinalData = simpleParse("year", "ordinal"),
+    sqlYmdRegex = /(\d{4})-(\d\d)-(\d\d)/,
+    // dumbed-down version of the ISO one
+sqlTimeRegex = RegExp(isoTimeBaseRegex.source + " ?(?:" + offsetRegex.source + "|(" + ianaRegex.source + "))?"),
+    sqlTimeExtensionRegex = RegExp("(?: " + sqlTimeRegex.source + ")?");
+
+function extractISOYmd(match, cursor) {
+  var item = {
+    year: parseInt(match[cursor]),
+    month: parseInt(match[cursor + 1]) || 1,
+    day: parseInt(match[cursor + 2]) || 1
+  };
+  return [item, null, cursor + 3];
+}
+
+function extractISOTime(match, cursor) {
+  var item = {
+    hour: parseInt(match[cursor]) || 0,
+    minute: parseInt(match[cursor + 1]) || 0,
+    second: parseInt(match[cursor + 2]) || 0,
+    millisecond: parseMillis(match[cursor + 3])
+  };
+  return [item, null, cursor + 4];
+}
+
+function extractISOOffset(match, cursor) {
+  var local = !match[cursor] && !match[cursor + 1],
+      fullOffset = signedOffset(match[cursor + 1], match[cursor + 2]),
+      zone = local ? null : FixedOffsetZone.instance(fullOffset);
+  return [{}, zone, cursor + 3];
+}
+
+function extractIANAZone(match, cursor) {
+  var zone = match[cursor] ? new IANAZone(match[cursor]) : null;
+  return [{}, zone, cursor + 1];
+} // ISO duration parsing
+
+
+var isoDuration = /^P(?:(?:(-?\d{1,9})Y)?(?:(-?\d{1,9})M)?(?:(-?\d{1,9})D)?(?:T(?:(-?\d{1,9})H)?(?:(-?\d{1,9})M)?(?:(-?\d{1,9})(?:[.,](-?\d{1,9}))?S)?)?|(-?\d{1,9})W)$/;
+
+function extractISODuration(match) {
+  var yearStr = match[1],
+      monthStr = match[2],
+      dayStr = match[3],
+      hourStr = match[4],
+      minuteStr = match[5],
+      secondStr = match[6],
+      millisecondsStr = match[7],
+      weekStr = match[8];
+  return [{
+    years: parseInt(yearStr),
+    months: parseInt(monthStr),
+    weeks: parseInt(weekStr),
+    days: parseInt(dayStr),
+    hours: parseInt(hourStr),
+    minutes: parseInt(minuteStr),
+    seconds: parseInt(secondStr),
+    milliseconds: parseMillis(millisecondsStr)
+  }];
+} // These are a little braindead. EDT *should* tell us that we're in, say, America/New_York
+// and not just that we're in -240 *right now*. But since I don't think these are used that often
+// I'm just going to ignore that
+
+
+var obsOffsets = {
+  GMT: 0,
+  EDT: -4 * 60,
+  EST: -5 * 60,
+  CDT: -5 * 60,
+  CST: -6 * 60,
+  MDT: -6 * 60,
+  MST: -7 * 60,
+  PDT: -7 * 60,
+  PST: -8 * 60
+};
+
+function fromStrings(weekdayStr, yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
+  var result = {
+    year: yearStr.length === 2 ? untruncateYear(parseInt(yearStr)) : parseInt(yearStr),
+    month: monthStr.length === 2 ? parseInt(monthStr, 10) : monthsShort.indexOf(monthStr) + 1,
+    day: parseInt(dayStr),
+    hour: parseInt(hourStr),
+    minute: parseInt(minuteStr)
+  };
+  if (secondStr) result.second = parseInt(secondStr);
+
+  if (weekdayStr) {
+    result.weekday = weekdayStr.length > 3 ? weekdaysLong.indexOf(weekdayStr) + 1 : weekdaysShort.indexOf(weekdayStr) + 1;
+  }
+
+  return result;
+} // RFC 2822/5322
+
+
+var rfc2822 = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|(?:([+-]\d\d)(\d\d)))$/;
+
+function extractRFC2822(match) {
+  var weekdayStr = match[1],
+      dayStr = match[2],
+      monthStr = match[3],
+      yearStr = match[4],
+      hourStr = match[5],
+      minuteStr = match[6],
+      secondStr = match[7],
+      obsOffset = match[8],
+      milOffset = match[9],
+      offHourStr = match[10],
+      offMinuteStr = match[11],
+      result = fromStrings(weekdayStr, yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr);
+  var offset;
+
+  if (obsOffset) {
+    offset = obsOffsets[obsOffset];
+  } else if (milOffset) {
+    offset = 0;
+  } else {
+    offset = signedOffset(offHourStr, offMinuteStr);
+  }
+
+  return [result, new FixedOffsetZone(offset)];
+}
+
+function preprocessRFC2822(s) {
+  // Remove comments and folding whitespace and replace multiple-spaces with a single space
+  return s.replace(/\([^)]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").trim();
+} // http date
+
+
+var rfc1123 = /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (\d\d) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d\d):(\d\d):(\d\d) GMT$/,
+    rfc850 = /^(Monday|Tuesday|Wedsday|Thursday|Friday|Saturday|Sunday), (\d\d)-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d\d) (\d\d):(\d\d):(\d\d) GMT$/,
+    ascii = /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ( \d|\d\d) (\d\d):(\d\d):(\d\d) (\d{4})$/;
+
+function extractRFC1123Or850(match) {
+  var weekdayStr = match[1],
+      dayStr = match[2],
+      monthStr = match[3],
+      yearStr = match[4],
+      hourStr = match[5],
+      minuteStr = match[6],
+      secondStr = match[7],
+      result = fromStrings(weekdayStr, yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr);
+  return [result, FixedOffsetZone.utcInstance];
+}
+
+function extractASCII(match) {
+  var weekdayStr = match[1],
+      monthStr = match[2],
+      dayStr = match[3],
+      hourStr = match[4],
+      minuteStr = match[5],
+      secondStr = match[6],
+      yearStr = match[7],
+      result = fromStrings(weekdayStr, yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr);
+  return [result, FixedOffsetZone.utcInstance];
+}
+/**
+ * @private
+ */
+
+
+function parseISODate(s) {
+  return parse(s, [combineRegexes(isoYmdRegex, isoTimeExtensionRegex), combineExtractors(extractISOYmd, extractISOTime, extractISOOffset)], [combineRegexes(isoWeekRegex, isoTimeExtensionRegex), combineExtractors(extractISOWeekData, extractISOTime, extractISOOffset)], [combineRegexes(isoOrdinalRegex, isoTimeExtensionRegex), combineExtractors(extractISOOrdinalData, extractISOTime)], [combineRegexes(isoTimeRegex), combineExtractors(extractISOTime, extractISOOffset)]);
+}
+function parseRFC2822Date(s) {
+  return parse(preprocessRFC2822(s), [rfc2822, extractRFC2822]);
+}
+function parseHTTPDate(s) {
+  return parse(s, [rfc1123, extractRFC1123Or850], [rfc850, extractRFC1123Or850], [ascii, extractASCII]);
+}
+function parseISODuration(s) {
+  return parse(s, [isoDuration, extractISODuration]);
+}
+function parseSQL(s) {
+  return parse(s, [combineRegexes(sqlYmdRegex, sqlTimeExtensionRegex), combineExtractors(extractISOYmd, extractISOTime, extractISOOffset, extractIANAZone)], [combineRegexes(sqlTimeRegex), combineExtractors(extractISOTime, extractISOOffset, extractIANAZone)]);
+}
+
+var Invalid =
+/*#__PURE__*/
+function () {
+  function Invalid(reason, explanation) {
+    this.reason = reason;
+    this.explanation = explanation;
+  }
+
+  var _proto = Invalid.prototype;
+
+  _proto.toMessage = function toMessage() {
+    if (this.explanation) {
+      return this.reason + ": " + this.explanation;
+    } else {
+      return this.reason;
+    }
+  };
+
+  return Invalid;
+}();
+
+var INVALID = "Invalid Duration"; // unit conversion constants
+
+var lowOrderMatrix = {
+  weeks: {
+    days: 7,
+    hours: 7 * 24,
+    minutes: 7 * 24 * 60,
+    seconds: 7 * 24 * 60 * 60,
+    milliseconds: 7 * 24 * 60 * 60 * 1000
+  },
+  days: {
+    hours: 24,
+    minutes: 24 * 60,
+    seconds: 24 * 60 * 60,
+    milliseconds: 24 * 60 * 60 * 1000
+  },
+  hours: {
+    minutes: 60,
+    seconds: 60 * 60,
+    milliseconds: 60 * 60 * 1000
+  },
+  minutes: {
+    seconds: 60,
+    milliseconds: 60 * 1000
+  },
+  seconds: {
+    milliseconds: 1000
+  }
+},
+    casualMatrix = Object.assign({
+  years: {
+    months: 12,
+    weeks: 52,
+    days: 365,
+    hours: 365 * 24,
+    minutes: 365 * 24 * 60,
+    seconds: 365 * 24 * 60 * 60,
+    milliseconds: 365 * 24 * 60 * 60 * 1000
+  },
+  quarters: {
+    months: 3,
+    weeks: 13,
+    days: 91,
+    hours: 91 * 24,
+    minutes: 91 * 24 * 60,
+    milliseconds: 91 * 24 * 60 * 60 * 1000
+  },
+  months: {
+    weeks: 4,
+    days: 30,
+    hours: 30 * 24,
+    minutes: 30 * 24 * 60,
+    seconds: 30 * 24 * 60 * 60,
+    milliseconds: 30 * 24 * 60 * 60 * 1000
+  }
+}, lowOrderMatrix),
+    daysInYearAccurate = 146097.0 / 400,
+    daysInMonthAccurate = 146097.0 / 4800,
+    accurateMatrix = Object.assign({
+  years: {
+    months: 12,
+    weeks: daysInYearAccurate / 7,
+    days: daysInYearAccurate,
+    hours: daysInYearAccurate * 24,
+    minutes: daysInYearAccurate * 24 * 60,
+    seconds: daysInYearAccurate * 24 * 60 * 60,
+    milliseconds: daysInYearAccurate * 24 * 60 * 60 * 1000
+  },
+  quarters: {
+    months: 3,
+    weeks: daysInYearAccurate / 28,
+    days: daysInYearAccurate / 4,
+    hours: daysInYearAccurate * 24 / 4,
+    minutes: daysInYearAccurate * 24 * 60 / 4,
+    seconds: daysInYearAccurate * 24 * 60 * 60 / 4,
+    milliseconds: daysInYearAccurate * 24 * 60 * 60 * 1000 / 4
+  },
+  months: {
+    weeks: daysInMonthAccurate / 7,
+    days: daysInMonthAccurate,
+    hours: daysInMonthAccurate * 24,
+    minutes: daysInMonthAccurate * 24 * 60,
+    seconds: daysInMonthAccurate * 24 * 60 * 60,
+    milliseconds: daysInMonthAccurate * 24 * 60 * 60 * 1000
+  }
+}, lowOrderMatrix); // units ordered by size
+
+var orderedUnits = ["years", "quarters", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds"];
+var reverseUnits = orderedUnits.slice(0).reverse(); // clone really means "create another instance just like this one, but with these changes"
+
+function clone(dur, alts, clear) {
+  if (clear === void 0) {
+    clear = false;
+  }
+
+  // deep merge for vals
+  var conf = {
+    values: clear ? alts.values : Object.assign({}, dur.values, alts.values || {}),
+    loc: dur.loc.clone(alts.loc),
+    conversionAccuracy: alts.conversionAccuracy || dur.conversionAccuracy
+  };
+  return new Duration(conf);
+}
+
+function antiTrunc(n) {
+  return n < 0 ? Math.floor(n) : Math.ceil(n);
+} // NB: mutates parameters
+
+
+function convert(matrix, fromMap, fromUnit, toMap, toUnit) {
+  var conv = matrix[toUnit][fromUnit],
+      raw = fromMap[fromUnit] / conv,
+      sameSign = Math.sign(raw) === Math.sign(toMap[toUnit]),
+      // ok, so this is wild, but see the matrix in the tests
+  added = !sameSign && toMap[toUnit] !== 0 && Math.abs(raw) <= 1 ? antiTrunc(raw) : Math.trunc(raw);
+  toMap[toUnit] += added;
+  fromMap[fromUnit] -= added * conv;
+} // NB: mutates parameters
+
+
+function normalizeValues(matrix, vals) {
+  reverseUnits.reduce(function (previous, current) {
+    if (!isUndefined(vals[current])) {
+      if (previous) {
+        convert(matrix, vals, previous, vals, current);
+      }
+
+      return current;
+    } else {
+      return previous;
+    }
+  }, null);
+}
+/**
+ * A Duration object represents a period of time, like "2 months" or "1 day, 1 hour". Conceptually, it's just a map of units to their quantities, accompanied by some additional configuration and methods for creating, parsing, interrogating, transforming, and formatting them. They can be used on their own or in conjunction with other Luxon types; for example, you can use {@link DateTime.plus} to add a Duration object to a DateTime, producing another DateTime.
+ *
+ * Here is a brief overview of commonly used methods and getters in Duration:
+ *
+ * * **Creation** To create a Duration, use {@link Duration.fromMillis}, {@link Duration.fromObject}, or {@link Duration.fromISO}.
+ * * **Unit values** See the {@link Duration.years}, {@link Duration.months}, {@link Duration.weeks}, {@link Duration.days}, {@link Duration.hours}, {@link Duration.minutes}, {@link Duration.seconds}, {@link Duration.milliseconds} accessors.
+ * * **Configuration** See  {@link Duration.locale} and {@link Duration.numberingSystem} accessors.
+ * * **Transformation** To create new Durations out of old ones use {@link Duration.plus}, {@link Duration.minus}, {@link Duration.normalize}, {@link Duration.set}, {@link Duration.reconfigure}, {@link Duration.shiftTo}, and {@link Duration.negate}.
+ * * **Output** To convert the Duration into other representations, see {@link Duration.as}, {@link Duration.toISO}, {@link Duration.toFormat}, and {@link Duration.toJSON}
+ *
+ * There's are more methods documented below. In addition, for more information on subtler topics like internationalization and validity, see the external documentation.
+ */
+
+
+var Duration =
+/*#__PURE__*/
+function () {
+  /**
+   * @private
+   */
+  function Duration(config) {
+    var accurate = config.conversionAccuracy === "longterm" || false;
+    /**
+     * @access private
+     */
+
+    this.values = config.values;
+    /**
+     * @access private
+     */
+
+    this.loc = config.loc || Locale.create();
+    /**
+     * @access private
+     */
+
+    this.conversionAccuracy = accurate ? "longterm" : "casual";
+    /**
+     * @access private
+     */
+
+    this.invalid = config.invalid || null;
+    /**
+     * @access private
+     */
+
+    this.matrix = accurate ? accurateMatrix : casualMatrix;
+    /**
+     * @access private
+     */
+
+    this.isLuxonDuration = true;
+  }
+  /**
+   * Create Duration from a number of milliseconds.
+   * @param {number} count of milliseconds
+   * @param {Object} opts - options for parsing
+   * @param {string} [opts.locale='en-US'] - the locale to use
+   * @param {string} opts.numberingSystem - the numbering system to use
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @return {Duration}
+   */
+
+
+  Duration.fromMillis = function fromMillis(count, opts) {
+    return Duration.fromObject(Object.assign({
+      milliseconds: count
+    }, opts));
+  };
+  /**
+   * Create a Duration from a Javascript object with keys like 'years' and 'hours.
+   * If this object is empty then zero  milliseconds duration is returned.
+   * @param {Object} obj - the object to create the DateTime from
+   * @param {number} obj.years
+   * @param {number} obj.quarters
+   * @param {number} obj.months
+   * @param {number} obj.weeks
+   * @param {number} obj.days
+   * @param {number} obj.hours
+   * @param {number} obj.minutes
+   * @param {number} obj.seconds
+   * @param {number} obj.milliseconds
+   * @param {string} [obj.locale='en-US'] - the locale to use
+   * @param {string} obj.numberingSystem - the numbering system to use
+   * @param {string} [obj.conversionAccuracy='casual'] - the conversion system to use
+   * @return {Duration}
+   */
+
+
+  Duration.fromObject = function fromObject(obj) {
+    if (obj == null || typeof obj !== "object") {
+      throw new InvalidArgumentError("Duration.fromObject: argument expected to be an object, got " + typeof obj);
+    }
+
+    return new Duration({
+      values: normalizeObject(obj, Duration.normalizeUnit, true),
+      loc: Locale.fromObject(obj),
+      conversionAccuracy: obj.conversionAccuracy
+    });
+  };
+  /**
+   * Create a Duration from an ISO 8601 duration string.
+   * @param {string} text - text to parse
+   * @param {Object} opts - options for parsing
+   * @param {string} [opts.locale='en-US'] - the locale to use
+   * @param {string} opts.numberingSystem - the numbering system to use
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Durations
+   * @example Duration.fromISO('P3Y6M4DT12H30M5S').toObject() //=> { years: 3, months: 6, day: 4, hours: 12, minutes: 30, seconds: 5 }
+   * @example Duration.fromISO('PT23H').toObject() //=> { hours: 23 }
+   * @example Duration.fromISO('P5Y3M').toObject() //=> { years: 5, months: 3 }
+   * @return {Duration}
+   */
+
+
+  Duration.fromISO = function fromISO(text, opts) {
+    var _parseISODuration = parseISODuration(text),
+        parsed = _parseISODuration[0];
+
+    if (parsed) {
+      var obj = Object.assign(parsed, opts);
+      return Duration.fromObject(obj);
+    } else {
+      return Duration.invalid("unparsable", "the input \"" + text + "\" can't be parsed as ISO 8601");
+    }
+  };
+  /**
+   * Create an invalid Duration.
+   * @param {string} reason - simple string of why this datetime is invalid. Should not contain parameters or anything else data-dependent
+   * @param {string} [explanation=null] - longer explanation, may include parameters and other useful debugging information
+   * @return {Duration}
+   */
+
+
+  Duration.invalid = function invalid(reason, explanation) {
+    if (explanation === void 0) {
+      explanation = null;
+    }
+
+    if (!reason) {
+      throw new InvalidArgumentError("need to specify a reason the Duration is invalid");
+    }
+
+    var invalid = reason instanceof Invalid ? reason : new Invalid(reason, explanation);
+
+    if (Settings.throwOnInvalid) {
+      throw new InvalidDurationError(invalid);
+    } else {
+      return new Duration({
+        invalid: invalid
+      });
+    }
+  };
+  /**
+   * @private
+   */
+
+
+  Duration.normalizeUnit = function normalizeUnit(unit, ignoreUnknown) {
+    if (ignoreUnknown === void 0) {
+      ignoreUnknown = false;
+    }
+
+    var normalized = {
+      year: "years",
+      years: "years",
+      quarter: "quarters",
+      quarters: "quarters",
+      month: "months",
+      months: "months",
+      week: "weeks",
+      weeks: "weeks",
+      day: "days",
+      days: "days",
+      hour: "hours",
+      hours: "hours",
+      minute: "minutes",
+      minutes: "minutes",
+      second: "seconds",
+      seconds: "seconds",
+      millisecond: "milliseconds",
+      milliseconds: "milliseconds"
+    }[unit ? unit.toLowerCase() : unit];
+    if (!ignoreUnknown && !normalized) throw new InvalidUnitError(unit);
+    return normalized;
+  };
+  /**
+   * Check if an object is a Duration. Works across context boundaries
+   * @param {object} o
+   * @return {boolean}
+   */
+
+
+  Duration.isDuration = function isDuration(o) {
+    return o.isLuxonDuration || false;
+  };
+  /**
+   * Get  the locale of a Duration, such 'en-GB'
+   * @type {string}
+   */
+
+
+  var _proto = Duration.prototype;
+
+  /**
+   * Returns a string representation of this Duration formatted according to the specified format string. You may use these tokens:
+   * * `S` for milliseconds
+   * * `s` for seconds
+   * * `m` for minutes
+   * * `h` for hours
+   * * `d` for days
+   * * `M` for months
+   * * `y` for years
+   * Notes:
+   * * Add padding by repeating the token, e.g. "yy" pads the years to two digits, "hhhh" pads the hours out to four digits
+   * * The duration will be converted to the set of units in the format string using {@link Duration.shiftTo} and the Durations's conversion accuracy setting.
+   * @param {string} fmt - the format string
+   * @param {Object} opts - options
+   * @param {boolean} [opts.floor=true] - floor numerical values
+   * @example Duration.fromObject({ years: 1, days: 6, seconds: 2 }).toFormat("y d s") //=> "1 6 2"
+   * @example Duration.fromObject({ years: 1, days: 6, seconds: 2 }).toFormat("yy dd sss") //=> "01 06 002"
+   * @example Duration.fromObject({ years: 1, days: 6, seconds: 2 }).toFormat("M S") //=> "12 518402000"
+   * @return {string}
+   */
+  _proto.toFormat = function toFormat(fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    // reverse-compat since 1.2; we always round down now, never up, and we do it by default
+    var fmtOpts = Object.assign({}, opts, {
+      floor: opts.round !== false && opts.floor !== false
+    });
+    return this.isValid ? Formatter.create(this.loc, fmtOpts).formatDurationFromString(this, fmt) : INVALID;
+  };
+  /**
+   * Returns a Javascript object with this Duration's values.
+   * @param opts - options for generating the object
+   * @param {boolean} [opts.includeConfig=false] - include configuration attributes in the output
+   * @example Duration.fromObject({ years: 1, days: 6, seconds: 2 }).toObject() //=> { years: 1, days: 6, seconds: 2 }
+   * @return {Object}
+   */
+
+
+  _proto.toObject = function toObject(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) return {};
+    var base = Object.assign({}, this.values);
+
+    if (opts.includeConfig) {
+      base.conversionAccuracy = this.conversionAccuracy;
+      base.numberingSystem = this.loc.numberingSystem;
+      base.locale = this.loc.locale;
+    }
+
+    return base;
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this Duration.
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Durations
+   * @example Duration.fromObject({ years: 3, seconds: 45 }).toISO() //=> 'P3YT45S'
+   * @example Duration.fromObject({ months: 4, seconds: 45 }).toISO() //=> 'P4MT45S'
+   * @example Duration.fromObject({ months: 5 }).toISO() //=> 'P5M'
+   * @example Duration.fromObject({ minutes: 5 }).toISO() //=> 'PT5M'
+   * @example Duration.fromObject({ milliseconds: 6 }).toISO() //=> 'PT0.006S'
+   * @return {string}
+   */
+
+
+  _proto.toISO = function toISO() {
+    // we could use the formatter, but this is an easier way to get the minimum string
+    if (!this.isValid) return null;
+    var s = "P";
+    if (this.years !== 0) s += this.years + "Y";
+    if (this.months !== 0 || this.quarters !== 0) s += this.months + this.quarters * 3 + "M";
+    if (this.days !== 0 || this.weeks !== 0) s += this.days + this.weeks * 7 + "D";
+    if (this.hours !== 0 || this.minutes !== 0 || this.seconds !== 0 || this.milliseconds !== 0) s += "T";
+    if (this.hours !== 0) s += this.hours + "H";
+    if (this.minutes !== 0) s += this.minutes + "M";
+    if (this.seconds !== 0 || this.milliseconds !== 0) s += this.seconds + this.milliseconds / 1000 + "S";
+    if (s === "P") s += "T0S";
+    return s;
+  };
+  /**
+   * Returns an ISO 8601 representation of this Duration appropriate for use in JSON.
+   * @return {string}
+   */
+
+
+  _proto.toJSON = function toJSON() {
+    return this.toISO();
+  };
+  /**
+   * Returns an ISO 8601 representation of this Duration appropriate for use in debugging.
+   * @return {string}
+   */
+
+
+  _proto.toString = function toString() {
+    return this.toISO();
+  };
+  /**
+   * Returns an milliseconds value of this Duration.
+   * @return {number}
+   */
+
+
+  _proto.valueOf = function valueOf() {
+    return this.as("milliseconds");
+  };
+  /**
+   * Make this Duration longer by the specified amount. Return a newly-constructed Duration.
+   * @param {Duration|Object|number} duration - The amount to add. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   * @return {Duration}
+   */
+
+
+  _proto.plus = function plus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration),
+        result = {};
+
+    for (var _i = 0; _i < orderedUnits.length; _i++) {
+      var k = orderedUnits[_i];
+
+      if (dur.values.hasOwnProperty(k) || this.values.hasOwnProperty(k)) {
+        result[k] = dur.get(k) + this.get(k);
+      }
+    }
+
+    return clone(this, {
+      values: result
+    }, true);
+  };
+  /**
+   * Make this Duration shorter by the specified amount. Return a newly-constructed Duration.
+   * @param {Duration|Object|number} duration - The amount to subtract. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   * @return {Duration}
+   */
+
+
+  _proto.minus = function minus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration);
+    return this.plus(dur.negate());
+  };
+  /**
+   * Get the value of unit.
+   * @param {string} unit - a unit such as 'minute' or 'day'
+   * @example Duration.fromObject({years: 2, days: 3}).years //=> 2
+   * @example Duration.fromObject({years: 2, days: 3}).months //=> 0
+   * @example Duration.fromObject({years: 2, days: 3}).days //=> 3
+   * @return {number}
+   */
+
+
+  _proto.get = function get(unit) {
+    return this[Duration.normalizeUnit(unit)];
+  };
+  /**
+   * "Set" the values of specified units. Return a newly-constructed Duration.
+   * @param {Object} values - a mapping of units to numbers
+   * @example dur.set({ years: 2017 })
+   * @example dur.set({ hours: 8, minutes: 30 })
+   * @return {Duration}
+   */
+
+
+  _proto.set = function set(values) {
+    var mixed = Object.assign(this.values, normalizeObject(values, Duration.normalizeUnit));
+    return clone(this, {
+      values: mixed
+    });
+  };
+  /**
+   * "Set" the locale and/or numberingSystem.  Returns a newly-constructed Duration.
+   * @example dur.reconfigure({ locale: 'en-GB' })
+   * @return {Duration}
+   */
+
+
+  _proto.reconfigure = function reconfigure(_temp) {
+    var _ref = _temp === void 0 ? {} : _temp,
+        locale = _ref.locale,
+        numberingSystem = _ref.numberingSystem,
+        conversionAccuracy = _ref.conversionAccuracy;
+
+    var loc = this.loc.clone({
+      locale: locale,
+      numberingSystem: numberingSystem
+    }),
+        opts = {
+      loc: loc
+    };
+
+    if (conversionAccuracy) {
+      opts.conversionAccuracy = conversionAccuracy;
+    }
+
+    return clone(this, opts);
+  };
+  /**
+   * Return the length of the duration in the specified unit.
+   * @param {string} unit - a unit such as 'minutes' or 'days'
+   * @example Duration.fromObject({years: 1}).as('days') //=> 365
+   * @example Duration.fromObject({years: 1}).as('months') //=> 12
+   * @example Duration.fromObject({hours: 60}).as('days') //=> 2.5
+   * @return {number}
+   */
+
+
+  _proto.as = function as(unit) {
+    return this.isValid ? this.shiftTo(unit).get(unit) : NaN;
+  };
+  /**
+   * Reduce this Duration to its canonical representation in its current units.
+   * @example Duration.fromObject({ years: 2, days: 5000 }).normalize().toObject() //=> { years: 15, days: 255 }
+   * @example Duration.fromObject({ hours: 12, minutes: -45 }).normalize().toObject() //=> { hours: 11, minutes: 15 }
+   * @return {Duration}
+   */
+
+
+  _proto.normalize = function normalize() {
+    if (!this.isValid) return this;
+    var vals = this.toObject();
+    normalizeValues(this.matrix, vals);
+    return Duration.fromObject(vals);
+  };
+  /**
+   * Convert this Duration into its representation in a different set of units.
+   * @example Duration.fromObject({ hours: 1, seconds: 30 }).shiftTo('minutes', 'milliseconds').toObject() //=> { minutes: 60, milliseconds: 30000 }
+   * @return {Duration}
+   */
+
+
+  _proto.shiftTo = function shiftTo() {
+    for (var _len = arguments.length, units = new Array(_len), _key = 0; _key < _len; _key++) {
+      units[_key] = arguments[_key];
+    }
+
+    if (!this.isValid) return this;
+
+    if (units.length === 0) {
+      return this;
+    }
+
+    units = units.map(function (u) {
+      return Duration.normalizeUnit(u);
+    });
+    var built = {},
+        accumulated = {},
+        vals = this.toObject();
+    var lastUnit;
+    normalizeValues(this.matrix, vals);
+
+    for (var _i2 = 0; _i2 < orderedUnits.length; _i2++) {
+      var k = orderedUnits[_i2];
+
+      if (units.indexOf(k) >= 0) {
+        lastUnit = k;
+        var own = 0; // anything we haven't boiled down yet should get boiled to this unit
+
+        for (var ak in accumulated) {
+          if (accumulated.hasOwnProperty(ak)) {
+            own += this.matrix[ak][k] * accumulated[ak];
+            accumulated[ak] = 0;
+          }
+        } // plus anything that's already in this unit
+
+
+        if (isNumber(vals[k])) {
+          own += vals[k];
+        }
+
+        var i = Math.trunc(own);
+        built[k] = i;
+        accumulated[k] = own - i; // we'd like to absorb these fractions in another unit
+        // plus anything further down the chain that should be rolled up in to this
+
+        for (var down in vals) {
+          if (orderedUnits.indexOf(down) > orderedUnits.indexOf(k)) {
+            convert(this.matrix, vals, down, built, k);
+          }
+        } // otherwise, keep it in the wings to boil it later
+
+      } else if (isNumber(vals[k])) {
+        accumulated[k] = vals[k];
+      }
+    } // anything leftover becomes the decimal for the last unit
+
+
+    if (lastUnit) {
+      for (var key in accumulated) {
+        if (accumulated.hasOwnProperty(key)) {
+          if (accumulated[key] !== 0) {
+            built[lastUnit] += key === lastUnit ? accumulated[key] : accumulated[key] / this.matrix[lastUnit][key];
+          }
+        }
+      }
+    }
+
+    return clone(this, {
+      values: built
+    }, true);
+  };
+  /**
+   * Return the negative of this Duration.
+   * @example Duration.fromObject({ hours: 1, seconds: 30 }).negate().toObject() //=> { hours: -1, seconds: -30 }
+   * @return {Duration}
+   */
+
+
+  _proto.negate = function negate() {
+    if (!this.isValid) return this;
+    var negated = {};
+
+    var _arr = Object.keys(this.values);
+
+    for (var _i3 = 0; _i3 < _arr.length; _i3++) {
+      var k = _arr[_i3];
+      negated[k] = -this.values[k];
+    }
+
+    return clone(this, {
+      values: negated
+    }, true);
+  };
+  /**
+   * Get the years.
+   * @type {number}
+   */
+
+
+  /**
+   * Equality check
+   * Two Durations are equal iff they have the same units and the same values for each unit.
+   * @param {Duration} other
+   * @return {boolean}
+   */
+  _proto.equals = function equals(other) {
+    if (!this.isValid || !other.isValid) {
+      return false;
+    }
+
+    if (!this.loc.equals(other.loc)) {
+      return false;
+    }
+
+    for (var _i4 = 0; _i4 < orderedUnits.length; _i4++) {
+      var u = orderedUnits[_i4];
+
+      if (this.values[u] !== other.values[u]) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  _createClass(Duration, [{
+    key: "locale",
+    get: function get() {
+      return this.isValid ? this.loc.locale : null;
+    }
+    /**
+     * Get the numbering system of a Duration, such 'beng'. The numbering system is used when formatting the Duration
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "numberingSystem",
+    get: function get() {
+      return this.isValid ? this.loc.numberingSystem : null;
+    }
+  }, {
+    key: "years",
+    get: function get() {
+      return this.isValid ? this.values.years || 0 : NaN;
+    }
+    /**
+     * Get the quarters.
+     * @type {number}
+     */
+
+  }, {
+    key: "quarters",
+    get: function get() {
+      return this.isValid ? this.values.quarters || 0 : NaN;
+    }
+    /**
+     * Get the months.
+     * @type {number}
+     */
+
+  }, {
+    key: "months",
+    get: function get() {
+      return this.isValid ? this.values.months || 0 : NaN;
+    }
+    /**
+     * Get the weeks
+     * @type {number}
+     */
+
+  }, {
+    key: "weeks",
+    get: function get() {
+      return this.isValid ? this.values.weeks || 0 : NaN;
+    }
+    /**
+     * Get the days.
+     * @type {number}
+     */
+
+  }, {
+    key: "days",
+    get: function get() {
+      return this.isValid ? this.values.days || 0 : NaN;
+    }
+    /**
+     * Get the hours.
+     * @type {number}
+     */
+
+  }, {
+    key: "hours",
+    get: function get() {
+      return this.isValid ? this.values.hours || 0 : NaN;
+    }
+    /**
+     * Get the minutes.
+     * @type {number}
+     */
+
+  }, {
+    key: "minutes",
+    get: function get() {
+      return this.isValid ? this.values.minutes || 0 : NaN;
+    }
+    /**
+     * Get the seconds.
+     * @return {number}
+     */
+
+  }, {
+    key: "seconds",
+    get: function get() {
+      return this.isValid ? this.values.seconds || 0 : NaN;
+    }
+    /**
+     * Get the milliseconds.
+     * @return {number}
+     */
+
+  }, {
+    key: "milliseconds",
+    get: function get() {
+      return this.isValid ? this.values.milliseconds || 0 : NaN;
+    }
+    /**
+     * Returns whether the Duration is invalid. Invalid durations are returned by diff operations
+     * on invalid DateTimes or Intervals.
+     * @return {boolean}
+     */
+
+  }, {
+    key: "isValid",
+    get: function get() {
+      return this.invalid === null;
+    }
+    /**
+     * Returns an error code if this Duration became invalid, or null if the Duration is valid
+     * @return {string}
+     */
+
+  }, {
+    key: "invalidReason",
+    get: function get() {
+      return this.invalid ? this.invalid.reason : null;
+    }
+    /**
+     * Returns an explanation of why this Duration became invalid, or null if the Duration is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidExplanation",
+    get: function get() {
+      return this.invalid ? this.invalid.explanation : null;
+    }
+  }]);
+
+  return Duration;
+}();
+function friendlyDuration(durationish) {
+  if (isNumber(durationish)) {
+    return Duration.fromMillis(durationish);
+  } else if (Duration.isDuration(durationish)) {
+    return durationish;
+  } else if (typeof durationish === "object") {
+    return Duration.fromObject(durationish);
+  } else {
+    throw new InvalidArgumentError("Unknown duration argument " + durationish + " of type " + typeof durationish);
+  }
+}
+
+var INVALID$1 = "Invalid Interval"; // checks if the start is equal to or before the end
+
+function validateStartEnd(start, end) {
+  if (!start || !start.isValid) {
+    return new Invalid("missing or invalid start");
+  } else if (!end || !end.isValid) {
+    return new Invalid("missing or invalid end");
+  } else if (end < start) {
+    return new Invalid("end before start", "The end of an interval must be after its start, but you had start=" + start.toISO() + " and end=" + end.toISO());
+  } else {
+    return null;
+  }
+}
+/**
+ * An Interval object represents a half-open interval of time, where each endpoint is a {@link DateTime}. Conceptually, it's a container for those two endpoints, accompanied by methods for creating, parsing, interrogating, comparing, transforming, and formatting them.
+ *
+ * Here is a brief overview of the most commonly used methods and getters in Interval:
+ *
+ * * **Creation** To create an Interval, use {@link fromDateTimes}, {@link after}, {@link before}, or {@link fromISO}.
+ * * **Accessors** Use {@link start} and {@link end} to get the start and end.
+ * * **Interrogation** To analyze the Interval, use {@link count}, {@link length}, {@link hasSame}, {@link contains}, {@link isAfter}, or {@link isBefore}.
+ * * **Transformation** To create other Intervals out of this one, use {@link set}, {@link splitAt}, {@link splitBy}, {@link divideEqually}, {@link merge}, {@link xor}, {@link union}, {@link intersection}, or {@link difference}.
+ * * **Comparison** To compare this Interval to another one, use {@link equals}, {@link overlaps}, {@link abutsStart}, {@link abutsEnd}, {@link engulfs}
+ * * **Output*** To convert the Interval into other representations, see {@link toString}, {@link toISO}, {@link toFormat}, and {@link toDuration}.
+ */
+
+
+var Interval =
+/*#__PURE__*/
+function () {
+  /**
+   * @private
+   */
+  function Interval(config) {
+    /**
+     * @access private
+     */
+    this.s = config.start;
+    /**
+     * @access private
+     */
+
+    this.e = config.end;
+    /**
+     * @access private
+     */
+
+    this.invalid = config.invalid || null;
+    /**
+     * @access private
+     */
+
+    this.isLuxonInterval = true;
+  }
+  /**
+   * Create an invalid Interval.
+   * @param {string} reason - simple string of why this Interval is invalid. Should not contain parameters or anything else data-dependent
+   * @param {string} [explanation=null] - longer explanation, may include parameters and other useful debugging information
+   * @return {Interval}
+   */
+
+
+  Interval.invalid = function invalid(reason, explanation) {
+    if (explanation === void 0) {
+      explanation = null;
+    }
+
+    if (!reason) {
+      throw new InvalidArgumentError("need to specify a reason the Interval is invalid");
+    }
+
+    var invalid = reason instanceof Invalid ? reason : new Invalid(reason, explanation);
+
+    if (Settings.throwOnInvalid) {
+      throw new InvalidIntervalError(invalid);
+    } else {
+      return new Interval({
+        invalid: invalid
+      });
+    }
+  };
+  /**
+   * Create an Interval from a start DateTime and an end DateTime. Inclusive of the start but not the end.
+   * @param {DateTime|Date|Object} start
+   * @param {DateTime|Date|Object} end
+   * @return {Interval}
+   */
+
+
+  Interval.fromDateTimes = function fromDateTimes(start, end) {
+    var builtStart = friendlyDateTime(start),
+        builtEnd = friendlyDateTime(end);
+    return new Interval({
+      start: builtStart,
+      end: builtEnd,
+      invalid: validateStartEnd(builtStart, builtEnd)
+    });
+  };
+  /**
+   * Create an Interval from a start DateTime and a Duration to extend to.
+   * @param {DateTime|Date|Object} start
+   * @param {Duration|Object|number} duration - the length of the Interval.
+   * @return {Interval}
+   */
+
+
+  Interval.after = function after(start, duration) {
+    var dur = friendlyDuration(duration),
+        dt = friendlyDateTime(start);
+    return Interval.fromDateTimes(dt, dt.plus(dur));
+  };
+  /**
+   * Create an Interval from an end DateTime and a Duration to extend backwards to.
+   * @param {DateTime|Date|Object} end
+   * @param {Duration|Object|number} duration - the length of the Interval.
+   * @return {Interval}
+   */
+
+
+  Interval.before = function before(end, duration) {
+    var dur = friendlyDuration(duration),
+        dt = friendlyDateTime(end);
+    return Interval.fromDateTimes(dt.minus(dur), dt);
+  };
+  /**
+   * Create an Interval from an ISO 8601 string.
+   * Accepts `<start>/<end>`, `<start>/<duration>`, and `<duration>/<end>` formats.
+   * @param {string} text - the ISO string to parse
+   * @param {Object} [opts] - options to pass {@link DateTime.fromISO} and optionally {@link Duration.fromISO}
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Time_intervals
+   * @return {Interval}
+   */
+
+
+  Interval.fromISO = function fromISO(text, opts) {
+    var _split = (text || "").split("/", 2),
+        s = _split[0],
+        e = _split[1];
+
+    if (s && e) {
+      var start = DateTime.fromISO(s, opts),
+          end = DateTime.fromISO(e, opts);
+
+      if (start.isValid && end.isValid) {
+        return Interval.fromDateTimes(start, end);
+      }
+
+      if (start.isValid) {
+        var dur = Duration.fromISO(e, opts);
+
+        if (dur.isValid) {
+          return Interval.after(start, dur);
+        }
+      } else if (end.isValid) {
+        var _dur = Duration.fromISO(s, opts);
+
+        if (_dur.isValid) {
+          return Interval.before(end, _dur);
+        }
+      }
+    }
+
+    return Interval.invalid("unparsable", "the input \"" + text + "\" can't be parsed asISO 8601");
+  };
+  /**
+   * Check if an object is an Interval. Works across context boundaries
+   * @param {object} o
+   * @return {boolean}
+   */
+
+
+  Interval.isInterval = function isInterval(o) {
+    return o instanceof Interval || o.isLuxonInterval;
+  };
+  /**
+   * Returns the start of the Interval
+   * @type {DateTime}
+   */
+
+
+  var _proto = Interval.prototype;
+
+  /**
+   * Returns the length of the Interval in the specified unit.
+   * @param {string} unit - the unit (such as 'hours' or 'days') to return the length in.
+   * @return {number}
+   */
+  _proto.length = function length(unit) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    return this.isValid ? this.toDuration.apply(this, [unit]).get(unit) : NaN;
+  };
+  /**
+   * Returns the count of minutes, hours, days, months, or years included in the Interval, even in part.
+   * Unlike {@link length} this counts sections of the calendar, not periods of time, e.g. specifying 'day'
+   * asks 'what dates are included in this interval?', not 'how many days long is this interval?'
+   * @param {string} [unit='milliseconds'] - the unit of time to count.
+   * @return {number}
+   */
+
+
+  _proto.count = function count(unit) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    if (!this.isValid) return NaN;
+    var start = this.start.startOf(unit),
+        end = this.end.startOf(unit);
+    return Math.floor(end.diff(start, unit).get(unit)) + 1;
+  };
+  /**
+   * Returns whether this Interval's start and end are both in the same unit of time
+   * @param {string} unit - the unit of time to check sameness on
+   * @return {boolean}
+   */
+
+
+  _proto.hasSame = function hasSame(unit) {
+    return this.isValid ? this.e.minus(1).hasSame(this.s, unit) : false;
+  };
+  /**
+   * Return whether this Interval has the same start and end DateTimes.
+   * @return {boolean}
+   */
+
+
+  _proto.isEmpty = function isEmpty() {
+    return this.s.valueOf() === this.e.valueOf();
+  };
+  /**
+   * Return whether this Interval's start is after the specified DateTime.
+   * @param {DateTime} dateTime
+   * @return {boolean}
+   */
+
+
+  _proto.isAfter = function isAfter(dateTime) {
+    if (!this.isValid) return false;
+    return this.s > dateTime;
+  };
+  /**
+   * Return whether this Interval's end is before the specified DateTime.
+   * @param {DateTime} dateTime
+   * @return {boolean}
+   */
+
+
+  _proto.isBefore = function isBefore(dateTime) {
+    if (!this.isValid) return false;
+    return this.e <= dateTime;
+  };
+  /**
+   * Return whether this Interval contains the specified DateTime.
+   * @param {DateTime} dateTime
+   * @return {boolean}
+   */
+
+
+  _proto.contains = function contains(dateTime) {
+    if (!this.isValid) return false;
+    return this.s <= dateTime && this.e > dateTime;
+  };
+  /**
+   * "Sets" the start and/or end dates. Returns a newly-constructed Interval.
+   * @param {Object} values - the values to set
+   * @param {DateTime} values.start - the starting DateTime
+   * @param {DateTime} values.end - the ending DateTime
+   * @return {Interval}
+   */
+
+
+  _proto.set = function set(_temp) {
+    var _ref = _temp === void 0 ? {} : _temp,
+        start = _ref.start,
+        end = _ref.end;
+
+    if (!this.isValid) return this;
+    return Interval.fromDateTimes(start || this.s, end || this.e);
+  };
+  /**
+   * Split this Interval at each of the specified DateTimes
+   * @param {...[DateTime]} dateTimes - the unit of time to count.
+   * @return {[Interval]}
+   */
+
+
+  _proto.splitAt = function splitAt() {
+    if (!this.isValid) return [];
+
+    for (var _len = arguments.length, dateTimes = new Array(_len), _key = 0; _key < _len; _key++) {
+      dateTimes[_key] = arguments[_key];
+    }
+
+    var sorted = dateTimes.map(friendlyDateTime).sort(),
+        results = [];
+    var s = this.s,
+        i = 0;
+
+    while (s < this.e) {
+      var added = sorted[i] || this.e,
+          next = +added > +this.e ? this.e : added;
+      results.push(Interval.fromDateTimes(s, next));
+      s = next;
+      i += 1;
+    }
+
+    return results;
+  };
+  /**
+   * Split this Interval into smaller Intervals, each of the specified length.
+   * Left over time is grouped into a smaller interval
+   * @param {Duration|Object|number} duration - The length of each resulting interval.
+   * @return {[Interval]}
+   */
+
+
+  _proto.splitBy = function splitBy(duration) {
+    var dur = friendlyDuration(duration);
+
+    if (!this.isValid || !dur.isValid || dur.as("milliseconds") === 0) {
+      return [];
+    }
+
+    var s = this.s,
+        added,
+        next;
+    var results = [];
+
+    while (s < this.e) {
+      added = s.plus(dur);
+      next = +added > +this.e ? this.e : added;
+      results.push(Interval.fromDateTimes(s, next));
+      s = next;
+    }
+
+    return results;
+  };
+  /**
+   * Split this Interval into the specified number of smaller intervals.
+   * @param {number} numberOfParts - The number of Intervals to divide the Interval into.
+   * @return {[Interval]}
+   */
+
+
+  _proto.divideEqually = function divideEqually(numberOfParts) {
+    if (!this.isValid) return [];
+    return this.splitBy(this.length() / numberOfParts).slice(0, numberOfParts);
+  };
+  /**
+   * Return whether this Interval overlaps with the specified Interval
+   * @param {Interval} other
+   * @return {boolean}
+   */
+
+
+  _proto.overlaps = function overlaps(other) {
+    return this.e > other.s && this.s < other.e;
+  };
+  /**
+   * Return whether this Interval's end is adjacent to the specified Interval's start.
+   * @param {Interval} other
+   * @return {boolean}
+   */
+
+
+  _proto.abutsStart = function abutsStart(other) {
+    if (!this.isValid) return false;
+    return +this.e === +other.s;
+  };
+  /**
+   * Return whether this Interval's start is adjacent to the specified Interval's end.
+   * @param {Interval} other
+   * @return {boolean}
+   */
+
+
+  _proto.abutsEnd = function abutsEnd(other) {
+    if (!this.isValid) return false;
+    return +other.e === +this.s;
+  };
+  /**
+   * Return whether this Interval engulfs the start and end of the specified Interval.
+   * @param {Interval} other
+   * @return {boolean}
+   */
+
+
+  _proto.engulfs = function engulfs(other) {
+    if (!this.isValid) return false;
+    return this.s <= other.s && this.e >= other.e;
+  };
+  /**
+   * Return whether this Interval has the same start and end as the specified Interval.
+   * @param {Interval} other
+   * @return {boolean}
+   */
+
+
+  _proto.equals = function equals(other) {
+    if (!this.isValid || !other.isValid) {
+      return false;
+    }
+
+    return this.s.equals(other.s) && this.e.equals(other.e);
+  };
+  /**
+   * Return an Interval representing the intersection of this Interval and the specified Interval.
+   * Specifically, the resulting Interval has the maximum start time and the minimum end time of the two Intervals.
+   * Returns null if the intersection is empty, i.e., the intervals don't intersect.
+   * @param {Interval} other
+   * @return {Interval}
+   */
+
+
+  _proto.intersection = function intersection(other) {
+    if (!this.isValid) return this;
+    var s = this.s > other.s ? this.s : other.s,
+        e = this.e < other.e ? this.e : other.e;
+
+    if (s > e) {
+      return null;
+    } else {
+      return Interval.fromDateTimes(s, e);
+    }
+  };
+  /**
+   * Return an Interval representing the union of this Interval and the specified Interval.
+   * Specifically, the resulting Interval has the minimum start time and the maximum end time of the two Intervals.
+   * @param {Interval} other
+   * @return {Interval}
+   */
+
+
+  _proto.union = function union(other) {
+    if (!this.isValid) return this;
+    var s = this.s < other.s ? this.s : other.s,
+        e = this.e > other.e ? this.e : other.e;
+    return Interval.fromDateTimes(s, e);
+  };
+  /**
+   * Merge an array of Intervals into a equivalent minimal set of Intervals.
+   * Combines overlapping and adjacent Intervals.
+   * @param {[Interval]} intervals
+   * @return {[Interval]}
+   */
+
+
+  Interval.merge = function merge(intervals) {
+    var _intervals$sort$reduc = intervals.sort(function (a, b) {
+      return a.s - b.s;
+    }).reduce(function (_ref2, item) {
+      var sofar = _ref2[0],
+          current = _ref2[1];
+
+      if (!current) {
+        return [sofar, item];
+      } else if (current.overlaps(item) || current.abutsStart(item)) {
+        return [sofar, current.union(item)];
+      } else {
+        return [sofar.concat([current]), item];
+      }
+    }, [[], null]),
+        found = _intervals$sort$reduc[0],
+        final = _intervals$sort$reduc[1];
+
+    if (final) {
+      found.push(final);
+    }
+
+    return found;
+  };
+  /**
+   * Return an array of Intervals representing the spans of time that only appear in one of the specified Intervals.
+   * @param {[Interval]} intervals
+   * @return {[Interval]}
+   */
+
+
+  Interval.xor = function xor(intervals) {
+    var _Array$prototype;
+
+    var start = null,
+        currentCount = 0;
+
+    var results = [],
+        ends = intervals.map(function (i) {
+      return [{
+        time: i.s,
+        type: "s"
+      }, {
+        time: i.e,
+        type: "e"
+      }];
+    }),
+        flattened = (_Array$prototype = Array.prototype).concat.apply(_Array$prototype, ends),
+        arr = flattened.sort(function (a, b) {
+      return a.time - b.time;
+    });
+
+    for (var _iterator = arr, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      var _ref3;
+
+      if (_isArray) {
+        if (_i >= _iterator.length) break;
+        _ref3 = _iterator[_i++];
+      } else {
+        _i = _iterator.next();
+        if (_i.done) break;
+        _ref3 = _i.value;
+      }
+
+      var i = _ref3;
+      currentCount += i.type === "s" ? 1 : -1;
+
+      if (currentCount === 1) {
+        start = i.time;
+      } else {
+        if (start && +start !== +i.time) {
+          results.push(Interval.fromDateTimes(start, i.time));
+        }
+
+        start = null;
+      }
+    }
+
+    return Interval.merge(results);
+  };
+  /**
+   * Return an Interval representing the span of time in this Interval that doesn't overlap with any of the specified Intervals.
+   * @param {...Interval} intervals
+   * @return {[Interval]}
+   */
+
+
+  _proto.difference = function difference() {
+    var _this = this;
+
+    for (var _len2 = arguments.length, intervals = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      intervals[_key2] = arguments[_key2];
+    }
+
+    return Interval.xor([this].concat(intervals)).map(function (i) {
+      return _this.intersection(i);
+    }).filter(function (i) {
+      return i && !i.isEmpty();
+    });
+  };
+  /**
+   * Returns a string representation of this Interval appropriate for debugging.
+   * @return {string}
+   */
+
+
+  _proto.toString = function toString() {
+    if (!this.isValid) return INVALID$1;
+    return "[" + this.s.toISO() + " \u2013 " + this.e.toISO() + ")";
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this Interval.
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Time_intervals
+   * @param {Object} opts - The same options as {@link DateTime.toISO}
+   * @return {string}
+   */
+
+
+  _proto.toISO = function toISO(opts) {
+    if (!this.isValid) return INVALID$1;
+    return this.s.toISO(opts) + "/" + this.e.toISO(opts);
+  };
+  /**
+   * Returns a string representation of this Interval formatted according to the specified format string.
+   * @param {string} dateFormat - the format string. This string formats the start and end time. See {@link DateTime.toFormat} for details.
+   * @param {Object} opts - options
+   * @param {string} [opts.separator =  ' – '] - a separator to place between the start and end representations
+   * @return {string}
+   */
+
+
+  _proto.toFormat = function toFormat(dateFormat, _temp2) {
+    var _ref4 = _temp2 === void 0 ? {} : _temp2,
+        _ref4$separator = _ref4.separator,
+        separator = _ref4$separator === void 0 ? " – " : _ref4$separator;
+
+    if (!this.isValid) return INVALID$1;
+    return "" + this.s.toFormat(dateFormat) + separator + this.e.toFormat(dateFormat);
+  };
+  /**
+   * Return a Duration representing the time spanned by this interval.
+   * @param {string|string[]} [unit=['milliseconds']] - the unit or units (such as 'hours' or 'days') to include in the duration.
+   * @param {Object} opts - options that affect the creation of the Duration
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @example Interval.fromDateTimes(dt1, dt2).toDuration().toObject() //=> { milliseconds: 88489257 }
+   * @example Interval.fromDateTimes(dt1, dt2).toDuration('days').toObject() //=> { days: 1.0241812152777778 }
+   * @example Interval.fromDateTimes(dt1, dt2).toDuration(['hours', 'minutes']).toObject() //=> { hours: 24, minutes: 34.82095 }
+   * @example Interval.fromDateTimes(dt1, dt2).toDuration(['hours', 'minutes', 'seconds']).toObject() //=> { hours: 24, minutes: 34, seconds: 49.257 }
+   * @example Interval.fromDateTimes(dt1, dt2).toDuration('seconds').toObject() //=> { seconds: 88489.257 }
+   * @return {Duration}
+   */
+
+
+  _proto.toDuration = function toDuration(unit, opts) {
+    if (!this.isValid) {
+      return Duration.invalid(this.invalidReason);
+    }
+
+    return this.e.diff(this.s, unit, opts);
+  };
+  /**
+   * Run mapFn on the interval start and end, returning a new Interval from the resulting DateTimes
+   * @param {function} mapFn
+   * @return {Interval}
+   * @example Interval.fromDateTimes(dt1, dt2).mapEndpoints(endpoint => endpoint.toUTC())
+   * @example Interval.fromDateTimes(dt1, dt2).mapEndpoints(endpoint => endpoint.plus({ hours: 2 }))
+   */
+
+
+  _proto.mapEndpoints = function mapEndpoints(mapFn) {
+    return Interval.fromDateTimes(mapFn(this.s), mapFn(this.e));
+  };
+
+  _createClass(Interval, [{
+    key: "start",
+    get: function get() {
+      return this.isValid ? this.s : null;
+    }
+    /**
+     * Returns the end of the Interval
+     * @type {DateTime}
+     */
+
+  }, {
+    key: "end",
+    get: function get() {
+      return this.isValid ? this.e : null;
+    }
+    /**
+     * Returns whether this Interval's end is at least its start, i.e. that the Interval isn't 'backwards'.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isValid",
+    get: function get() {
+      return this.invalidReason === null;
+    }
+    /**
+     * Returns an error code if this Interval is invalid, or null if the Interval is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidReason",
+    get: function get() {
+      return this.invalid ? this.invalid.reason : null;
+    }
+    /**
+     * Returns an explanation of why this Interval became invalid, or null if the Interval is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidExplanation",
+    get: function get() {
+      return this.invalid ? this.invalid.explanation : null;
+    }
+  }]);
+
+  return Interval;
+}();
+
+/**
+ * The Info class contains static methods for retrieving general time and date related data. For example, it has methods for finding out if a time zone has a DST, for listing the months in any supported locale, and for discovering which of Luxon features are available in the current environment.
+ */
+
+var Info =
+/*#__PURE__*/
+function () {
+  function Info() {}
+
+  /**
+   * Return whether the specified zone contains a DST.
+   * @param {string|Zone} [zone='local'] - Zone to check. Defaults to the environment's local zone.
+   * @return {boolean}
+   */
+  Info.hasDST = function hasDST(zone) {
+    if (zone === void 0) {
+      zone = Settings.defaultZone;
+    }
+
+    var proto = DateTime.local().setZone(zone).set({
+      month: 12
+    });
+    return !zone.universal && proto.offset !== proto.set({
+      month: 6
+    }).offset;
+  };
+  /**
+   * Return whether the specified zone is a valid IANA specifier.
+   * @param {string} zone - Zone to check
+   * @return {boolean}
+   */
+
+
+  Info.isValidIANAZone = function isValidIANAZone(zone) {
+    return !!IANAZone.isValidSpecifier(zone) && IANAZone.isValidZone(zone);
+  };
+  /**
+   * Converts the input into a {@link Zone} instance.
+   *
+   * * If `input` is already a Zone instance, it is returned unchanged.
+   * * If `input` is a string containing a valid time zone name, a Zone instance
+   *   with that name is returned.
+   * * If `input` is a string that doesn't refer to a known time zone, a Zone
+   *   instance with {@link Zone.isValid} == false is returned.
+   * * If `input is a number, a Zone instance with the specified fixed offset
+   *   in minutes is returned.
+   * * If `input` is `null` or `undefined`, the default zone is returned.
+   * @param {string|Zone|number} [input] - the value to be converted
+   * @return {Zone}
+   */
+
+
+  Info.normalizeZone = function normalizeZone$$1(input) {
+    return normalizeZone(input, Settings.defaultZone);
+  };
+  /**
+   * Return an array of standalone month names.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+   * @param {string} [length='long'] - the length of the month representation, such as "numeric", "2-digit", "narrow", "short", "long"
+   * @param {Object} opts - options
+   * @param {string} [opts.locale] - the locale code
+   * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.outputCalendar='gregory'] - the calendar
+   * @example Info.months()[0] //=> 'January'
+   * @example Info.months('short')[0] //=> 'Jan'
+   * @example Info.months('numeric')[0] //=> '1'
+   * @example Info.months('short', { locale: 'fr-CA' } )[0] //=> 'janv.'
+   * @example Info.months('numeric', { locale: 'ar' })[0] //=> '١'
+   * @example Info.months('long', { outputCalendar: 'islamic' })[0] //=> 'Rabiʻ I'
+   * @return {[string]}
+   */
+
+
+  Info.months = function months(length, _temp) {
+    if (length === void 0) {
+      length = "long";
+    }
+
+    var _ref = _temp === void 0 ? {} : _temp,
+        _ref$locale = _ref.locale,
+        locale = _ref$locale === void 0 ? null : _ref$locale,
+        _ref$numberingSystem = _ref.numberingSystem,
+        numberingSystem = _ref$numberingSystem === void 0 ? null : _ref$numberingSystem,
+        _ref$outputCalendar = _ref.outputCalendar,
+        outputCalendar = _ref$outputCalendar === void 0 ? "gregory" : _ref$outputCalendar;
+
+    return Locale.create(locale, numberingSystem, outputCalendar).months(length);
+  };
+  /**
+   * Return an array of format month names.
+   * Format months differ from standalone months in that they're meant to appear next to the day of the month. In some languages, that
+   * changes the string.
+   * See {@link months}
+   * @param {string} [length='long'] - the length of the month representation, such as "numeric", "2-digit", "narrow", "short", "long"
+   * @param {Object} opts - options
+   * @param {string} [opts.locale] - the locale code
+   * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.outputCalendar='gregory'] - the calendar
+   * @return {[string]}
+   */
+
+
+  Info.monthsFormat = function monthsFormat(length, _temp2) {
+    if (length === void 0) {
+      length = "long";
+    }
+
+    var _ref2 = _temp2 === void 0 ? {} : _temp2,
+        _ref2$locale = _ref2.locale,
+        locale = _ref2$locale === void 0 ? null : _ref2$locale,
+        _ref2$numberingSystem = _ref2.numberingSystem,
+        numberingSystem = _ref2$numberingSystem === void 0 ? null : _ref2$numberingSystem,
+        _ref2$outputCalendar = _ref2.outputCalendar,
+        outputCalendar = _ref2$outputCalendar === void 0 ? "gregory" : _ref2$outputCalendar;
+
+    return Locale.create(locale, numberingSystem, outputCalendar).months(length, true);
+  };
+  /**
+   * Return an array of standalone week names.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+   * @param {string} [length='long'] - the length of the month representation, such as "narrow", "short", "long".
+   * @param {Object} opts - options
+   * @param {string} [opts.locale] - the locale code
+   * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @example Info.weekdays()[0] //=> 'Monday'
+   * @example Info.weekdays('short')[0] //=> 'Mon'
+   * @example Info.weekdays('short', { locale: 'fr-CA' })[0] //=> 'lun.'
+   * @example Info.weekdays('short', { locale: 'ar' })[0] //=> 'الاثنين'
+   * @return {[string]}
+   */
+
+
+  Info.weekdays = function weekdays(length, _temp3) {
+    if (length === void 0) {
+      length = "long";
+    }
+
+    var _ref3 = _temp3 === void 0 ? {} : _temp3,
+        _ref3$locale = _ref3.locale,
+        locale = _ref3$locale === void 0 ? null : _ref3$locale,
+        _ref3$numberingSystem = _ref3.numberingSystem,
+        numberingSystem = _ref3$numberingSystem === void 0 ? null : _ref3$numberingSystem;
+
+    return Locale.create(locale, numberingSystem, null).weekdays(length);
+  };
+  /**
+   * Return an array of format week names.
+   * Format weekdays differ from standalone weekdays in that they're meant to appear next to more date information. In some languages, that
+   * changes the string.
+   * See {@link weekdays}
+   * @param {string} [length='long'] - the length of the month representation, such as "narrow", "short", "long".
+   * @param {Object} opts - options
+   * @param {string} [opts.locale=null] - the locale code
+   * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @return {[string]}
+   */
+
+
+  Info.weekdaysFormat = function weekdaysFormat(length, _temp4) {
+    if (length === void 0) {
+      length = "long";
+    }
+
+    var _ref4 = _temp4 === void 0 ? {} : _temp4,
+        _ref4$locale = _ref4.locale,
+        locale = _ref4$locale === void 0 ? null : _ref4$locale,
+        _ref4$numberingSystem = _ref4.numberingSystem,
+        numberingSystem = _ref4$numberingSystem === void 0 ? null : _ref4$numberingSystem;
+
+    return Locale.create(locale, numberingSystem, null).weekdays(length, true);
+  };
+  /**
+   * Return an array of meridiems.
+   * @param {Object} opts - options
+   * @param {string} [opts.locale] - the locale code
+   * @example Info.meridiems() //=> [ 'AM', 'PM' ]
+   * @example Info.meridiems({ locale: 'my' }) //=> [ 'နံနက်', 'ညနေ' ]
+   * @return {[string]}
+   */
+
+
+  Info.meridiems = function meridiems(_temp5) {
+    var _ref5 = _temp5 === void 0 ? {} : _temp5,
+        _ref5$locale = _ref5.locale,
+        locale = _ref5$locale === void 0 ? null : _ref5$locale;
+
+    return Locale.create(locale).meridiems();
+  };
+  /**
+   * Return an array of eras, such as ['BC', 'AD']. The locale can be specified, but the calendar system is always Gregorian.
+   * @param {string} [length='short'] - the length of the era representation, such as "short" or "long".
+   * @param {Object} opts - options
+   * @param {string} [opts.locale] - the locale code
+   * @example Info.eras() //=> [ 'BC', 'AD' ]
+   * @example Info.eras('long') //=> [ 'Before Christ', 'Anno Domini' ]
+   * @example Info.eras('long', { locale: 'fr' }) //=> [ 'avant Jésus-Christ', 'après Jésus-Christ' ]
+   * @return {[string]}
+   */
+
+
+  Info.eras = function eras(length, _temp6) {
+    if (length === void 0) {
+      length = "short";
+    }
+
+    var _ref6 = _temp6 === void 0 ? {} : _temp6,
+        _ref6$locale = _ref6.locale,
+        locale = _ref6$locale === void 0 ? null : _ref6$locale;
+
+    return Locale.create(locale, null, "gregory").eras(length);
+  };
+  /**
+   * Return the set of available features in this environment.
+   * Some features of Luxon are not available in all environments. For example, on older browsers, timezone support is not available. Use this function to figure out if that's the case.
+   * Keys:
+   * * `zones`: whether this environment supports IANA timezones
+   * * `intlTokens`: whether this environment supports internationalized token-based formatting/parsing
+   * * `intl`: whether this environment supports general internationalization
+   * * `relative`: whether this environment supports relative time formatting
+   * @example Info.features() //=> { intl: true, intlTokens: false, zones: true, relative: false }
+   * @return {Object}
+   */
+
+
+  Info.features = function features() {
+    var intl = false,
+        intlTokens = false,
+        zones = false,
+        relative = hasRelative();
+
+    if (hasIntl()) {
+      intl = true;
+      intlTokens = hasFormatToParts();
+
+      try {
+        zones = new Intl.DateTimeFormat("en", {
+          timeZone: "America/New_York"
+        }).resolvedOptions().timeZone === "America/New_York";
+      } catch (e) {
+        zones = false;
+      }
+    }
+
+    return {
+      intl: intl,
+      intlTokens: intlTokens,
+      zones: zones,
+      relative: relative
+    };
+  };
+
+  return Info;
+}();
+
+function dayDiff(earlier, later) {
+  var utcDayStart = function utcDayStart(dt) {
+    return dt.toUTC(0, {
+      keepLocalTime: true
+    }).startOf("day").valueOf();
+  },
+      ms = utcDayStart(later) - utcDayStart(earlier);
+
+  return Math.floor(Duration.fromMillis(ms).as("days"));
+}
+
+function highOrderDiffs(cursor, later, units) {
+  var differs = [["years", function (a, b) {
+    return b.year - a.year;
+  }], ["months", function (a, b) {
+    return b.month - a.month + (b.year - a.year) * 12;
+  }], ["weeks", function (a, b) {
+    var days = dayDiff(a, b);
+    return (days - days % 7) / 7;
+  }], ["days", dayDiff]];
+  var results = {};
+  var lowestOrder, highWater;
+
+  for (var _i = 0; _i < differs.length; _i++) {
+    var _differs$_i = differs[_i],
+        unit = _differs$_i[0],
+        differ = _differs$_i[1];
+
+    if (units.indexOf(unit) >= 0) {
+      var _cursor$plus;
+
+      lowestOrder = unit;
+      var delta = differ(cursor, later);
+      highWater = cursor.plus((_cursor$plus = {}, _cursor$plus[unit] = delta, _cursor$plus));
+
+      if (highWater > later) {
+        var _highWater$minus;
+
+        cursor = highWater.minus((_highWater$minus = {}, _highWater$minus[unit] = 1, _highWater$minus));
+        delta -= 1;
+      } else {
+        cursor = highWater;
+      }
+
+      results[unit] = delta;
+    }
+  }
+
+  return [cursor, results, highWater, lowestOrder];
+}
+
+function _diff (earlier, later, units, opts) {
+  var _highOrderDiffs = highOrderDiffs(earlier, later, units),
+      cursor = _highOrderDiffs[0],
+      results = _highOrderDiffs[1],
+      highWater = _highOrderDiffs[2],
+      lowestOrder = _highOrderDiffs[3];
+
+  var remainingMillis = later - cursor;
+  var lowerOrderUnits = units.filter(function (u) {
+    return ["hours", "minutes", "seconds", "milliseconds"].indexOf(u) >= 0;
+  });
+
+  if (lowerOrderUnits.length === 0) {
+    if (highWater < later) {
+      var _cursor$plus2;
+
+      highWater = cursor.plus((_cursor$plus2 = {}, _cursor$plus2[lowestOrder] = 1, _cursor$plus2));
+    }
+
+    if (highWater !== cursor) {
+      results[lowestOrder] = (results[lowestOrder] || 0) + remainingMillis / (highWater - cursor);
+    }
+  }
+
+  var duration = Duration.fromObject(Object.assign(results, opts));
+
+  if (lowerOrderUnits.length > 0) {
+    var _Duration$fromMillis;
+
+    return (_Duration$fromMillis = Duration.fromMillis(remainingMillis, opts)).shiftTo.apply(_Duration$fromMillis, lowerOrderUnits).plus(duration);
+  } else {
+    return duration;
+  }
+}
+
+var MISSING_FTP = "missing Intl.DateTimeFormat.formatToParts support";
+
+function intUnit(regex, post) {
+  if (post === void 0) {
+    post = function post(i) {
+      return i;
+    };
+  }
+
+  return {
+    regex: regex,
+    deser: function deser(_ref) {
+      var s = _ref[0];
+      return post(parseInt(s));
+    }
+  };
+}
+
+function fixListRegex(s) {
+  // make dots optional and also make them literal
+  return s.replace(/\./, "\\.?");
+}
+
+function stripInsensitivities(s) {
+  return s.replace(/\./, "").toLowerCase();
+}
+
+function oneOf(strings, startIndex) {
+  if (strings === null) {
+    return null;
+  } else {
+    return {
+      regex: RegExp(strings.map(fixListRegex).join("|")),
+      deser: function deser(_ref2) {
+        var s = _ref2[0];
+        return strings.findIndex(function (i) {
+          return stripInsensitivities(s) === stripInsensitivities(i);
+        }) + startIndex;
+      }
+    };
+  }
+}
+
+function offset(regex, groups) {
+  return {
+    regex: regex,
+    deser: function deser(_ref3) {
+      var h = _ref3[1],
+          m = _ref3[2];
+      return signedOffset(h, m);
+    },
+    groups: groups
+  };
+}
+
+function simple(regex) {
+  return {
+    regex: regex,
+    deser: function deser(_ref4) {
+      var s = _ref4[0];
+      return s;
+    }
+  };
+}
+
+function escapeToken(value) {
+  // eslint-disable-next-line no-useless-escape
+  return value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
+}
+
+function unitForToken(token, loc) {
+  var one = /\d/,
+      two = /\d{2}/,
+      three = /\d{3}/,
+      four = /\d{4}/,
+      oneOrTwo = /\d{1,2}/,
+      oneToThree = /\d{1,3}/,
+      twoToFour = /\d{2,4}/,
+      literal = function literal(t) {
+    return {
+      regex: RegExp(escapeToken(t.val)),
+      deser: function deser(_ref5) {
+        var s = _ref5[0];
+        return s;
+      },
+      literal: true
+    };
+  },
+      unitate = function unitate(t) {
+    if (token.literal) {
+      return literal(t);
+    }
+
+    switch (t.val) {
+      // era
+      case "G":
+        return oneOf(loc.eras("short", false), 0);
+
+      case "GG":
+        return oneOf(loc.eras("long", false), 0);
+      // years
+
+      case "y":
+        return intUnit(/\d{1,6}/);
+
+      case "yy":
+        return intUnit(twoToFour, untruncateYear);
+
+      case "yyyy":
+        return intUnit(four);
+
+      case "yyyyy":
+        return intUnit(/\d{4,6}/);
+
+      case "yyyyyy":
+        return intUnit(/\d{6}/);
+      // months
+
+      case "M":
+        return intUnit(oneOrTwo);
+
+      case "MM":
+        return intUnit(two);
+
+      case "MMM":
+        return oneOf(loc.months("short", false, false), 1);
+
+      case "MMMM":
+        return oneOf(loc.months("long", false, false), 1);
+
+      case "L":
+        return intUnit(oneOrTwo);
+
+      case "LL":
+        return intUnit(two);
+
+      case "LLL":
+        return oneOf(loc.months("short", true, false), 1);
+
+      case "LLLL":
+        return oneOf(loc.months("long", true, false), 1);
+      // dates
+
+      case "d":
+        return intUnit(oneOrTwo);
+
+      case "dd":
+        return intUnit(two);
+      // ordinals
+
+      case "o":
+        return intUnit(oneToThree);
+
+      case "ooo":
+        return intUnit(three);
+      // time
+
+      case "HH":
+        return intUnit(two);
+
+      case "H":
+        return intUnit(oneOrTwo);
+
+      case "hh":
+        return intUnit(two);
+
+      case "h":
+        return intUnit(oneOrTwo);
+
+      case "mm":
+        return intUnit(two);
+
+      case "m":
+        return intUnit(oneOrTwo);
+
+      case "s":
+        return intUnit(oneOrTwo);
+
+      case "ss":
+        return intUnit(two);
+
+      case "S":
+        return intUnit(oneToThree);
+
+      case "SSS":
+        return intUnit(three);
+
+      case "u":
+        return simple(/\d{1,9}/);
+      // meridiem
+
+      case "a":
+        return oneOf(loc.meridiems(), 0);
+      // weekYear (k)
+
+      case "kkkk":
+        return intUnit(four);
+
+      case "kk":
+        return intUnit(twoToFour, untruncateYear);
+      // weekNumber (W)
+
+      case "W":
+        return intUnit(oneOrTwo);
+
+      case "WW":
+        return intUnit(two);
+      // weekdays
+
+      case "E":
+      case "c":
+        return intUnit(one);
+
+      case "EEE":
+        return oneOf(loc.weekdays("short", false, false), 1);
+
+      case "EEEE":
+        return oneOf(loc.weekdays("long", false, false), 1);
+
+      case "ccc":
+        return oneOf(loc.weekdays("short", true, false), 1);
+
+      case "cccc":
+        return oneOf(loc.weekdays("long", true, false), 1);
+      // offset/zone
+
+      case "Z":
+      case "ZZ":
+        return offset(/([+-]\d{1,2})(?::(\d{2}))?/, 2);
+
+      case "ZZZ":
+        return offset(/([+-]\d{1,2})(\d{2})?/, 2);
+      // we don't support ZZZZ (PST) or ZZZZZ (Pacific Standard Time) in parsing
+      // because we don't have any way to figure out what they are
+
+      case "z":
+        return simple(/[a-z_+-]{1,256}(\/[a-z_+-]{1,256}(\/[a-z_+-]{1,256})?)?/i);
+
+      default:
+        return literal(t);
+    }
+  };
+
+  var unit = unitate(token) || {
+    invalidReason: MISSING_FTP
+  };
+  unit.token = token;
+  return unit;
+}
+
+function buildRegex(units) {
+  var re = units.map(function (u) {
+    return u.regex;
+  }).reduce(function (f, r) {
+    return f + "(" + r.source + ")";
+  }, "");
+  return ["^" + re + "$", units];
+}
+
+function match(input, regex, handlers) {
+  var matches = input.match(regex);
+
+  if (matches) {
+    var all = {};
+    var matchIndex = 1;
+
+    for (var i in handlers) {
+      if (handlers.hasOwnProperty(i)) {
+        var h = handlers[i],
+            groups = h.groups ? h.groups + 1 : 1;
+
+        if (!h.literal && h.token) {
+          all[h.token.val[0]] = h.deser(matches.slice(matchIndex, matchIndex + groups));
+        }
+
+        matchIndex += groups;
+      }
+    }
+
+    return [matches, all];
+  } else {
+    return [matches, {}];
+  }
+}
+
+function dateTimeFromMatches(matches) {
+  var toField = function toField(token) {
+    switch (token) {
+      case "S":
+        return "millisecond";
+
+      case "s":
+        return "second";
+
+      case "m":
+        return "minute";
+
+      case "h":
+      case "H":
+        return "hour";
+
+      case "d":
+        return "day";
+
+      case "o":
+        return "ordinal";
+
+      case "L":
+      case "M":
+        return "month";
+
+      case "y":
+        return "year";
+
+      case "E":
+      case "c":
+        return "weekday";
+
+      case "W":
+        return "weekNumber";
+
+      case "k":
+        return "weekYear";
+
+      default:
+        return null;
+    }
+  };
+
+  var zone;
+
+  if (!isUndefined(matches.Z)) {
+    zone = new FixedOffsetZone(matches.Z);
+  } else if (!isUndefined(matches.z)) {
+    zone = new IANAZone(matches.z);
+  } else {
+    zone = null;
+  }
+
+  if (!isUndefined(matches.h)) {
+    if (matches.h < 12 && matches.a === 1) {
+      matches.h += 12;
+    } else if (matches.h === 12 && matches.a === 0) {
+      matches.h = 0;
+    }
+  }
+
+  if (matches.G === 0 && matches.y) {
+    matches.y = -matches.y;
+  }
+
+  if (!isUndefined(matches.u)) {
+    matches.S = parseMillis(matches.u);
+  }
+
+  var vals = Object.keys(matches).reduce(function (r, k) {
+    var f = toField(k);
+
+    if (f) {
+      r[f] = matches[k];
+    }
+
+    return r;
+  }, {});
+  return [vals, zone];
+}
+/**
+ * @private
+ */
+
+
+function explainFromTokens(locale, input, format) {
+  var tokens = Formatter.parseFormat(format),
+      units = tokens.map(function (t) {
+    return unitForToken(t, locale);
+  }),
+      disqualifyingUnit = units.find(function (t) {
+    return t.invalidReason;
+  });
+
+  if (disqualifyingUnit) {
+    return {
+      input: input,
+      tokens: tokens,
+      invalidReason: disqualifyingUnit.invalidReason
+    };
+  } else {
+    var _buildRegex = buildRegex(units),
+        regexString = _buildRegex[0],
+        handlers = _buildRegex[1],
+        regex = RegExp(regexString, "i"),
+        _match = match(input, regex, handlers),
+        rawMatches = _match[0],
+        matches = _match[1],
+        _ref6 = matches ? dateTimeFromMatches(matches) : [null, null],
+        result = _ref6[0],
+        zone = _ref6[1];
+
+    return {
+      input: input,
+      tokens: tokens,
+      regex: regex,
+      rawMatches: rawMatches,
+      matches: matches,
+      result: result,
+      zone: zone
+    };
+  }
+}
+function parseFromTokens(locale, input, format) {
+  var _explainFromTokens = explainFromTokens(locale, input, format),
+      result = _explainFromTokens.result,
+      zone = _explainFromTokens.zone,
+      invalidReason = _explainFromTokens.invalidReason;
+
+  return [result, zone, invalidReason];
+}
+
+var nonLeapLadder = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
+    leapLadder = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335];
+
+function unitOutOfRange(unit, value) {
+  return new Invalid("unit out of range", "you specified " + value + " (of type " + typeof value + ") as a " + unit + ", which is invalid");
+}
+
+function dayOfWeek(year, month, day) {
+  var js = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+  return js === 0 ? 7 : js;
+}
+
+function computeOrdinal(year, month, day) {
+  return day + (isLeapYear(year) ? leapLadder : nonLeapLadder)[month - 1];
+}
+
+function uncomputeOrdinal(year, ordinal) {
+  var table = isLeapYear(year) ? leapLadder : nonLeapLadder,
+      month0 = table.findIndex(function (i) {
+    return i < ordinal;
+  }),
+      day = ordinal - table[month0];
+  return {
+    month: month0 + 1,
+    day: day
+  };
+}
+/**
+ * @private
+ */
+
+
+function gregorianToWeek(gregObj) {
+  var year = gregObj.year,
+      month = gregObj.month,
+      day = gregObj.day,
+      ordinal = computeOrdinal(year, month, day),
+      weekday = dayOfWeek(year, month, day);
+  var weekNumber = Math.floor((ordinal - weekday + 10) / 7),
+      weekYear;
+
+  if (weekNumber < 1) {
+    weekYear = year - 1;
+    weekNumber = weeksInWeekYear(weekYear);
+  } else if (weekNumber > weeksInWeekYear(year)) {
+    weekYear = year + 1;
+    weekNumber = 1;
+  } else {
+    weekYear = year;
+  }
+
+  return Object.assign({
+    weekYear: weekYear,
+    weekNumber: weekNumber,
+    weekday: weekday
+  }, timeObject(gregObj));
+}
+function weekToGregorian(weekData) {
+  var weekYear = weekData.weekYear,
+      weekNumber = weekData.weekNumber,
+      weekday = weekData.weekday,
+      weekdayOfJan4 = dayOfWeek(weekYear, 1, 4),
+      yearInDays = daysInYear(weekYear);
+  var ordinal = weekNumber * 7 + weekday - weekdayOfJan4 - 3,
+      year;
+
+  if (ordinal < 1) {
+    year = weekYear - 1;
+    ordinal += daysInYear(year);
+  } else if (ordinal > yearInDays) {
+    year = weekYear + 1;
+    ordinal -= daysInYear(weekYear);
+  } else {
+    year = weekYear;
+  }
+
+  var _uncomputeOrdinal = uncomputeOrdinal(year, ordinal),
+      month = _uncomputeOrdinal.month,
+      day = _uncomputeOrdinal.day;
+
+  return Object.assign({
+    year: year,
+    month: month,
+    day: day
+  }, timeObject(weekData));
+}
+function gregorianToOrdinal(gregData) {
+  var year = gregData.year,
+      month = gregData.month,
+      day = gregData.day,
+      ordinal = computeOrdinal(year, month, day);
+  return Object.assign({
+    year: year,
+    ordinal: ordinal
+  }, timeObject(gregData));
+}
+function ordinalToGregorian(ordinalData) {
+  var year = ordinalData.year,
+      ordinal = ordinalData.ordinal,
+      _uncomputeOrdinal2 = uncomputeOrdinal(year, ordinal),
+      month = _uncomputeOrdinal2.month,
+      day = _uncomputeOrdinal2.day;
+
+  return Object.assign({
+    year: year,
+    month: month,
+    day: day
+  }, timeObject(ordinalData));
+}
+function hasInvalidWeekData(obj) {
+  var validYear = isNumber(obj.weekYear),
+      validWeek = numberBetween(obj.weekNumber, 1, weeksInWeekYear(obj.weekYear)),
+      validWeekday = numberBetween(obj.weekday, 1, 7);
+
+  if (!validYear) {
+    return unitOutOfRange("weekYear", obj.weekYear);
+  } else if (!validWeek) {
+    return unitOutOfRange("week", obj.week);
+  } else if (!validWeekday) {
+    return unitOutOfRange("weekday", obj.weekday);
+  } else return false;
+}
+function hasInvalidOrdinalData(obj) {
+  var validYear = isNumber(obj.year),
+      validOrdinal = numberBetween(obj.ordinal, 1, daysInYear(obj.year));
+
+  if (!validYear) {
+    return unitOutOfRange("year", obj.year);
+  } else if (!validOrdinal) {
+    return unitOutOfRange("ordinal", obj.ordinal);
+  } else return false;
+}
+function hasInvalidGregorianData(obj) {
+  var validYear = isNumber(obj.year),
+      validMonth = numberBetween(obj.month, 1, 12),
+      validDay = numberBetween(obj.day, 1, daysInMonth(obj.year, obj.month));
+
+  if (!validYear) {
+    return unitOutOfRange("year", obj.year);
+  } else if (!validMonth) {
+    return unitOutOfRange("month", obj.month);
+  } else if (!validDay) {
+    return unitOutOfRange("day", obj.day);
+  } else return false;
+}
+function hasInvalidTimeData(obj) {
+  var validHour = numberBetween(obj.hour, 0, 24),
+      validMinute = numberBetween(obj.minute, 0, 59),
+      validSecond = numberBetween(obj.second, 0, 59),
+      validMillisecond = numberBetween(obj.millisecond, 0, 999);
+
+  if (!validHour) {
+    return unitOutOfRange("hour", obj.hour);
+  } else if (!validMinute) {
+    return unitOutOfRange("minute", obj.minute);
+  } else if (!validSecond) {
+    return unitOutOfRange("second", obj.secon);
+  } else if (!validMillisecond) {
+    return unitOutOfRange("millisecond", obj.millisecond);
+  } else return false;
+}
+
+var INVALID$2 = "Invalid DateTime";
+
+function unsupportedZone(zone) {
+  return new Invalid("unsupported zone", "the zone \"" + zone.name + "\" is not supported");
+} // we cache week data on the DT object and this intermediates the cache
+
+
+function possiblyCachedWeekData(dt) {
+  if (dt.weekData === null) {
+    dt.weekData = gregorianToWeek(dt.c);
+  }
+
+  return dt.weekData;
+} // clone really means, "make a new object with these modifications". all "setters" really use this
+// to create a new object while only changing some of the properties
+
+
+function clone$1(inst, alts) {
+  var current = {
+    ts: inst.ts,
+    zone: inst.zone,
+    c: inst.c,
+    o: inst.o,
+    loc: inst.loc,
+    invalid: inst.invalid
+  };
+  return new DateTime(Object.assign({}, current, alts, {
+    old: current
+  }));
+} // find the right offset a given local time. The o input is our guess, which determines which
+// offset we'll pick in ambiguous cases (e.g. there are two 3 AMs b/c Fallback DST)
+
+
+function fixOffset(localTS, o, tz) {
+  // Our UTC time is just a guess because our offset is just a guess
+  var utcGuess = localTS - o * 60 * 1000; // Test whether the zone matches the offset for this ts
+
+  var o2 = tz.offset(utcGuess); // If so, offset didn't change and we're done
+
+  if (o === o2) {
+    return [utcGuess, o];
+  } // If not, change the ts by the difference in the offset
+
+
+  utcGuess -= (o2 - o) * 60 * 1000; // If that gives us the local time we want, we're done
+
+  var o3 = tz.offset(utcGuess);
+
+  if (o2 === o3) {
+    return [utcGuess, o2];
+  } // If it's different, we're in a hole time. The offset has changed, but the we don't adjust the time
+
+
+  return [localTS - Math.min(o2, o3) * 60 * 1000, Math.max(o2, o3)];
+} // convert an epoch timestamp into a calendar object with the given offset
+
+
+function tsToObj(ts, offset) {
+  ts += offset * 60 * 1000;
+  var d = new Date(ts);
+  return {
+    year: d.getUTCFullYear(),
+    month: d.getUTCMonth() + 1,
+    day: d.getUTCDate(),
+    hour: d.getUTCHours(),
+    minute: d.getUTCMinutes(),
+    second: d.getUTCSeconds(),
+    millisecond: d.getUTCMilliseconds()
+  };
+} // convert a calendar object to a epoch timestamp
+
+
+function objToTS(obj, offset, zone) {
+  return fixOffset(objToLocalTS(obj), offset, zone);
+} // create a new DT instance by adding a duration, adjusting for DSTs
+
+
+function adjustTime(inst, dur) {
+  var oPre = inst.o,
+      year = inst.c.year + dur.years,
+      month = inst.c.month + dur.months + dur.quarters * 3,
+      c = Object.assign({}, inst.c, {
+    year: year,
+    month: month,
+    day: Math.min(inst.c.day, daysInMonth(year, month)) + dur.days + dur.weeks * 7
+  }),
+      millisToAdd = Duration.fromObject({
+    hours: dur.hours,
+    minutes: dur.minutes,
+    seconds: dur.seconds,
+    milliseconds: dur.milliseconds
+  }).as("milliseconds"),
+      localTS = objToLocalTS(c);
+
+  var _fixOffset = fixOffset(localTS, oPre, inst.zone),
+      ts = _fixOffset[0],
+      o = _fixOffset[1];
+
+  if (millisToAdd !== 0) {
+    ts += millisToAdd; // that could have changed the offset by going over a DST, but we want to keep the ts the same
+
+    o = inst.zone.offset(ts);
+  }
+
+  return {
+    ts: ts,
+    o: o
+  };
+} // helper useful in turning the results of parsing into real dates
+// by handling the zone options
+
+
+function parseDataToDateTime(parsed, parsedZone, opts, format, text) {
+  var setZone = opts.setZone,
+      zone = opts.zone;
+
+  if (parsed && Object.keys(parsed).length !== 0) {
+    var interpretationZone = parsedZone || zone,
+        inst = DateTime.fromObject(Object.assign(parsed, opts, {
+      zone: interpretationZone
+    }));
+    return setZone ? inst : inst.setZone(zone);
+  } else {
+    return DateTime.invalid(new Invalid("unparsable", "the input \"" + text + "\" can't be parsed as " + format));
+  }
+} // if you want to output a technical format (e.g. RFC 2822), this helper
+// helps handle the details
+
+
+function toTechFormat(dt, format) {
+  return dt.isValid ? Formatter.create(Locale.create("en-US"), {
+    allowZ: true,
+    forceSimple: true
+  }).formatDateTimeFromString(dt, format) : null;
+} // technical time formats (e.g. the time part of ISO 8601), take some options
+// and this commonizes their handling
+
+
+function toTechTimeFormat(dt, _ref) {
+  var _ref$suppressSeconds = _ref.suppressSeconds,
+      suppressSeconds = _ref$suppressSeconds === void 0 ? false : _ref$suppressSeconds,
+      _ref$suppressMillisec = _ref.suppressMilliseconds,
+      suppressMilliseconds = _ref$suppressMillisec === void 0 ? false : _ref$suppressMillisec,
+      _ref$includeOffset = _ref.includeOffset,
+      includeOffset = _ref$includeOffset === void 0 ? true : _ref$includeOffset,
+      _ref$includeZone = _ref.includeZone,
+      includeZone = _ref$includeZone === void 0 ? false : _ref$includeZone,
+      _ref$spaceZone = _ref.spaceZone,
+      spaceZone = _ref$spaceZone === void 0 ? false : _ref$spaceZone;
+  var fmt = "HH:mm";
+
+  if (!suppressSeconds || dt.second !== 0 || dt.millisecond !== 0) {
+    fmt += ":ss";
+
+    if (!suppressMilliseconds || dt.millisecond !== 0) {
+      fmt += ".SSS";
+    }
+  }
+
+  if ((includeZone || includeOffset) && spaceZone) {
+    fmt += " ";
+  }
+
+  if (includeZone) {
+    fmt += "z";
+  } else if (includeOffset) {
+    fmt += "ZZ";
+  }
+
+  return toTechFormat(dt, fmt);
+} // defaults for unspecified units in the supported calendars
+
+
+var defaultUnitValues = {
+  month: 1,
+  day: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+},
+    defaultWeekUnitValues = {
+  weekNumber: 1,
+  weekday: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+},
+    defaultOrdinalUnitValues = {
+  ordinal: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+}; // Units in the supported calendars, sorted by bigness
+
+var orderedUnits$1 = ["year", "month", "day", "hour", "minute", "second", "millisecond"],
+    orderedWeekUnits = ["weekYear", "weekNumber", "weekday", "hour", "minute", "second", "millisecond"],
+    orderedOrdinalUnits = ["year", "ordinal", "hour", "minute", "second", "millisecond"]; // standardize case and plurality in units
+
+function normalizeUnit(unit, ignoreUnknown) {
+  if (ignoreUnknown === void 0) {
+    ignoreUnknown = false;
+  }
+
+  var normalized = {
+    year: "year",
+    years: "year",
+    month: "month",
+    months: "month",
+    day: "day",
+    days: "day",
+    hour: "hour",
+    hours: "hour",
+    minute: "minute",
+    minutes: "minute",
+    second: "second",
+    seconds: "second",
+    millisecond: "millisecond",
+    milliseconds: "millisecond",
+    weekday: "weekday",
+    weekdays: "weekday",
+    weeknumber: "weekNumber",
+    weeksnumber: "weekNumber",
+    weeknumbers: "weekNumber",
+    weekyear: "weekYear",
+    weekyears: "weekYear",
+    ordinal: "ordinal"
+  }[unit ? unit.toLowerCase() : unit];
+  if (!ignoreUnknown && !normalized) throw new InvalidUnitError(unit);
+  return normalized;
+} // this is a dumbed down version of fromObject() that runs about 60% faster
+// but doesn't do any validation, makes a bunch of assumptions about what units
+// are present, and so on.
+
+
+function quickDT(obj, zone) {
+  // assume we have the higher-order units
+  for (var _i = 0; _i < orderedUnits$1.length; _i++) {
+    var u = orderedUnits$1[_i];
+
+    if (isUndefined(obj[u])) {
+      obj[u] = defaultUnitValues[u];
+    }
+  }
+
+  var invalid = hasInvalidGregorianData(obj) || hasInvalidTimeData(obj);
+
+  if (invalid) {
+    return DateTime.invalid(invalid);
+  }
+
+  var tsNow = Settings.now(),
+      offsetProvis = zone.offset(tsNow),
+      _objToTS = objToTS(obj, offsetProvis, zone),
+      ts = _objToTS[0],
+      o = _objToTS[1];
+
+  return new DateTime({
+    ts: ts,
+    zone: zone,
+    o: o
+  });
+}
+
+function diffRelative(start, end, opts) {
+  var round = isUndefined(opts.round) ? true : opts.round,
+      format = function format(c, unit) {
+    c = roundTo(c, round || opts.calendary ? 0 : 2, true);
+    var formatter = end.loc.clone(opts).relFormatter(opts);
+    return formatter.format(c, unit);
+  },
+      differ = function differ(unit) {
+    if (opts.calendary) {
+      if (!end.hasSame(start, unit)) {
+        return end.startOf(unit).diff(start.startOf(unit), unit).get(unit);
+      } else return 0;
+    } else {
+      return end.diff(start, unit).get(unit);
+    }
+  };
+
+  if (opts.unit) {
+    return format(differ(opts.unit), opts.unit);
+  }
+
+  for (var _iterator = opts.units, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref2;
+
+    if (_isArray) {
+      if (_i2 >= _iterator.length) break;
+      _ref2 = _iterator[_i2++];
+    } else {
+      _i2 = _iterator.next();
+      if (_i2.done) break;
+      _ref2 = _i2.value;
+    }
+
+    var unit = _ref2;
+    var count = differ(unit);
+
+    if (Math.abs(count) >= 1) {
+      return format(count, unit);
+    }
+  }
+
+  return format(0, opts.units[opts.units.length - 1]);
+}
+/**
+ * A DateTime is an immutable data structure representing a specific date and time and accompanying methods. It contains class and instance methods for creating, parsing, interrogating, transforming, and formatting them.
+ *
+ * A DateTime comprises of:
+ * * A timestamp. Each DateTime instance refers to a specific millisecond of the Unix epoch.
+ * * A time zone. Each instance is considered in the context of a specific zone (by default the local system's zone).
+ * * Configuration properties that effect how output strings are formatted, such as `locale`, `numberingSystem`, and `outputCalendar`.
+ *
+ * Here is a brief overview of the most commonly used functionality it provides:
+ *
+ * * **Creation**: To create a DateTime from its components, use one of its factory class methods: {@link local}, {@link utc}, and (most flexibly) {@link fromObject}. To create one from a standard string format, use {@link fromISO}, {@link fromHTTP}, and {@link fromRFC2822}. To create one from a custom string format, use {@link fromFormat}. To create one from a native JS date, use {@link fromJSDate}.
+ * * **Gregorian calendar and time**: To examine the Gregorian properties of a DateTime individually (i.e as opposed to collectively through {@link toObject}), use the {@link year}, {@link month},
+ * {@link day}, {@link hour}, {@link minute}, {@link second}, {@link millisecond} accessors.
+ * * **Week calendar**: For ISO week calendar attributes, see the {@link weekYear}, {@link weekNumber}, and {@link weekday} accessors.
+ * * **Configuration** See the {@link locale} and {@link numberingSystem} accessors.
+ * * **Transformation**: To transform the DateTime into other DateTimes, use {@link set}, {@link reconfigure}, {@link setZone}, {@link setLocale}, {@link plus}, {@link minus}, {@link endOf}, {@link startOf}, {@link toUTC}, and {@link toLocal}.
+ * * **Output**: To convert the DateTime to other representations, use the {@link toRelative}, {@link toRelativeCalendar}, {@link toJSON}, {@link toISO}, {@link toHTTP}, {@link toObject}, {@link toRFC2822}, {@link toString}, {@link toLocaleString}, {@link toFormat}, {@link toMillis} and {@link toJSDate}.
+ *
+ * There's plenty others documented below. In addition, for more information on subtler topics like internationalization, time zones, alternative calendars, validity, and so on, see the external documentation.
+ */
+
+
+var DateTime =
+/*#__PURE__*/
+function () {
+  /**
+   * @access private
+   */
+  function DateTime(config) {
+    var zone = config.zone || Settings.defaultZone,
+        invalid = config.invalid || (Number.isNaN(config.ts) ? new Invalid("invalid input") : null) || (!zone.isValid ? unsupportedZone(zone) : null);
+    /**
+     * @access private
+     */
+
+    this.ts = isUndefined(config.ts) ? Settings.now() : config.ts;
+    var c = null,
+        o = null;
+
+    if (!invalid) {
+      var unchanged = config.old && config.old.ts === this.ts && config.old.zone.equals(zone);
+      c = unchanged ? config.old.c : tsToObj(this.ts, zone.offset(this.ts));
+      o = unchanged ? config.old.o : zone.offset(this.ts);
+    }
+    /**
+     * @access private
+     */
+
+
+    this._zone = zone;
+    /**
+     * @access private
+     */
+
+    this.loc = config.loc || Locale.create();
+    /**
+     * @access private
+     */
+
+    this.invalid = invalid;
+    /**
+     * @access private
+     */
+
+    this.weekData = null;
+    /**
+     * @access private
+     */
+
+    this.c = c;
+    /**
+     * @access private
+     */
+
+    this.o = o;
+    /**
+     * @access private
+     */
+
+    this.isLuxonDateTime = true;
+  } // CONSTRUCT
+
+  /**
+   * Create a local DateTime
+   * @param {number} year - The calendar year. If omitted (as in, call `local()` with no arguments), the current time will be used
+   * @param {number} [month=1] - The month, 1-indexed
+   * @param {number} [day=1] - The day of the month
+   * @param {number} [hour=0] - The hour of the day, in 24-hour time
+   * @param {number} [minute=0] - The minute of the hour, i.e. a number between 0 and 59
+   * @param {number} [second=0] - The second of the minute, i.e. a number between 0 and 59
+   * @param {number} [millisecond=0] - The millisecond of the second, i.e. a number between 0 and 999
+   * @example DateTime.local()                            //~> now
+   * @example DateTime.local(2017)                        //~> 2017-01-01T00:00:00
+   * @example DateTime.local(2017, 3)                     //~> 2017-03-01T00:00:00
+   * @example DateTime.local(2017, 3, 12)                 //~> 2017-03-12T00:00:00
+   * @example DateTime.local(2017, 3, 12, 5)              //~> 2017-03-12T05:00:00
+   * @example DateTime.local(2017, 3, 12, 5, 45)          //~> 2017-03-12T05:45:00
+   * @example DateTime.local(2017, 3, 12, 5, 45, 10)      //~> 2017-03-12T05:45:10
+   * @example DateTime.local(2017, 3, 12, 5, 45, 10, 765) //~> 2017-03-12T05:45:10.765
+   * @return {DateTime}
+   */
+
+
+  DateTime.local = function local(year, month, day, hour, minute, second, millisecond) {
+    if (isUndefined(year)) {
+      return new DateTime({
+        ts: Settings.now()
+      });
+    } else {
+      return quickDT({
+        year: year,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second,
+        millisecond: millisecond
+      }, Settings.defaultZone);
+    }
+  };
+  /**
+   * Create a DateTime in UTC
+   * @param {number} year - The calendar year. If omitted (as in, call `utc()` with no arguments), the current time will be used
+   * @param {number} [month=1] - The month, 1-indexed
+   * @param {number} [day=1] - The day of the month
+   * @param {number} [hour=0] - The hour of the day, in 24-hour time
+   * @param {number} [minute=0] - The minute of the hour, i.e. a number between 0 and 59
+   * @param {number} [second=0] - The second of the minute, i.e. a number between 0 and 59
+   * @param {number} [millisecond=0] - The millisecond of the second, i.e. a number between 0 and 999
+   * @example DateTime.utc()                            //~> now
+   * @example DateTime.utc(2017)                        //~> 2017-01-01T00:00:00Z
+   * @example DateTime.utc(2017, 3)                     //~> 2017-03-01T00:00:00Z
+   * @example DateTime.utc(2017, 3, 12)                 //~> 2017-03-12T00:00:00Z
+   * @example DateTime.utc(2017, 3, 12, 5)              //~> 2017-03-12T05:00:00Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45)          //~> 2017-03-12T05:45:00Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45, 10)      //~> 2017-03-12T05:45:10Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45, 10, 765) //~> 2017-03-12T05:45:10.765Z
+   * @return {DateTime}
+   */
+
+
+  DateTime.utc = function utc(year, month, day, hour, minute, second, millisecond) {
+    if (isUndefined(year)) {
+      return new DateTime({
+        ts: Settings.now(),
+        zone: FixedOffsetZone.utcInstance
+      });
+    } else {
+      return quickDT({
+        year: year,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second,
+        millisecond: millisecond
+      }, FixedOffsetZone.utcInstance);
+    }
+  };
+  /**
+   * Create a DateTime from a Javascript Date object. Uses the default zone.
+   * @param {Date} date - a Javascript Date object
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromJSDate = function fromJSDate(date, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return new DateTime({
+      ts: isDate(date) ? date.valueOf() : NaN,
+      zone: normalizeZone(options.zone, Settings.defaultZone),
+      loc: Locale.fromObject(options)
+    });
+  };
+  /**
+   * Create a DateTime from a number of milliseconds since the epoch (i.e. since 1 January 1970 00:00:00 UTC). Uses the default zone.
+   * @param {number} milliseconds - a number of milliseconds since 1970 UTC
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @param {string} [options.locale] - a locale to set on the resulting DateTime instance
+   * @param {string} options.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} options.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromMillis = function fromMillis(milliseconds, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!isNumber(milliseconds)) {
+      throw new InvalidArgumentError("fromMillis requires a numerical input");
+    } else {
+      return new DateTime({
+        ts: milliseconds,
+        zone: normalizeZone(options.zone, Settings.defaultZone),
+        loc: Locale.fromObject(options)
+      });
+    }
+  };
+  /**
+   * Create a DateTime from a number of seconds since the epoch (i.e. since 1 January 1970 00:00:00 UTC). Uses the default zone.
+   * @param {number} seconds - a number of seconds since 1970 UTC
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @param {string} [options.locale] - a locale to set on the resulting DateTime instance
+   * @param {string} options.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} options.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromSeconds = function fromSeconds(seconds, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!isNumber(seconds)) {
+      throw new InvalidArgumentError("fromSeconds requires a numerical input");
+    } else {
+      return new DateTime({
+        ts: seconds * 1000,
+        zone: normalizeZone(options.zone, Settings.defaultZone),
+        loc: Locale.fromObject(options)
+      });
+    }
+  };
+  /**
+   * Create a DateTime from a Javascript object with keys like 'year' and 'hour' with reasonable defaults.
+   * @param {Object} obj - the object to create the DateTime from
+   * @param {number} obj.year - a year, such as 1987
+   * @param {number} obj.month - a month, 1-12
+   * @param {number} obj.day - a day of the month, 1-31, depending on the month
+   * @param {number} obj.ordinal - day of the year, 1-365 or 366
+   * @param {number} obj.weekYear - an ISO week year
+   * @param {number} obj.weekNumber - an ISO week number, between 1 and 52 or 53, depending on the year
+   * @param {number} obj.weekday - an ISO weekday, 1-7, where 1 is Monday and 7 is Sunday
+   * @param {number} obj.hour - hour of the day, 0-23
+   * @param {number} obj.minute - minute of the hour, 0-59
+   * @param {number} obj.second - second of the minute, 0-59
+   * @param {number} obj.millisecond - millisecond of the second, 0-999
+   * @param {string|Zone} [obj.zone='local'] - interpret the numbers in the context of a particular zone. Can take any value taken as the first argument to setZone()
+   * @param {string} [obj.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} obj.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} obj.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromObject({ year: 1982, month: 5, day: 25}).toISODate() //=> '1982-05-25'
+   * @example DateTime.fromObject({ year: 1982 }).toISODate() //=> '1982-01-01T00'
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6 }) //~> today at 10:26:06
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'utc' }),
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'local' })
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'America/New_York' })
+   * @example DateTime.fromObject({ weekYear: 2016, weekNumber: 2, weekday: 3 }).toISODate() //=> '2016-01-13'
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromObject = function fromObject(obj) {
+    var zoneToUse = normalizeZone(obj.zone, Settings.defaultZone);
+
+    if (!zoneToUse.isValid) {
+      return DateTime.invalid(unsupportedZone(zoneToUse));
+    }
+
+    var tsNow = Settings.now(),
+        offsetProvis = zoneToUse.offset(tsNow),
+        normalized = normalizeObject(obj, normalizeUnit, true),
+        containsOrdinal = !isUndefined(normalized.ordinal),
+        containsGregorYear = !isUndefined(normalized.year),
+        containsGregorMD = !isUndefined(normalized.month) || !isUndefined(normalized.day),
+        containsGregor = containsGregorYear || containsGregorMD,
+        definiteWeekDef = normalized.weekYear || normalized.weekNumber,
+        loc = Locale.fromObject(obj); // cases:
+    // just a weekday -> this week's instance of that weekday, no worries
+    // (gregorian data or ordinal) + (weekYear or weekNumber) -> error
+    // (gregorian month or day) + ordinal -> error
+    // otherwise just use weeks or ordinals or gregorian, depending on what's specified
+
+    if ((containsGregor || containsOrdinal) && definiteWeekDef) {
+      throw new ConflictingSpecificationError("Can't mix weekYear/weekNumber units with year/month/day or ordinals");
+    }
+
+    if (containsGregorMD && containsOrdinal) {
+      throw new ConflictingSpecificationError("Can't mix ordinal dates with month/day");
+    }
+
+    var useWeekData = definiteWeekDef || normalized.weekday && !containsGregor; // configure ourselves to deal with gregorian dates or week stuff
+
+    var units,
+        defaultValues,
+        objNow = tsToObj(tsNow, offsetProvis);
+
+    if (useWeekData) {
+      units = orderedWeekUnits;
+      defaultValues = defaultWeekUnitValues;
+      objNow = gregorianToWeek(objNow);
+    } else if (containsOrdinal) {
+      units = orderedOrdinalUnits;
+      defaultValues = defaultOrdinalUnitValues;
+      objNow = gregorianToOrdinal(objNow);
+    } else {
+      units = orderedUnits$1;
+      defaultValues = defaultUnitValues;
+    } // set default values for missing stuff
+
+
+    var foundFirst = false;
+
+    for (var _iterator2 = units, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+      var _ref3;
+
+      if (_isArray2) {
+        if (_i3 >= _iterator2.length) break;
+        _ref3 = _iterator2[_i3++];
+      } else {
+        _i3 = _iterator2.next();
+        if (_i3.done) break;
+        _ref3 = _i3.value;
+      }
+
+      var u = _ref3;
+      var v = normalized[u];
+
+      if (!isUndefined(v)) {
+        foundFirst = true;
+      } else if (foundFirst) {
+        normalized[u] = defaultValues[u];
+      } else {
+        normalized[u] = objNow[u];
+      }
+    } // make sure the values we have are in range
+
+
+    var higherOrderInvalid = useWeekData ? hasInvalidWeekData(normalized) : containsOrdinal ? hasInvalidOrdinalData(normalized) : hasInvalidGregorianData(normalized),
+        invalid = higherOrderInvalid || hasInvalidTimeData(normalized);
+
+    if (invalid) {
+      return DateTime.invalid(invalid);
+    } // compute the actual time
+
+
+    var gregorian = useWeekData ? weekToGregorian(normalized) : containsOrdinal ? ordinalToGregorian(normalized) : normalized,
+        _objToTS2 = objToTS(gregorian, offsetProvis, zoneToUse),
+        tsFinal = _objToTS2[0],
+        offsetFinal = _objToTS2[1],
+        inst = new DateTime({
+      ts: tsFinal,
+      zone: zoneToUse,
+      o: offsetFinal,
+      loc: loc
+    }); // gregorian data + weekday serves only to validate
+
+
+    if (normalized.weekday && containsGregor && obj.weekday !== inst.weekday) {
+      return DateTime.invalid("mismatched weekday", "you can't specify both a weekday of " + normalized.weekday + " and a date of " + inst.toISO());
+    }
+
+    return inst;
+  };
+  /**
+   * Create a DateTime from an ISO 8601 string
+   * @param {string} text - the ISO string
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the time to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a fixed-offset zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123')
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00')
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00', {setZone: true})
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123', {zone: 'utc'})
+   * @example DateTime.fromISO('2016-W05-4')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromISO = function fromISO(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseISODate = parseISODate(text),
+        vals = _parseISODate[0],
+        parsedZone = _parseISODate[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "ISO 8601", text);
+  };
+  /**
+   * Create a DateTime from an RFC 2822 string
+   * @param {string} text - the RFC 2822 string
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - convert the time to this zone. Since the offset is always specified in the string itself, this has no effect on the interpretation of string, merely the zone the resulting DateTime is expressed in.
+   * @param {boolean} [opts.setZone=false] - override the zone with a fixed-offset zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromRFC2822('25 Nov 2016 13:23:12 GMT')
+   * @example DateTime.fromRFC2822('Tue, 25 Nov 2016 13:23:12 +0600')
+   * @example DateTime.fromRFC2822('25 Nov 2016 13:23 Z')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromRFC2822 = function fromRFC2822(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseRFC2822Date = parseRFC2822Date(text),
+        vals = _parseRFC2822Date[0],
+        parsedZone = _parseRFC2822Date[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "RFC 2822", text);
+  };
+  /**
+   * Create a DateTime from an HTTP header date
+   * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
+   * @param {string} text - the HTTP header date
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - convert the time to this zone. Since HTTP dates are always in UTC, this has no effect on the interpretation of string, merely the zone the resulting DateTime is expressed in.
+   * @param {boolean} [opts.setZone=false] - override the zone with the fixed-offset zone specified in the string. For HTTP dates, this is always UTC, so this option is equivalent to setting the `zone` option to 'utc', but this option is included for consistency with similar methods.
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromHTTP('Sun, 06 Nov 1994 08:49:37 GMT')
+   * @example DateTime.fromHTTP('Sunday, 06-Nov-94 08:49:37 GMT')
+   * @example DateTime.fromHTTP('Sun Nov  6 08:49:37 1994')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromHTTP = function fromHTTP(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseHTTPDate = parseHTTPDate(text),
+        vals = _parseHTTPDate[0],
+        parsedZone = _parseHTTPDate[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "HTTP", opts);
+  };
+  /**
+   * Create a DateTime from an input string and format string
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale
+   * @param {string} text - the string to parse
+   * @param {string} fmt - the format the string is expected to be in (see description)
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the DateTime to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale string to use when parsing. Will also set the DateTime to this locale
+   * @param {string} opts.numberingSystem - the numbering system to use when parsing. Will also set the resulting DateTime to this numbering system
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromFormat = function fromFormat(text, fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (isUndefined(text) || isUndefined(fmt)) {
+      throw new InvalidArgumentError("fromFormat requires an input string and a format");
+    }
+
+    var _opts = opts,
+        _opts$locale = _opts.locale,
+        locale = _opts$locale === void 0 ? null : _opts$locale,
+        _opts$numberingSystem = _opts.numberingSystem,
+        numberingSystem = _opts$numberingSystem === void 0 ? null : _opts$numberingSystem,
+        localeToUse = Locale.fromOpts({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      defaultToEN: true
+    }),
+        _parseFromTokens = parseFromTokens(localeToUse, text, fmt),
+        vals = _parseFromTokens[0],
+        parsedZone = _parseFromTokens[1],
+        invalid = _parseFromTokens[2];
+
+    if (invalid) {
+      return DateTime.invalid(invalid);
+    } else {
+      return parseDataToDateTime(vals, parsedZone, opts, "format " + fmt, text);
+    }
+  };
+  /**
+   * @deprecated use fromFormat instead
+   */
+
+
+  DateTime.fromString = function fromString(text, fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return DateTime.fromFormat(text, fmt, opts);
+  };
+  /**
+   * Create a DateTime from a SQL date, time, or datetime
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale
+   * @param {string} text - the string to parse
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the DateTime to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale string to use when parsing. Will also set the DateTime to this locale
+   * @param {string} opts.numberingSystem - the numbering system to use when parsing. Will also set the resulting DateTime to this numbering system
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @example DateTime.fromSQL('2017-05-15')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342+06:00')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342 America/Los_Angeles')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342 America/Los_Angeles', { setZone: true })
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342', { zone: 'America/Los_Angeles' })
+   * @example DateTime.fromSQL('09:12:34.342')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromSQL = function fromSQL(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseSQL = parseSQL(text),
+        vals = _parseSQL[0],
+        parsedZone = _parseSQL[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "SQL", text);
+  };
+  /**
+   * Create an invalid DateTime.
+   * @param {string} reason - simple string of why this DateTime is invalid. Should not contain parameters or anything else data-dependent
+   * @param {string} [explanation=null] - longer explanation, may include parameters and other useful debugging information
+   * @return {DateTime}
+   */
+
+
+  DateTime.invalid = function invalid(reason, explanation) {
+    if (explanation === void 0) {
+      explanation = null;
+    }
+
+    if (!reason) {
+      throw new InvalidArgumentError("need to specify a reason the DateTime is invalid");
+    }
+
+    var invalid = reason instanceof Invalid ? reason : new Invalid(reason, explanation);
+
+    if (Settings.throwOnInvalid) {
+      throw new InvalidDateTimeError(invalid);
+    } else {
+      return new DateTime({
+        invalid: invalid
+      });
+    }
+  };
+  /**
+   * Check if an object is a DateTime. Works across context boundaries
+   * @param {object} o
+   * @return {boolean}
+   */
+
+
+  DateTime.isDateTime = function isDateTime(o) {
+    return o.isLuxonDateTime || false;
+  }; // INFO
+
+  /**
+   * Get the value of unit.
+   * @param {string} unit - a unit such as 'minute' or 'day'
+   * @example DateTime.local(2017, 7, 4).get('month'); //=> 7
+   * @example DateTime.local(2017, 7, 4).get('day'); //=> 4
+   * @return {number}
+   */
+
+
+  var _proto = DateTime.prototype;
+
+  _proto.get = function get(unit) {
+    return this[unit];
+  };
+  /**
+   * Returns whether the DateTime is valid. Invalid DateTimes occur when:
+   * * The DateTime was created from invalid calendar information, such as the 13th month or February 30
+   * * The DateTime was created by an operation on another invalid date
+   * @type {boolean}
+   */
+
+
+  /**
+   * Returns the resolved Intl options for this DateTime.
+   * This is useful in understanding the behavior of formatting methods
+   * @param {Object} opts - the same options as toLocaleString
+   * @return {Object}
+   */
+  _proto.resolvedLocaleOpts = function resolvedLocaleOpts(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _Formatter$create$res = Formatter.create(this.loc.clone(opts), opts).resolvedOptions(this),
+        locale = _Formatter$create$res.locale,
+        numberingSystem = _Formatter$create$res.numberingSystem,
+        calendar = _Formatter$create$res.calendar;
+
+    return {
+      locale: locale,
+      numberingSystem: numberingSystem,
+      outputCalendar: calendar
+    };
+  }; // TRANSFORM
+
+  /**
+   * "Set" the DateTime's zone to UTC. Returns a newly-constructed DateTime.
+   *
+   * Equivalent to {@link setZone}('utc')
+   * @param {number} [offset=0] - optionally, an offset from UTC in minutes
+   * @param {Object} [opts={}] - options to pass to `setZone()`
+   * @return {DateTime}
+   */
+
+
+  _proto.toUTC = function toUTC(offset, opts) {
+    if (offset === void 0) {
+      offset = 0;
+    }
+
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.setZone(FixedOffsetZone.instance(offset), opts);
+  };
+  /**
+   * "Set" the DateTime's zone to the host's local zone. Returns a newly-constructed DateTime.
+   *
+   * Equivalent to `setZone('local')`
+   * @return {DateTime}
+   */
+
+
+  _proto.toLocal = function toLocal() {
+    return this.setZone(Settings.defaultZone || new LocalZone());
+  };
+  /**
+   * "Set" the DateTime's zone to specified zone. Returns a newly-constructed DateTime.
+   *
+   * By default, the setter keeps the underlying time the same (as in, the same UTC timestamp), but the new instance will report different local times and consider DSTs when making computations, as with {@link plus}. You may wish to use {@link toLocal} and {@link toUTC} which provide simple convenience wrappers for commonly used zones.
+   * @param {string|Zone} [zone='local'] - a zone identifier. As a string, that can be any IANA zone supported by the host environment, or a fixed-offset name of the form 'utc+3', or the strings 'local' or 'utc'. You may also supply an instance of a {@link Zone} class.
+   * @param {Object} opts - options
+   * @param {boolean} [opts.keepLocalTime=false] - If true, adjust the underlying time so that the local time stays the same, but in the target zone. You should rarely need this.
+   * @return {DateTime}
+   */
+
+
+  _proto.setZone = function setZone(zone, _temp) {
+    var _ref4 = _temp === void 0 ? {} : _temp,
+        _ref4$keepLocalTime = _ref4.keepLocalTime,
+        keepLocalTime = _ref4$keepLocalTime === void 0 ? false : _ref4$keepLocalTime,
+        _ref4$keepCalendarTim = _ref4.keepCalendarTime,
+        keepCalendarTime = _ref4$keepCalendarTim === void 0 ? false : _ref4$keepCalendarTim;
+
+    zone = normalizeZone(zone, Settings.defaultZone);
+
+    if (zone.equals(this.zone)) {
+      return this;
+    } else if (!zone.isValid) {
+      return DateTime.invalid(unsupportedZone(zone));
+    } else {
+      var newTS = keepLocalTime || keepCalendarTime // keepCalendarTime is the deprecated name for keepLocalTime
+      ? this.ts + (this.o - zone.offset(this.ts)) * 60 * 1000 : this.ts;
+      return clone$1(this, {
+        ts: newTS,
+        zone: zone
+      });
+    }
+  };
+  /**
+   * "Set" the locale, numberingSystem, or outputCalendar. Returns a newly-constructed DateTime.
+   * @param {Object} properties - the properties to set
+   * @example DateTime.local(2017, 5, 25).reconfigure({ locale: 'en-GB' })
+   * @return {DateTime}
+   */
+
+
+  _proto.reconfigure = function reconfigure(_temp2) {
+    var _ref5 = _temp2 === void 0 ? {} : _temp2,
+        locale = _ref5.locale,
+        numberingSystem = _ref5.numberingSystem,
+        outputCalendar = _ref5.outputCalendar;
+
+    var loc = this.loc.clone({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      outputCalendar: outputCalendar
+    });
+    return clone$1(this, {
+      loc: loc
+    });
+  };
+  /**
+   * "Set" the locale. Returns a newly-constructed DateTime.
+   * Just a convenient alias for reconfigure({ locale })
+   * @example DateTime.local(2017, 5, 25).setLocale('en-GB')
+   * @return {DateTime}
+   */
+
+
+  _proto.setLocale = function setLocale(locale) {
+    return this.reconfigure({
+      locale: locale
+    });
+  };
+  /**
+   * "Set" the values of specified units. Returns a newly-constructed DateTime.
+   * You can only set units with this method; for "setting" metadata, see {@link reconfigure} and {@link setZone}.
+   * @param {Object} values - a mapping of units to numbers
+   * @example dt.set({ year: 2017 })
+   * @example dt.set({ hour: 8, minute: 30 })
+   * @example dt.set({ weekday: 5 })
+   * @example dt.set({ year: 2005, ordinal: 234 })
+   * @return {DateTime}
+   */
+
+
+  _proto.set = function set(values) {
+    if (!this.isValid) return this;
+    var normalized = normalizeObject(values, normalizeUnit),
+        settingWeekStuff = !isUndefined(normalized.weekYear) || !isUndefined(normalized.weekNumber) || !isUndefined(normalized.weekday);
+    var mixed;
+
+    if (settingWeekStuff) {
+      mixed = weekToGregorian(Object.assign(gregorianToWeek(this.c), normalized));
+    } else if (!isUndefined(normalized.ordinal)) {
+      mixed = ordinalToGregorian(Object.assign(gregorianToOrdinal(this.c), normalized));
+    } else {
+      mixed = Object.assign(this.toObject(), normalized); // if we didn't set the day but we ended up on an overflow date,
+      // use the last day of the right month
+
+      if (isUndefined(normalized.day)) {
+        mixed.day = Math.min(daysInMonth(mixed.year, mixed.month), mixed.day);
+      }
+    }
+
+    var _objToTS3 = objToTS(mixed, this.o, this.zone),
+        ts = _objToTS3[0],
+        o = _objToTS3[1];
+
+    return clone$1(this, {
+      ts: ts,
+      o: o
+    });
+  };
+  /**
+   * Add a period of time to this DateTime and return the resulting DateTime
+   *
+   * Adding hours, minutes, seconds, or milliseconds increases the timestamp by the right number of milliseconds. Adding days, months, or years shifts the calendar, accounting for DSTs and leap years along the way. Thus, `dt.plus({ hours: 24 })` may result in a different time than `dt.plus({ days: 1 })` if there's a DST shift in between.
+   * @param {Duration|Object|number} duration - The amount to add. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   * @example DateTime.local().plus(123) //~> in 123 milliseconds
+   * @example DateTime.local().plus({ minutes: 15 }) //~> in 15 minutes
+   * @example DateTime.local().plus({ days: 1 }) //~> this time tomorrow
+   * @example DateTime.local().plus({ days: -1 }) //~> this time yesterday
+   * @example DateTime.local().plus({ hours: 3, minutes: 13 }) //~> in 1 hr, 13 min
+   * @example DateTime.local().plus(Duration.fromObject({ hours: 3, minutes: 13 })) //~> in 1 hr, 13 min
+   * @return {DateTime}
+   */
+
+
+  _proto.plus = function plus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration);
+    return clone$1(this, adjustTime(this, dur));
+  };
+  /**
+   * Subtract a period of time to this DateTime and return the resulting DateTime
+   * See {@link plus}
+   * @param {Duration|Object|number} duration - The amount to subtract. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   @return {DateTime}
+  */
+
+
+  _proto.minus = function minus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration).negate();
+    return clone$1(this, adjustTime(this, dur));
+  };
+  /**
+   * "Set" this DateTime to the beginning of a unit of time.
+   * @param {string} unit - The unit to go to the beginning of. Can be 'year', 'month', 'day', 'hour', 'minute', 'second', or 'millisecond'.
+   * @example DateTime.local(2014, 3, 3).startOf('month').toISODate(); //=> '2014-03-01'
+   * @example DateTime.local(2014, 3, 3).startOf('year').toISODate(); //=> '2014-01-01'
+   * @example DateTime.local(2014, 3, 3, 5, 30).startOf('day').toISOTime(); //=> '00:00.000-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).startOf('hour').toISOTime(); //=> '05:00:00.000-05:00'
+   * @return {DateTime}
+   */
+
+
+  _proto.startOf = function startOf(unit) {
+    if (!this.isValid) return this;
+    var o = {},
+        normalizedUnit = Duration.normalizeUnit(unit);
+
+    switch (normalizedUnit) {
+      case "years":
+        o.month = 1;
+      // falls through
+
+      case "quarters":
+      case "months":
+        o.day = 1;
+      // falls through
+
+      case "weeks":
+      case "days":
+        o.hour = 0;
+      // falls through
+
+      case "hours":
+        o.minute = 0;
+      // falls through
+
+      case "minutes":
+        o.second = 0;
+      // falls through
+
+      case "seconds":
+        o.millisecond = 0;
+        break;
+
+      case "milliseconds":
+        break;
+
+      default:
+        throw new InvalidUnitError(unit);
+    }
+
+    if (normalizedUnit === "weeks") {
+      o.weekday = 1;
+    }
+
+    if (normalizedUnit === "quarters") {
+      var q = Math.ceil(this.month / 3);
+      o.month = (q - 1) * 3 + 1;
+    }
+
+    return this.set(o);
+  };
+  /**
+   * "Set" this DateTime to the end (i.e. the last millisecond) of a unit of time
+   * @param {string} unit - The unit to go to the end of. Can be 'year', 'month', 'day', 'hour', 'minute', 'second', or 'millisecond'.
+   * @example DateTime.local(2014, 3, 3).endOf('month').toISO(); //=> '2014-03-31T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3).endOf('year').toISO(); //=> '2014-12-31T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).endOf('day').toISO(); //=> '2014-03-03T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).endOf('hour').toISO(); //=> '2014-03-03T05:59:59.999-05:00'
+   * @return {DateTime}
+   */
+
+
+  _proto.endOf = function endOf(unit) {
+    var _this$plus;
+
+    return this.isValid ? this.plus((_this$plus = {}, _this$plus[unit] = 1, _this$plus)).startOf(unit).minus(1) : this;
+  }; // OUTPUT
+
+  /**
+   * Returns a string representation of this DateTime formatted according to the specified format string.
+   * **You may not want this.** See {@link toLocaleString} for a more flexible formatting tool. For a table of tokens and their interpretations, see [here](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens).
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale.
+   * @see https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens
+   * @param {string} fmt - the format string
+   * @param {Object} opts - opts to override the configuration options
+   * @example DateTime.local().toFormat('yyyy LLL dd') //=> '2017 Apr 22'
+   * @example DateTime.local().setLocale('fr').toFormat('yyyy LLL dd') //=> '2017 avr. 22'
+   * @example DateTime.local().toFormat('yyyy LLL dd', { locale: "fr" }) //=> '2017 avr. 22'
+   * @example DateTime.local().toFormat("HH 'hours and' mm 'minutes'") //=> '20 hours and 55 minutes'
+   * @return {string}
+   */
+
+
+  _proto.toFormat = function toFormat(fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.isValid ? Formatter.create(this.loc.redefaultToEN(opts)).formatDateTimeFromString(this, fmt) : INVALID$2;
+  };
+  /**
+   * Returns a localized string representing this date. Accepts the same options as the Intl.DateTimeFormat constructor and any presets defined by Luxon, such as `DateTime.DATE_FULL` or `DateTime.TIME_SIMPLE`.
+   * The exact behavior of this method is browser-specific, but in general it will return an appropriate representation.
+   * of the DateTime in the assigned locale.
+   * Defaults to the system's locale if no locale has been specified
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+   * @param opts {Object} - Intl.DateTimeFormat constructor options and configuration options
+   * @example DateTime.local().toLocaleString(); //=> 4/20/2017
+   * @example DateTime.local().setLocale('en-gb').toLocaleString(); //=> '20/04/2017'
+   * @example DateTime.local().toLocaleString({ locale: 'en-gb' }); //=> '20/04/2017'
+   * @example DateTime.local().toLocaleString(DateTime.DATE_FULL); //=> 'April 20, 2017'
+   * @example DateTime.local().toLocaleString(DateTime.TIME_SIMPLE); //=> '11:32 AM'
+   * @example DateTime.local().toLocaleString(DateTime.DATETIME_SHORT); //=> '4/20/2017, 11:32 AM'
+   * @example DateTime.local().toLocaleString({ weekday: 'long', month: 'long', day: '2-digit' }); //=> 'Thursday, April 20'
+   * @example DateTime.local().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }); //=> 'Thu, Apr 20, 11:27 AM'
+   * @example DateTime.local().toLocaleString({ hour: '2-digit', minute: '2-digit', hour12: false }); //=> '11:32'
+   * @return {string}
+   */
+
+
+  _proto.toLocaleString = function toLocaleString(opts) {
+    if (opts === void 0) {
+      opts = DATE_SHORT;
+    }
+
+    return this.isValid ? Formatter.create(this.loc.clone(opts), opts).formatDateTime(this) : INVALID$2;
+  };
+  /**
+   * Returns an array of format "parts", i.e. individual tokens along with metadata. This is allows callers to post-process individual sections of the formatted output.
+   * Defaults to the system's locale if no locale has been specified
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat/formatToParts
+   * @param opts {Object} - Intl.DateTimeFormat constructor options, same as `toLocaleString`.
+   * @example DateTime.local().toLocaleString(); //=> [
+   *                                    //=>   { type: 'day', value: '25' },
+   *                                    //=>   { type: 'literal', value: '/' },
+   *                                    //=>   { type: 'month', value: '05' },
+   *                                    //=>   { type: 'literal', value: '/' },
+   *                                    //=>   { type: 'year', value: '1982' }
+   *                                    //=> ]
+   */
+
+
+  _proto.toLocaleParts = function toLocaleParts(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.isValid ? Formatter.create(this.loc.clone(opts), opts).formatDateTimeParts(this) : [];
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime
+   * @param {Object} opts - options
+   * @param {boolean} [opts.suppressMilliseconds=false] - exclude milliseconds from the format if they're 0
+   * @param {boolean} [opts.suppressSeconds=false] - exclude seconds from the format if they're 0
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc(1982, 5, 25).toISO() //=> '1982-05-25T00:00:00.000Z'
+   * @example DateTime.local().toISO() //=> '2017-04-22T20:47:05.335-04:00'
+   * @example DateTime.local().toISO({ includeOffset: false }) //=> '2017-04-22T20:47:05.335'
+   * @return {string}
+   */
+
+
+  _proto.toISO = function toISO(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) {
+      return null;
+    }
+
+    return this.toISODate() + "T" + this.toISOTime(opts);
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's date component
+   * @example DateTime.utc(1982, 5, 25).toISODate() //=> '1982-05-25'
+   * @return {string}
+   */
+
+
+  _proto.toISODate = function toISODate() {
+    return toTechFormat(this, "yyyy-MM-dd");
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's week date
+   * @example DateTime.utc(1982, 5, 25).toISOWeekDate() //=> '1982-W21-2'
+   * @return {string}
+   */
+
+
+  _proto.toISOWeekDate = function toISOWeekDate() {
+    return toTechFormat(this, "kkkk-'W'WW-c");
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's time component
+   * @param {Object} opts - options
+   * @param {boolean} [opts.suppressMilliseconds=false] - exclude milliseconds from the format if they're 0
+   * @param {boolean} [opts.suppressSeconds=false] - exclude seconds from the format if they're 0
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc().hour(7).minute(34).toISOTime() //=> '07:34:19.361Z'
+   * @example DateTime.utc().hour(7).minute(34).toISOTime({ suppressSeconds: true }) //=> '07:34Z'
+   * @return {string}
+   */
+
+
+  _proto.toISOTime = function toISOTime(_temp3) {
+    var _ref6 = _temp3 === void 0 ? {} : _temp3,
+        _ref6$suppressMillise = _ref6.suppressMilliseconds,
+        suppressMilliseconds = _ref6$suppressMillise === void 0 ? false : _ref6$suppressMillise,
+        _ref6$suppressSeconds = _ref6.suppressSeconds,
+        suppressSeconds = _ref6$suppressSeconds === void 0 ? false : _ref6$suppressSeconds,
+        _ref6$includeOffset = _ref6.includeOffset,
+        includeOffset = _ref6$includeOffset === void 0 ? true : _ref6$includeOffset;
+
+    return toTechTimeFormat(this, {
+      suppressSeconds: suppressSeconds,
+      suppressMilliseconds: suppressMilliseconds,
+      includeOffset: includeOffset
+    });
+  };
+  /**
+   * Returns an RFC 2822-compatible string representation of this DateTime, always in UTC
+   * @example DateTime.utc(2014, 7, 13).toRFC2822() //=> 'Sun, 13 Jul 2014 00:00:00 +0000'
+   * @example DateTime.local(2014, 7, 13).toRFC2822() //=> 'Sun, 13 Jul 2014 00:00:00 -0400'
+   * @return {string}
+   */
+
+
+  _proto.toRFC2822 = function toRFC2822() {
+    return toTechFormat(this, "EEE, dd LLL yyyy HH:mm:ss ZZZ");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in HTTP headers.
+   * Specifically, the string conforms to RFC 1123.
+   * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
+   * @example DateTime.utc(2014, 7, 13).toHTTP() //=> 'Sun, 13 Jul 2014 00:00:00 GMT'
+   * @example DateTime.utc(2014, 7, 13, 19).toHTTP() //=> 'Sun, 13 Jul 2014 19:00:00 GMT'
+   * @return {string}
+   */
+
+
+  _proto.toHTTP = function toHTTP() {
+    return toTechFormat(this.toUTC(), "EEE, dd LLL yyyy HH:mm:ss 'GMT'");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL Date
+   * @example DateTime.utc(2014, 7, 13).toSQLDate() //=> '2014-07-13'
+   * @return {string}
+   */
+
+
+  _proto.toSQLDate = function toSQLDate() {
+    return toTechFormat(this, "yyyy-MM-dd");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL Time
+   * @param {Object} opts - options
+   * @param {boolean} [opts.includeZone=false] - include the zone, such as 'America/New_York'. Overrides includeOffset.
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc().toSQL() //=> '05:15:16.345'
+   * @example DateTime.local().toSQL() //=> '05:15:16.345 -04:00'
+   * @example DateTime.local().toSQL({ includeOffset: false }) //=> '05:15:16.345'
+   * @example DateTime.local().toSQL({ includeZone: false }) //=> '05:15:16.345 America/New_York'
+   * @return {string}
+   */
+
+
+  _proto.toSQLTime = function toSQLTime(_temp4) {
+    var _ref7 = _temp4 === void 0 ? {} : _temp4,
+        _ref7$includeOffset = _ref7.includeOffset,
+        includeOffset = _ref7$includeOffset === void 0 ? true : _ref7$includeOffset,
+        _ref7$includeZone = _ref7.includeZone,
+        includeZone = _ref7$includeZone === void 0 ? false : _ref7$includeZone;
+
+    return toTechTimeFormat(this, {
+      includeOffset: includeOffset,
+      includeZone: includeZone,
+      spaceZone: true
+    });
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL DateTime
+   * @param {Object} opts - options
+   * @param {boolean} [opts.includeZone=false] - include the zone, such as 'America/New_York'. Overrides includeOffset.
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc(2014, 7, 13).toSQL() //=> '2014-07-13 00:00:00.000 Z'
+   * @example DateTime.local(2014, 7, 13).toSQL() //=> '2014-07-13 00:00:00.000 -04:00'
+   * @example DateTime.local(2014, 7, 13).toSQL({ includeOffset: false }) //=> '2014-07-13 00:00:00.000'
+   * @example DateTime.local(2014, 7, 13).toSQL({ includeZone: true }) //=> '2014-07-13 00:00:00.000 America/New_York'
+   * @return {string}
+   */
+
+
+  _proto.toSQL = function toSQL(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) {
+      return null;
+    }
+
+    return this.toSQLDate() + " " + this.toSQLTime(opts);
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for debugging
+   * @return {string}
+   */
+
+
+  _proto.toString = function toString() {
+    return this.isValid ? this.toISO() : INVALID$2;
+  };
+  /**
+   * Returns the epoch milliseconds of this DateTime. Alias of {@link toMillis}
+   * @return {number}
+   */
+
+
+  _proto.valueOf = function valueOf() {
+    return this.toMillis();
+  };
+  /**
+   * Returns the epoch milliseconds of this DateTime.
+   * @return {number}
+   */
+
+
+  _proto.toMillis = function toMillis() {
+    return this.isValid ? this.ts : NaN;
+  };
+  /**
+   * Returns the epoch seconds of this DateTime.
+   * @return {number}
+   */
+
+
+  _proto.toSeconds = function toSeconds() {
+    return this.isValid ? this.ts / 1000 : NaN;
+  };
+  /**
+   * Returns an ISO 8601 representation of this DateTime appropriate for use in JSON.
+   * @return {string}
+   */
+
+
+  _proto.toJSON = function toJSON() {
+    return this.toISO();
+  };
+  /**
+   * Returns a BSON serializable equivalent to this DateTime.
+   * @return {Date}
+   */
+
+
+  _proto.toBSON = function toBSON() {
+    return this.toJSDate();
+  };
+  /**
+   * Returns a Javascript object with this DateTime's year, month, day, and so on.
+   * @param opts - options for generating the object
+   * @param {boolean} [opts.includeConfig=false] - include configuration attributes in the output
+   * @example DateTime.local().toObject() //=> { year: 2017, month: 4, day: 22, hour: 20, minute: 49, second: 42, millisecond: 268 }
+   * @return {Object}
+   */
+
+
+  _proto.toObject = function toObject(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) return {};
+    var base = Object.assign({}, this.c);
+
+    if (opts.includeConfig) {
+      base.outputCalendar = this.outputCalendar;
+      base.numberingSystem = this.loc.numberingSystem;
+      base.locale = this.loc.locale;
+    }
+
+    return base;
+  };
+  /**
+   * Returns a Javascript Date equivalent to this DateTime.
+   * @return {Date}
+   */
+
+
+  _proto.toJSDate = function toJSDate() {
+    return new Date(this.isValid ? this.ts : NaN);
+  }; // COMPARE
+
+  /**
+   * Return the difference between two DateTimes as a Duration.
+   * @param {DateTime} otherDateTime - the DateTime to compare this one to
+   * @param {string|string[]} [unit=['milliseconds']] - the unit or array of units (such as 'hours' or 'days') to include in the duration.
+   * @param {Object} opts - options that affect the creation of the Duration
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @example
+   * var i1 = DateTime.fromISO('1982-05-25T09:45'),
+   *     i2 = DateTime.fromISO('1983-10-14T10:30');
+   * i2.diff(i1).toObject() //=> { milliseconds: 43807500000 }
+   * i2.diff(i1, 'hours').toObject() //=> { hours: 12168.75 }
+   * i2.diff(i1, ['months', 'days']).toObject() //=> { months: 16, days: 19.03125 }
+   * i2.diff(i1, ['months', 'days', 'hours']).toObject() //=> { months: 16, days: 19, hours: 0.75 }
+   * @return {Duration}
+   */
+
+
+  _proto.diff = function diff(otherDateTime, unit, opts) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid || !otherDateTime.isValid) {
+      return Duration.invalid(this.invalid || otherDateTime.invalid, "created by diffing an invalid DateTime");
+    }
+
+    var durOpts = Object.assign({
+      locale: this.locale,
+      numberingSystem: this.numberingSystem
+    }, opts);
+
+    var units = maybeArray(unit).map(Duration.normalizeUnit),
+        otherIsLater = otherDateTime.valueOf() > this.valueOf(),
+        earlier = otherIsLater ? this : otherDateTime,
+        later = otherIsLater ? otherDateTime : this,
+        diffed = _diff(earlier, later, units, durOpts);
+
+    return otherIsLater ? diffed.negate() : diffed;
+  };
+  /**
+   * Return the difference between this DateTime and right now.
+   * See {@link diff}
+   * @param {string|string[]} [unit=['milliseconds']] - the unit or units units (such as 'hours' or 'days') to include in the duration
+   * @param {Object} opts - options that affect the creation of the Duration
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @return {Duration}
+   */
+
+
+  _proto.diffNow = function diffNow(unit, opts) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.diff(DateTime.local(), unit, opts);
+  };
+  /**
+   * Return an Interval spanning between this DateTime and another DateTime
+   * @param {DateTime} otherDateTime - the other end point of the Interval
+   * @return {Interval}
+   */
+
+
+  _proto.until = function until(otherDateTime) {
+    return this.isValid ? Interval.fromDateTimes(this, otherDateTime) : this;
+  };
+  /**
+   * Return whether this DateTime is in the same unit of time as another DateTime
+   * @param {DateTime} otherDateTime - the other DateTime
+   * @param {string} unit - the unit of time to check sameness on
+   * @example DateTime.local().hasSame(otherDT, 'day'); //~> true if both the same calendar day
+   * @return {boolean}
+   */
+
+
+  _proto.hasSame = function hasSame(otherDateTime, unit) {
+    if (!this.isValid) return false;
+
+    if (unit === "millisecond") {
+      return this.valueOf() === otherDateTime.valueOf();
+    } else {
+      var inputMs = otherDateTime.valueOf();
+      return this.startOf(unit) <= inputMs && inputMs <= this.endOf(unit);
+    }
+  };
+  /**
+   * Equality check
+   * Two DateTimes are equal iff they represent the same millisecond, have the same zone and location, and are both valid.
+   * To compare just the millisecond values, use `+dt1 === ~dt2`.
+   * @param {DateTime} other - the other DateTime
+   * @return {boolean}
+   */
+
+
+  _proto.equals = function equals(other) {
+    return this.isValid && other.isValid && this.valueOf() === other.valueOf() && this.zone.equals(other.zone) && this.loc.equals(other.loc);
+  };
+  /**
+   * Returns a string representation of a this time relative to now, such as "in two days". Can only internationalize if your
+   * platform supports Intl.RelativeDateFormat, **which it probably doesn't yet!** (As of this writing, only Chrome supports that). Rounds down by default.
+   * @param {Object} options - options that affect the output
+   * @param {DateTime} [options.base=DateTime.local()] - the DateTime to use as the basis to which this time is compared. Defaults to now.
+   * @param {string} [options.style="long"] - the style of units, must be "long", "short", or "narrow"
+   * @param {string} options.unit - use a specific unit; if omitted, the method will pick the unit. Use one of "year", "quarter", "month", "week", "day", "hour", "minute", or "second"
+   * @param {boolean} [options.round=true] - whether to round the numbers in the output.
+   * @param {boolean} [options.padding=0] - padding in milliseconds. This allows you to round up the result if it fits inside the threshold. Don't use in combination with {round: false} because the decimal output will include the padding.
+   * @param {string} options.locale - override the locale of this DateTime
+   * @param {string} options.numberingSystem - override the numberingSystem of this DateTime. The Intl system may choose not to honor this
+   * @example DateTime.local().plus({ days: 1 }).toRelative() //=> "in 1 day"
+   * @example DateTime.local().setLocale("es").toRelative({ days: 1 }) //=> "dentro de 1 día"
+   * @example DateTime.local().plus({ days: 1 }).toRelative({ locale: "fr" }) //=> "dans 23 heures"
+   * @example DateTime.local().minus({ days: 2 }).toRelative() //=> "2 days ago"
+   * @example DateTime.local().minus({ days: 2 }).toRelative({ unit: "hours" }) //=> "48 hours ago"
+   * @example DateTime.local().minus({ hours: 36 }).toRelative({ round: false }) //=> "1.5 days ago"
+   */
+
+
+  _proto.toRelative = function toRelative(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!this.isValid) return null;
+    var base = options.base || DateTime.fromObject({
+      zone: this.zone
+    }),
+        padding = options.padding ? this < base ? -options.padding : options.padding : 0;
+    return diffRelative(base, this.plus(padding), Object.assign(options, {
+      numeric: "always",
+      units: ["years", "months", "days", "hours", "minutes", "seconds"]
+    }));
+  };
+  /**
+   * Returns a string representation this date relative to today, such as "yesterday" or "next month"
+   * platform supports Intl.RelativeDateFormat.
+   * @param {Object} options - options that affect the output
+   * @param {DateTime} [options.base=DateTime.local()] - the DateTime to use as the basis to which this time is compared. Defaults to now.
+   * @param {string} options.locale - override the locale of this DateTime
+   * @param {string} options.unit - use a specific unit; if omitted, the method will pick the unit. Use one of "year", "quarter", "month", "week", or "day"
+   * @param {string} options.numberingSystem - override the numberingSystem of this DateTime. The Intl system may choose not to honor this
+   * @example DateTime.local().plus({ days: 1 }).toRelativeCalendar() //=> "tomorrow"
+   * @example DateTime.local().setLocale("es").plus({ days: 1 }).toRelative() //=> ""mañana"
+   * @example DateTime.local().plus({ days: 1 }).toRelativeCalendar({ locale: "fr" }) //=> "demain"
+   * @example DateTime.local().minus({ days: 2 }).toRelativeCalendar() //=> "2 days ago"
+   */
+
+
+  _proto.toRelativeCalendar = function toRelativeCalendar(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!this.isValid) return null;
+    return diffRelative(options.base || DateTime.fromObject({
+      zone: this.zone
+    }), this, Object.assign(options, {
+      numeric: "auto",
+      units: ["years", "months", "days"],
+      calendary: true
+    }));
+  };
+  /**
+   * Return the min of several date times
+   * @param {...DateTime} dateTimes - the DateTimes from which to choose the minimum
+   * @return {DateTime} the min DateTime, or undefined if called with no argument
+   */
+
+
+  DateTime.min = function min() {
+    for (var _len = arguments.length, dateTimes = new Array(_len), _key = 0; _key < _len; _key++) {
+      dateTimes[_key] = arguments[_key];
+    }
+
+    return bestBy(dateTimes, function (i) {
+      return i.valueOf();
+    }, Math.min);
+  };
+  /**
+   * Return the max of several date times
+   * @param {...DateTime} dateTimes - the DateTimes from which to choose the maximum
+   * @return {DateTime} the max DateTime, or undefined if called with no argument
+   */
+
+
+  DateTime.max = function max() {
+    for (var _len2 = arguments.length, dateTimes = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      dateTimes[_key2] = arguments[_key2];
+    }
+
+    return bestBy(dateTimes, function (i) {
+      return i.valueOf();
+    }, Math.max);
+  }; // MISC
+
+  /**
+   * Explain how a string would be parsed by fromFormat()
+   * @param {string} text - the string to parse
+   * @param {string} fmt - the format the string is expected to be in (see description)
+   * @param {Object} options - options taken by fromFormat()
+   * @return {Object}
+   */
+
+
+  DateTime.fromFormatExplain = function fromFormatExplain(text, fmt, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    var _options = options,
+        _options$locale = _options.locale,
+        locale = _options$locale === void 0 ? null : _options$locale,
+        _options$numberingSys = _options.numberingSystem,
+        numberingSystem = _options$numberingSys === void 0 ? null : _options$numberingSys,
+        localeToUse = Locale.fromOpts({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      defaultToEN: true
+    });
+    return explainFromTokens(localeToUse, text, fmt);
+  };
+  /**
+   * @deprecated use fromFormatExplain instead
+   */
+
+
+  DateTime.fromStringExplain = function fromStringExplain(text, fmt, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return DateTime.fromFormatExplain(text, fmt, options);
+  }; // FORMAT PRESETS
+
+  /**
+   * {@link toLocaleString} format like 10/14/1983
+   * @type {Object}
+   */
+
+
+  _createClass(DateTime, [{
+    key: "isValid",
+    get: function get() {
+      return this.invalid === null;
+    }
+    /**
+     * Returns an error code if this DateTime is invalid, or null if the DateTime is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidReason",
+    get: function get() {
+      return this.invalid ? this.invalid.reason : null;
+    }
+    /**
+     * Returns an explanation of why this DateTime became invalid, or null if the DateTime is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidExplanation",
+    get: function get() {
+      return this.invalid ? this.invalid.explanation : null;
+    }
+    /**
+     * Get the locale of a DateTime, such 'en-GB'. The locale is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "locale",
+    get: function get() {
+      return this.isValid ? this.loc.locale : null;
+    }
+    /**
+     * Get the numbering system of a DateTime, such 'beng'. The numbering system is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "numberingSystem",
+    get: function get() {
+      return this.isValid ? this.loc.numberingSystem : null;
+    }
+    /**
+     * Get the output calendar of a DateTime, such 'islamic'. The output calendar is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "outputCalendar",
+    get: function get() {
+      return this.isValid ? this.loc.outputCalendar : null;
+    }
+    /**
+     * Get the time zone associated with this DateTime.
+     * @type {Zone}
+     */
+
+  }, {
+    key: "zone",
+    get: function get() {
+      return this._zone;
+    }
+    /**
+     * Get the name of the time zone.
+     * @type {string}
+     */
+
+  }, {
+    key: "zoneName",
+    get: function get() {
+      return this.isValid ? this.zone.name : null;
+    }
+    /**
+     * Get the year
+     * @example DateTime.local(2017, 5, 25).year //=> 2017
+     * @type {number}
+     */
+
+  }, {
+    key: "year",
+    get: function get() {
+      return this.isValid ? this.c.year : NaN;
+    }
+    /**
+     * Get the quarter
+     * @example DateTime.local(2017, 5, 25).quarter //=> 2
+     * @type {number}
+     */
+
+  }, {
+    key: "quarter",
+    get: function get() {
+      return this.isValid ? Math.ceil(this.c.month / 3) : NaN;
+    }
+    /**
+     * Get the month (1-12).
+     * @example DateTime.local(2017, 5, 25).month //=> 5
+     * @type {number}
+     */
+
+  }, {
+    key: "month",
+    get: function get() {
+      return this.isValid ? this.c.month : NaN;
+    }
+    /**
+     * Get the day of the month (1-30ish).
+     * @example DateTime.local(2017, 5, 25).day //=> 25
+     * @type {number}
+     */
+
+  }, {
+    key: "day",
+    get: function get() {
+      return this.isValid ? this.c.day : NaN;
+    }
+    /**
+     * Get the hour of the day (0-23).
+     * @example DateTime.local(2017, 5, 25, 9).hour //=> 9
+     * @type {number}
+     */
+
+  }, {
+    key: "hour",
+    get: function get() {
+      return this.isValid ? this.c.hour : NaN;
+    }
+    /**
+     * Get the minute of the hour (0-59).
+     * @example DateTime.local(2017, 5, 25, 9, 30).minute //=> 30
+     * @type {number}
+     */
+
+  }, {
+    key: "minute",
+    get: function get() {
+      return this.isValid ? this.c.minute : NaN;
+    }
+    /**
+     * Get the second of the minute (0-59).
+     * @example DateTime.local(2017, 5, 25, 9, 30, 52).second //=> 52
+     * @type {number}
+     */
+
+  }, {
+    key: "second",
+    get: function get() {
+      return this.isValid ? this.c.second : NaN;
+    }
+    /**
+     * Get the millisecond of the second (0-999).
+     * @example DateTime.local(2017, 5, 25, 9, 30, 52, 654).millisecond //=> 654
+     * @type {number}
+     */
+
+  }, {
+    key: "millisecond",
+    get: function get() {
+      return this.isValid ? this.c.millisecond : NaN;
+    }
+    /**
+     * Get the week year
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2014, 11, 31).weekYear //=> 2015
+     * @type {number}
+     */
+
+  }, {
+    key: "weekYear",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekYear : NaN;
+    }
+    /**
+     * Get the week number of the week year (1-52ish).
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2017, 5, 25).weekNumber //=> 21
+     * @type {number}
+     */
+
+  }, {
+    key: "weekNumber",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekNumber : NaN;
+    }
+    /**
+     * Get the day of the week.
+     * 1 is Monday and 7 is Sunday
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2014, 11, 31).weekday //=> 4
+     * @type {number}
+     */
+
+  }, {
+    key: "weekday",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekday : NaN;
+    }
+    /**
+     * Get the ordinal (i.e. the day of the year)
+     * @example DateTime.local(2017, 5, 25).ordinal //=> 145
+     * @type {number|DateTime}
+     */
+
+  }, {
+    key: "ordinal",
+    get: function get() {
+      return this.isValid ? gregorianToOrdinal(this.c).ordinal : NaN;
+    }
+    /**
+     * Get the human readable short month name, such as 'Oct'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).monthShort //=> Oct
+     * @type {string}
+     */
+
+  }, {
+    key: "monthShort",
+    get: function get() {
+      return this.isValid ? Info.months("short", {
+        locale: this.locale
+      })[this.month - 1] : null;
+    }
+    /**
+     * Get the human readable long month name, such as 'October'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).monthLong //=> October
+     * @type {string}
+     */
+
+  }, {
+    key: "monthLong",
+    get: function get() {
+      return this.isValid ? Info.months("long", {
+        locale: this.locale
+      })[this.month - 1] : null;
+    }
+    /**
+     * Get the human readable short weekday, such as 'Mon'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayShort //=> Mon
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayShort",
+    get: function get() {
+      return this.isValid ? Info.weekdays("short", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the human readable long weekday, such as 'Monday'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayLong //=> Monday
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayLong",
+    get: function get() {
+      return this.isValid ? Info.weekdays("long", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the UTC offset of this DateTime in minutes
+     * @example DateTime.local().offset //=> -240
+     * @example DateTime.utc().offset //=> 0
+     * @type {number}
+     */
+
+  }, {
+    key: "offset",
+    get: function get() {
+      return this.isValid ? this.zone.offset(this.ts) : NaN;
+    }
+    /**
+     * Get the short human name for the zone's current offset, for example "EST" or "EDT".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
+
+  }, {
+    key: "offsetNameShort",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "short",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+    }
+    /**
+     * Get the long human name for the zone's current offset, for example "Eastern Standard Time" or "Eastern Daylight Time".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
+
+  }, {
+    key: "offsetNameLong",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "long",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+    }
+    /**
+     * Get whether this zone's offset ever changes, as in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isOffsetFixed",
+    get: function get() {
+      return this.isValid ? this.zone.universal : null;
+    }
+    /**
+     * Get whether the DateTime is in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInDST",
+    get: function get() {
+      if (this.isOffsetFixed) {
+        return false;
+      } else {
+        return this.offset > this.set({
+          month: 1
+        }).offset || this.offset > this.set({
+          month: 5
+        }).offset;
+      }
+    }
+    /**
+     * Returns true if this DateTime is in a leap year, false otherwise
+     * @example DateTime.local(2016).isInLeapYear //=> true
+     * @example DateTime.local(2013).isInLeapYear //=> false
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInLeapYear",
+    get: function get() {
+      return isLeapYear(this.year);
+    }
+    /**
+     * Returns the number of days in this DateTime's month
+     * @example DateTime.local(2016, 2).daysInMonth //=> 29
+     * @example DateTime.local(2016, 3).daysInMonth //=> 31
+     * @type {number}
+     */
+
+  }, {
+    key: "daysInMonth",
+    get: function get() {
+      return daysInMonth(this.year, this.month);
+    }
+    /**
+     * Returns the number of days in this DateTime's year
+     * @example DateTime.local(2016).daysInYear //=> 366
+     * @example DateTime.local(2013).daysInYear //=> 365
+     * @type {number}
+     */
+
+  }, {
+    key: "daysInYear",
+    get: function get() {
+      return this.isValid ? daysInYear(this.year) : NaN;
+    }
+    /**
+     * Returns the number of weeks in this DateTime's year
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2004).weeksInWeekYear //=> 53
+     * @example DateTime.local(2013).weeksInWeekYear //=> 52
+     * @type {number}
+     */
+
+  }, {
+    key: "weeksInWeekYear",
+    get: function get() {
+      return this.isValid ? weeksInWeekYear(this.weekYear) : NaN;
+    }
+  }], [{
+    key: "DATE_SHORT",
+    get: function get() {
+      return DATE_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_MED",
+    get: function get() {
+      return DATE_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_FULL",
+    get: function get() {
+      return DATE_FULL;
+    }
+    /**
+     * {@link toLocaleString} format like 'Tuesday, October 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_HUGE",
+    get: function get() {
+      return DATE_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_SIMPLE",
+    get: function get() {
+      return TIME_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_SECONDS",
+    get: function get() {
+      return TIME_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_SIMPLE",
+    get: function get() {
+      return TIME_24_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_SECONDS",
+    get: function get() {
+      return TIME_24_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 EDT', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 Eastern Daylight Time', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_SHORT",
+    get: function get() {
+      return DATETIME_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_SHORT_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_SHORT_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED",
+    get: function get() {
+      return DATETIME_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_MED_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL",
+    get: function get() {
+      return DATETIME_FULL;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30:33 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_FULL_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE",
+    get: function get() {
+      return DATETIME_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30:33 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_HUGE_WITH_SECONDS;
+    }
+  }]);
+
+  return DateTime;
+}();
+function friendlyDateTime(dateTimeish) {
+  if (DateTime.isDateTime(dateTimeish)) {
+    return dateTimeish;
+  } else if (dateTimeish && dateTimeish.valueOf && isNumber(dateTimeish.valueOf())) {
+    return DateTime.fromJSDate(dateTimeish);
+  } else if (dateTimeish && typeof dateTimeish === "object") {
+    return DateTime.fromObject(dateTimeish);
+  } else {
+    throw new InvalidArgumentError("Unknown datetime argument: " + dateTimeish + ", of type " + typeof dateTimeish);
+  }
+}
+
+exports.DateTime = DateTime;
+exports.Duration = Duration;
+exports.Interval = Interval;
+exports.Info = Info;
+exports.Zone = Zone;
+exports.FixedOffsetZone = FixedOffsetZone;
+exports.IANAZone = IANAZone;
+exports.InvalidZone = InvalidZone;
+exports.LocalZone = LocalZone;
+exports.Settings = Settings;
+//# sourceMappingURL=luxon.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
 /*!**************************************************!*\
   !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
@@ -57972,6 +69441,66 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../vue-loader/lib/loaders/stylePostLoader.js!../../postcss-loader/src??ref--6-2!../../vue-loader/lib??vue-loader-options!./datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./DetailBarangHilang.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css& ***!
@@ -62212,6 +73741,1743 @@ var AlertSuccess_Component = normalizeComponent(
 
 /***/ }),
 
+/***/ "./node_modules/vue-datetime-picker/dist/vue-datetime-picker.min.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/vue-datetime-picker/dist/vue-datetime-picker.min.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * vue-datetime-picker v0.2.0
+ * (c) 2016 Haixing Hu
+ * Released under the MIT License.
+ */
+!function(e){function t(n){if(a[n])return a[n].exports;var r=a[n]={exports:{},id:n,loaded:!1};return e[n].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var a={};return t.m=e,t.c=a,t.p="",t(0)}([function(e,t){var a=["today","clear","close","selectMonth","prevMonth","nextMonth","selectYear","prevYear","nextYear","selectDecade","prevDecade","nextDecade","prevCentury","nextCentury","pickHour","incrementHour","decrementHour","pickMinute","incrementMinute","decrementMinute","pickSecond","incrementSecond","decrementSecond","togglePeriod","selectTime"],n="en-US";e.exports={replace:!0,inherit:!1,template:"<div class='input-group date'><input class='form-control' :name='name' type='text' /><span class='input-group-addon'><i class='fa fa-fw fa-calendar'></i></span></div>",props:{model:{required:!0,twoWay:!0},type:{type:String,required:!1,"default":"datetime"},language:{type:String,required:!1,"default":""},datetimeFormat:{type:String,required:!1,"default":"YYYY-MM-DD HH:mm:ss"},dateFormat:{type:String,required:!1,"default":"YYYY-MM-DD"},timeFormat:{type:String,required:!1,"default":"HH:mm:ss"},name:{type:String,required:!1,"default":""},onChange:{required:!1,"default":null}},beforeCompile:function(){this.isChanging=!1,this.control=null},ready:function(){var e={useCurrent:!1,showClear:!0,showClose:!1,icons:{time:"fa fa-clock-o",date:"fa fa-calendar",up:"fa fa-chevron-up",down:"fa fa-chevron-down",previous:"fa fa-chevron-left",next:"fa fa-chevron-right",today:"fa fa-dot-circle-o",clear:"fa fa-trash",close:"fa fa-times"}},t=this.language;switch(null!==t&&""!==t||(this.$language?t=this.$language:langauge=n),e.locale=this.getLanguageCode(t),this.type){case"date":e.format=this.dateFormat;break;case"time":e.format=this.timeFormat;break;case"datetime":default:e.format=this.datetimeFormat}if(this.$i18n&&this.$i18n.datetime_picker){for(var r=this.$i18n.datetime_picker,i=$.fn.datetimepicker.defaults.tooltips,s=0;s<a.length;++s){var o=a[s];r[o]&&(i[o]=r[o])}e.tooltips=i}$(this.$el).datetimepicker(e),this.control=$(this.$el).data("DateTimePicker"),this.control.date(this.model);var c=this;$(this.$el).on("dp.change",function(){c.isChanging||(c.isChanging=!0,c.model=c.control.date(),c.$nextTick(function(){c.isChanging=!1,c.onChange&&c.onChange(c.model)}))})},watch:{model:function(e,t){this.isChanging||(this.isChanging=!0,this.control.date(e),this.isChanging=!1,this.onChange&&this.onChange(e))}},methods:{getLanguageCode:function(e){if(null===e||0===e.length)return"en";if(e.length<=2)return e;switch(e){case"zh-CN":case"zh-TW":case"ar-MA":case"ar-SA":case"ar-TN":case"de-AT":case"en-AU":case"en-CA":case"en-GB":case"fr-CA":case"hy-AM":case"ms-MY":case"pt-BR":case"sr-CYRL":case"tl-PH":case"tzm-LATN":case"tzm":return e.toLowerCase();default:return e.substr(0,2)}}}}}]);
+
+/***/ }),
+
+/***/ "./node_modules/vue-datetime/dist/vue-datetime.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-datetime/dist/vue-datetime.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * vue-datetime v1.0.0-beta.10
+ * (c) 2019 Mario Juárez
+ * Released under the MIT License.
+ */
+
+(function (global, factory) {
+	 true ? factory(exports, __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js")) :
+	undefined;
+}(this, (function (exports,luxon) { 'use strict';
+
+var FlowManager = function FlowManager (flow, endStatus) {
+  if ( flow === void 0 ) flow = [];
+  if ( endStatus === void 0 ) endStatus = null;
+
+  this.flow = flow;
+  this.endStatus = endStatus;
+  this.diversionNext = null;
+};
+
+FlowManager.prototype.step = function step (index) {
+  return this.flow.length > index ? this.flow[index] : this.endStatus
+};
+
+FlowManager.prototype.first = function first () {
+  return this.step(0)
+};
+
+FlowManager.prototype.next = function next (current) {
+  if (this.diversionNext) {
+    var next = this.diversionNext;
+    this.diversionNext = null;
+
+    return next
+  }
+
+  return this.step(this.flow.indexOf(current) + 1)
+};
+
+FlowManager.prototype.diversion = function diversion (next) {
+  this.diversionNext = next;
+};
+
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function datetimeFromISO (string) {
+  var datetime = luxon.DateTime.fromISO(string).toUTC();
+
+  return datetime.isValid ? datetime : null
+}
+
+function monthDays (year, month, weekStart) {
+  var monthDate = luxon.DateTime.local(year, month, 1);
+  var firstDay = monthDate.weekday - weekStart;
+
+  if (firstDay < 0) {
+    firstDay += 7;
+  }
+  var lastDay = (weekStart - monthDate.weekday - monthDate.daysInMonth) % 7;
+  if (lastDay < 0) {
+    lastDay += 7;
+  }
+
+  return new Array(monthDate.daysInMonth + firstDay + lastDay)
+    .fill(null)
+    .map(function (value, index) { return (index + 1 <= firstDay || index >= firstDay + monthDate.daysInMonth) ? null : (index + 1 - firstDay); }
+    )
+}
+
+function monthDayIsDisabled (minDate, maxDate, year, month, day) {
+  var date = luxon.DateTime.fromObject({ year: year, month: month, day: day, zone: 'UTC' });
+
+  minDate = minDate ? startOfDay(minDate) : null;
+  maxDate = maxDate ? startOfDay(maxDate) : null;
+
+  return (minDate && date < minDate) ||
+         (maxDate && date > maxDate)
+}
+
+function monthIsDisabled (minDate, maxDate, year, month) {
+  return (minDate && minDate > luxon.DateTime.utc(year, month, luxon.DateTime.utc(year, month).daysInMonth)) ||
+         (maxDate && maxDate < luxon.DateTime.utc(year, month, 1))
+}
+
+function yearIsDisabled (minDate, maxDate, year) {
+  var minYear = minDate ? minDate.year : null;
+  var maxYear = maxDate ? maxDate.year : null;
+
+  return (minYear && year < minYear) ||
+         (maxYear && year > maxYear)
+}
+
+function timeComponentIsDisabled (min, max, component) {
+  return (min && component < min) ||
+         (max && component > max)
+}
+
+function weekdays (weekStart) {
+  if (--weekStart < 0) {
+    weekStart = 6;
+  }
+
+  var weekDays = luxon.Info.weekdays('short').map(function (weekday) { return capitalize(weekday); });
+
+  weekDays = weekDays.concat(weekDays.splice(0, weekStart));
+
+  return weekDays
+}
+
+function months () {
+  return luxon.Info.months().map(function (month) { return capitalize(month); })
+}
+
+function hours (step) {
+  return new Array(Math.ceil(24 / step)).fill(null).map(function (item, index) { return index * step; })
+}
+
+function minutes (step) {
+  return new Array(Math.ceil(60 / step)).fill(null).map(function (item, index) { return index * step; })
+}
+
+function years (current) {
+  return new Array(201).fill(null).map(function (item, index) { return current - 100 + index; })
+}
+
+function pad (number) {
+  return number < 10 ? '0' + number : number
+}
+
+function startOfDay (datetime) {
+  return datetime.startOf('day')
+}
+
+function createFlowManager (flow) {
+  return new FlowManager(flow, 'end')
+}
+
+function createFlowManagerFromType (type) {
+  var flow = [];
+
+  switch (type) {
+    case 'datetime':
+      flow = ['date', 'time'];
+      break
+    case 'time':
+      flow = ['time'];
+      break
+    default:
+      flow = ['date'];
+  }
+
+  return new FlowManager(flow, 'end')
+}
+
+function weekStart () {
+  var weekstart;
+
+  try {
+    weekstart = __webpack_require__(/*! weekstart */ "./node_modules/weekstart/dist/es-module/main.js");
+  } catch (e) {
+    weekstart = window.weekstart;
+  }
+
+  var firstDay = weekstart ? weekstart.getWeekStartByLocale(luxon.Settings.defaultLocale) : 1;
+
+  return firstDay === 0 ? 7 : firstDay
+}
+
+var DatetimeCalendar = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime-calendar"},[_c('div',{staticClass:"vdatetime-calendar__navigation"},[_c('div',{staticClass:"vdatetime-calendar__navigation--previous",on:{"click":_vm.previousMonth}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 61.3 102.8"}},[_c('path',{attrs:{"fill":"none","stroke":"#444","stroke-width":"14","stroke-miterlimit":"10","d":"M56.3 97.8L9.9 51.4 56.3 5"}})])]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__current--month"},[_vm._v(_vm._s(_vm.monthName)+" "+_vm._s(_vm.newYear))]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__navigation--next",on:{"click":_vm.nextMonth}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 61.3 102.8"}},[_c('path',{attrs:{"fill":"none","stroke":"#444","stroke-width":"14","stroke-miterlimit":"10","d":"M56.3 97.8L9.9 51.4 56.3 5"}})])])]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__month"},[_vm._l((_vm.weekdays),function(weekday){return _c('div',{staticClass:"vdatetime-calendar__month__weekday"},[_vm._v(_vm._s(weekday))])}),_vm._v(" "),_vm._l((_vm.days),function(day){return _c('div',{staticClass:"vdatetime-calendar__month__day",class:{'vdatetime-calendar__month__day--selected': day.selected, 'vdatetime-calendar__month__day--disabled': day.disabled},on:{"click":function($event){_vm.selectDay(day);}}},[_c('span',[_c('span',[_vm._v(_vm._s(day.number))])])])})],2)])},staticRenderFns: [],
+  props: {
+    year: {
+      type: Number,
+      required: true
+    },
+    month: {
+      type: Number,
+      required: true
+    },
+    day: {
+      type: Number,
+      default: null
+    },
+    disabled: {
+      type: Array
+    },
+    minDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    maxDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    weekStart: {
+      type: Number,
+      default: 1
+    }
+  },
+
+  data: function data () {
+    return {
+      newDate: luxon.DateTime.fromObject({ year: this.year, month: this.month, zone: 'UTC' }),
+      weekdays: weekdays(this.weekStart),
+      months: months()
+    }
+  },
+
+  computed: {
+    newYear: function newYear () {
+      return this.newDate.year
+    },
+    newMonth: function newMonth () {
+      return this.newDate.month
+    },
+    monthName: function monthName () {
+      return this.months[this.newMonth - 1]
+    },
+    days: function days () {
+      var this$1 = this;
+
+      return monthDays(this.newYear, this.newMonth, this.weekStart).map(function (day) { return ({
+        number: day,
+        selected: day && this$1.year === this$1.newYear && this$1.month === this$1.newMonth && this$1.day === day,
+        disabled: !day || monthDayIsDisabled(this$1.minDate, this$1.maxDate, this$1.newYear, this$1.newMonth, day)
+      }); })
+    }
+  },
+
+  methods: {
+    selectDay: function selectDay (day) {
+      if (day.disabled) {
+        return
+      }
+
+      this.$emit('change', this.newYear, this.newMonth, day.number);
+    },
+    previousMonth: function previousMonth () {
+      this.newDate = this.newDate.minus({ months: 1 });
+    },
+    nextMonth: function nextMonth () {
+      this.newDate = this.newDate.plus({ months: 1 });
+    }
+  }
+};
+
+var DatetimeTimePicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'vdatetime-time-picker': true, 'vdatetime-time-picker__with-suffix': _vm.use12Hour}},[_c('div',{ref:"hourList",staticClass:"vdatetime-time-picker__list vdatetime-time-picker__list--hours"},_vm._l((_vm.hours),function(hour){return _c('div',{staticClass:"vdatetime-time-picker__item",class:{'vdatetime-time-picker__item--selected': hour.selected, 'vdatetime-time-picker__item--disabled': hour.disabled},on:{"click":function($event){_vm.selectHour(hour);}}},[_vm._v(_vm._s(_vm.formatHour(hour.number)))])})),_vm._v(" "),_c('div',{ref:"minuteList",staticClass:"vdatetime-time-picker__list vdatetime-time-picker__list--minutes"},_vm._l((_vm.minutes),function(minute){return _c('div',{staticClass:"vdatetime-time-picker__item",class:{'vdatetime-time-picker__item--selected': minute.selected, 'vdatetime-time-picker__item--disabled': minute.disabled},on:{"click":function($event){_vm.selectMinute(minute);}}},[_vm._v(_vm._s(minute.number))])})),_vm._v(" "),(_vm.use12Hour)?_c('div',{ref:"suffixList",staticClass:"vdatetime-time-picker__list vdatetime-time-picker__list--suffix"},[_c('div',{staticClass:"vdatetime-time-picker__item",class:{'vdatetime-time-picker__item--selected': _vm.hour < 12},on:{"click":function($event){_vm.selectSuffix('am');}}},[_vm._v("am")]),_vm._v(" "),_c('div',{staticClass:"vdatetime-time-picker__item",class:{'vdatetime-time-picker__item--selected': _vm.hour >= 12},on:{"click":function($event){_vm.selectSuffix('pm');}}},[_vm._v("pm")])]):_vm._e()])},staticRenderFns: [],
+  props: {
+    hour: {
+      type: Number,
+      required: true
+    },
+    minute: {
+      type: Number,
+      required: true
+    },
+    use12Hour: {
+      type: Boolean,
+      default: false
+    },
+    hourStep: {
+      type: Number,
+      default: 1
+    },
+    minuteStep: {
+      type: Number,
+      default: 1
+    },
+    minTime: {
+      type: String,
+      default: null
+    },
+    maxTime: {
+      type: String,
+      default: null
+    }
+  },
+
+  computed: {
+    hours: function hours$1 () {
+      var this$1 = this;
+
+      return hours(this.hourStep).filter(function (hour) {
+        if (!this$1.use12Hour) {
+          return true
+        } else {
+          if (this$1.hour < 12) {
+            return hour < 12
+          } else {
+            return hour >= 12
+          }
+        }
+      }).map(function (hour) { return ({
+        number: pad(hour),
+        selected: hour === this$1.hour,
+        disabled: timeComponentIsDisabled(this$1.minHour, this$1.maxHour, hour)
+      }); })
+    },
+    minutes: function minutes$1 () {
+      var this$1 = this;
+
+      return minutes(this.minuteStep).map(function (minute) { return ({
+        number: pad(minute),
+        selected: minute === this$1.minute,
+        disabled: timeComponentIsDisabled(this$1.minMinute, this$1.maxMinute, minute)
+      }); })
+    },
+    minHour: function minHour () {
+      return this.minTime ? parseInt(this.minTime.split(':')[0]) : null
+    },
+    minMinute: function minMinute () {
+      return this.minTime && this.minHour === this.hour ? parseInt(this.minTime.split(':')[1]) : null
+    },
+    maxHour: function maxHour () {
+      return this.maxTime ? parseInt(this.maxTime.split(':')[0]) : null
+    },
+    maxMinute: function maxMinute () {
+      return this.maxTime && this.maxHour === this.hour ? parseInt(this.maxTime.split(':')[1]) : null
+    }
+  },
+
+  methods: {
+    selectHour: function selectHour (hour) {
+      if (hour.disabled) {
+        return
+      }
+
+      this.$emit('change', { hour: parseInt(hour.number) });
+    },
+    selectMinute: function selectMinute (minute) {
+      if (minute.disabled) {
+        return
+      }
+
+      this.$emit('change', { minute: parseInt(minute.number) });
+    },
+    selectSuffix: function selectSuffix (suffix) {
+      if (suffix === 'am') {
+        if (this.hour >= 12) {
+          this.$emit('change', { hour: parseInt(this.hour - 12), suffixTouched: true });
+        }
+      }
+      if (suffix === 'pm') {
+        if (this.hour < 12) {
+          this.$emit('change', { hour: parseInt(this.hour + 12), suffixTouched: true });
+        }
+      }
+    },
+    formatHour: function formatHour (hour) {
+      var numHour = Number(hour);
+      if (this.use12Hour) {
+        if (numHour === 0) {
+          return 12
+        }
+        if (numHour > 12) {
+          return numHour - 12
+        }
+        return numHour
+      }
+      return hour
+    }
+  },
+
+  mounted: function mounted () {
+    var selectedHour = this.$refs.hourList.querySelector('.vdatetime-time-picker__item--selected');
+    var selectedMinute = this.$refs.minuteList.querySelector('.vdatetime-time-picker__item--selected');
+    this.$refs.hourList.scrollTop = selectedHour ? selectedHour.offsetTop - 250 : 0;
+    this.$refs.minuteList.scrollTop = selectedMinute ? selectedMinute.offsetTop - 250 : 0;
+  }
+};
+
+var DatetimeYearPicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime-year-picker"},[_c('div',{ref:"yearList",staticClass:"vdatetime-year-picker__list vdatetime-year-picker__list"},_vm._l((_vm.years),function(year){return _c('div',{staticClass:"vdatetime-year-picker__item",class:{'vdatetime-year-picker__item--selected': year.selected, 'vdatetime-year-picker__item--disabled': year.disabled},on:{"click":function($event){_vm.select(year);}}},[_vm._v(_vm._s(year.number)+" ")])}))])},staticRenderFns: [],
+  props: {
+    year: {
+      type: Number,
+      required: true
+    },
+    minDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    maxDate: {
+      type: luxon.DateTime,
+      default: null
+    }
+  },
+
+  computed: {
+    years: function years$1 () {
+      var this$1 = this;
+
+      return years(this.year).map(function (year) { return ({
+        number: year,
+        selected: year === this$1.year,
+        disabled: !year || yearIsDisabled(this$1.minDate, this$1.maxDate, year)
+      }); })
+    }
+  },
+
+  methods: {
+    select: function select (year) {
+      if (year.disabled) {
+        return
+      }
+
+      this.$emit('change', parseInt(year.number));
+    },
+
+    scrollToCurrent: function scrollToCurrent () {
+      var selectedYear = this.$refs.yearList.querySelector('.vdatetime-year-picker__item--selected');
+      this.$refs.yearList.scrollTop = selectedYear ? selectedYear.offsetTop - 250 : 0;
+    }
+  },
+
+  mounted: function mounted () {
+    this.scrollToCurrent();
+  },
+
+  updated: function updated () {
+    this.scrollToCurrent();
+  }
+};
+
+var DatetimeMonthPicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime-month-picker"},[_c('div',{ref:"monthList",staticClass:"vdatetime-month-picker__list vdatetime-month-picker__list"},_vm._l((_vm.months),function(month){return _c('div',{staticClass:"vdatetime-month-picker__item",class:{'vdatetime-month-picker__item--selected': month.selected, 'vdatetime-month-picker__item--disabled': month.disabled},on:{"click":function($event){_vm.select(month);}}},[_vm._v(_vm._s(month.label)+" ")])}))])},staticRenderFns: [],
+  props: {
+    year: {
+      type: Number,
+      required: true
+    },
+    month: {
+      type: Number,
+      required: true
+    },
+    minDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    maxDate: {
+      type: luxon.DateTime,
+      default: null
+    }
+  },
+
+  computed: {
+    months: function months$1 () {
+      var this$1 = this;
+
+      return months(this.month).map(function (month, index) { return ({
+        number: ++index,
+        label: month,
+        selected: index === this$1.month,
+        disabled: !index || monthIsDisabled(this$1.minDate, this$1.maxDate, this$1.year, index)
+      }); })
+    }
+  },
+
+  methods: {
+    select: function select (month) {
+      if (month.disabled) {
+        return
+      }
+
+      this.$emit('change', parseInt(month.number));
+    },
+
+    scrollToCurrent: function scrollToCurrent () {
+      var selectedMonth = this.$refs.monthList.querySelector('.vdatetime-month-picker__item--selected');
+      this.$refs.monthList.scrollTop = selectedMonth ? selectedMonth.offsetTop - 250 : 0;
+    }
+  },
+
+  mounted: function mounted () {
+    this.scrollToCurrent();
+  },
+
+  updated: function updated () {
+    this.scrollToCurrent();
+  }
+};
+
+var KEY_TAB = 9;
+var KEY_ENTER = 13;
+var KEY_ESC = 27;
+
+var DatetimePopup = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime-popup"},[_c('div',{staticClass:"vdatetime-popup__header"},[(_vm.title)?_c('div',{staticClass:"vdatetime-popup__title"},[_vm._v(_vm._s(_vm.title))]):_vm._e(),_vm._v(" "),(_vm.type !== 'time')?_c('div',{staticClass:"vdatetime-popup__year",on:{"click":_vm.showYear}},[_vm._v(_vm._s(_vm.year))]):_vm._e(),_vm._v(" "),(_vm.type !== 'time')?_c('div',{staticClass:"vdatetime-popup__date",on:{"click":_vm.showMonth}},[_vm._v(_vm._s(_vm.dateFormatted))]):_vm._e()]),_vm._v(" "),_c('div',{staticClass:"vdatetime-popup__body"},[(_vm.step === 'year')?_c('datetime-year-picker',{attrs:{"min-date":_vm.minDatetimeUTC,"max-date":_vm.maxDatetimeUTC,"year":_vm.year},on:{"change":_vm.onChangeYear}}):_vm._e(),_vm._v(" "),(_vm.step === 'month')?_c('datetime-month-picker',{attrs:{"min-date":_vm.minDatetimeUTC,"max-date":_vm.maxDatetimeUTC,"year":_vm.year,"month":_vm.month},on:{"change":_vm.onChangeMonth}}):_vm._e(),_vm._v(" "),(_vm.step === 'date')?_c('datetime-calendar',{attrs:{"year":_vm.year,"month":_vm.month,"day":_vm.day,"min-date":_vm.minDatetimeUTC,"max-date":_vm.maxDatetimeUTC,"week-start":_vm.weekStart},on:{"change":_vm.onChangeDate}}):_vm._e(),_vm._v(" "),(_vm.step === 'time')?_c('datetime-time-picker',{attrs:{"hour":_vm.hour,"minute":_vm.minute,"use12-hour":_vm.use12Hour,"hour-step":_vm.hourStep,"minute-step":_vm.minuteStep,"min-time":_vm.minTime,"max-time":_vm.maxTime},on:{"change":_vm.onChangeTime}}):_vm._e()],1),_vm._v(" "),_c('div',{staticClass:"vdatetime-popup__actions"},[_c('div',{staticClass:"vdatetime-popup__actions__button vdatetime-popup__actions__button--cancel",on:{"click":_vm.cancel}},[_vm._t("button-cancel__internal",[_vm._v(_vm._s(_vm.phrases.cancel))],{step:_vm.step})],2),_vm._v(" "),_c('div',{staticClass:"vdatetime-popup__actions__button vdatetime-popup__actions__button--confirm",on:{"click":_vm.confirm}},[_vm._t("button-confirm__internal",[_vm._v(_vm._s(_vm.phrases.ok))],{step:_vm.step})],2)])])},staticRenderFns: [],
+  components: {
+    DatetimeCalendar: DatetimeCalendar,
+    DatetimeTimePicker: DatetimeTimePicker,
+    DatetimeYearPicker: DatetimeYearPicker,
+    DatetimeMonthPicker: DatetimeMonthPicker
+  },
+
+  props: {
+    datetime: {
+      type: luxon.DateTime,
+      required: true
+    },
+    phrases: {
+      type: Object,
+      default: function default$1 () {
+        return {
+          cancel: 'Cancel',
+          ok: 'Ok'
+        }
+      }
+    },
+    type: {
+      type: String,
+      default: 'date'
+    },
+    use12Hour: {
+      type: Boolean,
+      default: false
+    },
+    hourStep: {
+      type: Number,
+      default: 1
+    },
+    minuteStep: {
+      type: Number,
+      default: 1
+    },
+    minDatetime: {
+      type: luxon.DateTime,
+      default: null
+    },
+    maxDatetime: {
+      type: luxon.DateTime,
+      default: null
+    },
+    auto: {
+      type: Boolean,
+      default: false
+    },
+    weekStart: {
+      type: Number,
+      default: 1
+    },
+    flow: {
+      type: Array
+    },
+    title: {
+      type: String
+    }
+  },
+
+  data: function data () {
+    var flowManager = this.flow
+      ? createFlowManager(this.flow)
+      : createFlowManagerFromType(this.type);
+
+    return {
+      newDatetime: this.datetime,
+      flowManager: flowManager,
+      step: flowManager.first(),
+      timePartsTouched: []
+    }
+  },
+
+  created: function created () {
+    document.addEventListener('keydown', this.onKeyDown);
+  },
+
+  beforeDestroy: function beforeDestroy () {
+    document.removeEventListener('keydown', this.onKeyDown);
+  },
+
+  computed: {
+    year: function year () {
+      return this.newDatetime.year
+    },
+    month: function month () {
+      return this.newDatetime.month
+    },
+    day: function day () {
+      return this.newDatetime.day
+    },
+    hour: function hour () {
+      return this.newDatetime.hour
+    },
+    minute: function minute () {
+      return this.newDatetime.minute
+    },
+    dateFormatted: function dateFormatted () {
+      return this.newDatetime.toLocaleString({
+        month: 'long',
+        day: 'numeric'
+      })
+    },
+    minDatetimeUTC: function minDatetimeUTC () {
+      return this.minDatetime ? this.minDatetime.toUTC() : null
+    },
+    maxDatetimeUTC: function maxDatetimeUTC () {
+      return this.maxDatetime ? this.maxDatetime.toUTC() : null
+    },
+    minTime: function minTime () {
+      return (
+        this.minDatetime &&
+        this.minDatetime.year === this.year &&
+        this.minDatetime.month === this.month &&
+        this.minDatetime.day === this.day
+      ) ? this.minDatetime.toFormat('HH:mm') : null
+    },
+    maxTime: function maxTime () {
+      return (
+        this.maxDatetime &&
+        this.maxDatetime.year === this.year &&
+        this.maxDatetime.month === this.month &&
+        this.maxDatetime.day === this.day
+      ) ? this.maxDatetime.toFormat('HH:mm') : null
+    }
+  },
+
+  methods: {
+    nextStep: function nextStep () {
+      this.step = this.flowManager.next(this.step);
+      this.timePartsTouched = [];
+
+      if (this.step === 'end') {
+        this.$emit('confirm', this.newDatetime);
+      }
+    },
+    showYear: function showYear () {
+      this.step = 'year';
+      this.flowManager.diversion('date');
+    },
+    showMonth: function showMonth () {
+      this.step = 'month';
+      this.flowManager.diversion('date');
+    },
+    confirm: function confirm () {
+      this.nextStep();
+    },
+    cancel: function cancel () {
+      this.$emit('cancel');
+    },
+    onChangeYear: function onChangeYear (year) {
+      this.newDatetime = this.newDatetime.set({ year: year });
+
+      if (this.auto) {
+        this.nextStep();
+      }
+    },
+    onChangeMonth: function onChangeMonth (month) {
+      this.newDatetime = this.newDatetime.set({ month: month });
+
+      if (this.auto) {
+        this.nextStep();
+      }
+    },
+    onChangeDate: function onChangeDate (year, month, day) {
+      this.newDatetime = this.newDatetime.set({ year: year, month: month, day: day });
+
+      if (this.auto) {
+        this.nextStep();
+      }
+    },
+    onChangeTime: function onChangeTime (ref) {
+      var hour = ref.hour;
+      var minute = ref.minute;
+      var suffixTouched = ref.suffixTouched;
+
+      if (suffixTouched) {
+        this.timePartsTouched['suffix'] = true;
+      }
+
+      if (Number.isInteger(hour)) {
+        this.newDatetime = this.newDatetime.set({ hour: hour });
+        this.timePartsTouched['hour'] = true;
+      }
+
+      if (Number.isInteger(minute)) {
+        this.newDatetime = this.newDatetime.set({ minute: minute });
+        this.timePartsTouched['minute'] = true;
+      }
+
+      var goNext = this.auto && this.timePartsTouched['hour'] && this.timePartsTouched['minute'] && (
+        this.timePartsTouched['suffix'] ||
+        !this.use12Hour
+      );
+
+      if (goNext) {
+        this.nextStep();
+      }
+    },
+    onKeyDown: function onKeyDown (event) {
+      switch (event.keyCode) {
+        case KEY_ESC:
+        case KEY_TAB:
+          this.cancel();
+          break
+
+        case KEY_ENTER:
+          this.nextStep();
+          break
+      }
+    }
+  }
+};
+
+var Datetime = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime"},[_vm._t("before"),_vm._v(" "),_c('input',_vm._g(_vm._b({staticClass:"vdatetime-input",class:_vm.inputClass,style:(_vm.inputStyle),attrs:{"id":_vm.inputId,"type":"text"},domProps:{"value":_vm.inputValue},on:{"click":_vm.open,"focus":_vm.open}},'input',_vm.$attrs,false),_vm.$listeners)),_vm._v(" "),(_vm.hiddenName)?_c('input',{attrs:{"type":"hidden","name":_vm.hiddenName},domProps:{"value":_vm.value},on:{"input":_vm.setValue}}):_vm._e(),_vm._v(" "),_vm._t("after"),_vm._v(" "),_c('transition-group',{attrs:{"name":"vdatetime-fade","tag":"div"}},[(_vm.isOpen)?_c('div',{key:"overlay",staticClass:"vdatetime-overlay",on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.cancel($event);}}}):_vm._e(),_vm._v(" "),(_vm.isOpen)?_c('datetime-popup',{key:"popup",attrs:{"type":_vm.type,"datetime":_vm.popupDate,"phrases":_vm.phrases,"use12-hour":_vm.use12Hour,"hour-step":_vm.hourStep,"minute-step":_vm.minuteStep,"min-datetime":_vm.popupMinDatetime,"max-datetime":_vm.popupMaxDatetime,"auto":_vm.auto,"week-start":_vm.weekStart,"flow":_vm.flow,"title":_vm.title},on:{"confirm":_vm.confirm,"cancel":_vm.cancel},scopedSlots:_vm._u([{key:"button-cancel__internal",fn:function(scope){return [_vm._t("button-cancel",[_vm._v(_vm._s(_vm.phrases.cancel))],{step:scope.step})]}},{key:"button-confirm__internal",fn:function(scope){return [_vm._t("button-confirm",[_vm._v(_vm._s(_vm.phrases.ok))],{step:scope.step})]}}])}):_vm._e()],1)],2)},staticRenderFns: [],
+  components: {
+    DatetimePopup: DatetimePopup
+  },
+
+  inheritAttrs: false,
+
+  props: {
+    value: {
+      type: String
+    },
+    valueZone: {
+      type: String,
+      default: 'UTC'
+    },
+    inputId: {
+      type: String,
+      default: ''
+    },
+    inputClass: {
+      type: [Object, Array, String],
+      default: ''
+    },
+    inputStyle: {
+      type: [Object, Array, String],
+      default: ''
+    },
+    hiddenName: {
+      type: String
+    },
+    zone: {
+      type: String,
+      default: 'local'
+    },
+    format: {
+      type: [Object, String],
+      default: null
+    },
+    type: {
+      type: String,
+      default: 'date'
+    },
+    phrases: {
+      type: Object,
+      default: function default$1 () {
+        return {
+          cancel: 'Cancel',
+          ok: 'Ok'
+        }
+      }
+    },
+    use12Hour: {
+      type: Boolean,
+      default: false
+    },
+    hourStep: {
+      type: Number,
+      default: 1
+    },
+    minuteStep: {
+      type: Number,
+      default: 1
+    },
+    minDatetime: {
+      type: String,
+      default: null
+    },
+    maxDatetime: {
+      type: String,
+      default: null
+    },
+    auto: {
+      type: Boolean,
+      default: false
+    },
+    weekStart: {
+      type: Number,
+      default: function default$2 () {
+        return weekStart()
+      }
+    },
+    flow: {
+      type: Array
+    },
+    title: {
+      type: String
+    }
+  },
+
+  data: function data () {
+    return {
+      isOpen: false,
+      datetime: datetimeFromISO(this.value)
+    }
+  },
+
+  watch: {
+    value: function value (newValue) {
+      this.datetime = datetimeFromISO(newValue);
+    }
+  },
+
+  created: function created () {
+    this.emitInput();
+  },
+
+  computed: {
+    inputValue: function inputValue () {
+      var format = this.format;
+
+      if (!format) {
+        switch (this.type) {
+          case 'date':
+            format = luxon.DateTime.DATE_MED;
+            break
+          case 'time':
+            format = luxon.DateTime.TIME_24_SIMPLE;
+            break
+          case 'datetime':
+          case 'default':
+            format = luxon.DateTime.DATETIME_MED;
+            break
+        }
+      }
+
+      if (typeof format === 'string') {
+        return this.datetime ? luxon.DateTime.fromISO(this.datetime).setZone(this.zone).toFormat(format) : ''
+      } else {
+        return this.datetime ? this.datetime.setZone(this.zone).toLocaleString(format) : ''
+      }
+    },
+    popupDate: function popupDate () {
+      return this.datetime ? this.datetime.setZone(this.zone) : this.newPopupDatetime()
+    },
+    popupMinDatetime: function popupMinDatetime () {
+      return this.minDatetime ? luxon.DateTime.fromISO(this.minDatetime).setZone(this.zone) : null
+    },
+    popupMaxDatetime: function popupMaxDatetime () {
+      return this.maxDatetime ? luxon.DateTime.fromISO(this.maxDatetime).setZone(this.zone) : null
+    }
+  },
+
+  methods: {
+    emitInput: function emitInput () {
+      var datetime = this.datetime ? this.datetime.setZone(this.valueZone) : null;
+
+      if (datetime && this.type === 'date') {
+        datetime = startOfDay(datetime);
+      }
+
+      this.$emit('input', datetime ? datetime.toISO() : '');
+    },
+    open: function open (event) {
+      event.target.blur();
+
+      this.isOpen = true;
+    },
+    close: function close () {
+      this.isOpen = false;
+      this.$emit('close');
+    },
+    confirm: function confirm (datetime) {
+      this.datetime = datetime.toUTC();
+      this.emitInput();
+      this.close();
+    },
+    cancel: function cancel () {
+      this.close();
+    },
+    newPopupDatetime: function newPopupDatetime () {
+      var datetime = luxon.DateTime.utc().setZone(this.zone).set({ seconds: 0, milliseconds: 0 });
+
+      if (this.popupMinDatetime && datetime < this.popupMinDatetime) {
+        datetime = this.popupMinDatetime.set({ seconds: 0, milliseconds: 0 });
+      }
+
+      if (this.popupMaxDatetime && datetime > this.popupMaxDatetime) {
+        datetime = this.popupMaxDatetime.set({ seconds: 0, milliseconds: 0 });
+      }
+
+      if (this.minuteStep === 1) {
+        return datetime
+      }
+
+      var roundedMinute = Math.round(datetime.minute / this.minuteStep) * this.minuteStep;
+
+      if (roundedMinute === 60) {
+        return datetime.plus({ hours: 1 }).set({ minute: 0 })
+      }
+
+      return datetime.set({ minute: roundedMinute })
+    },
+    setValue: function setValue (event) {
+      this.datetime = datetimeFromISO(event.target.value);
+      this.emitInput();
+    }
+  }
+};
+
+function plugin (Vue) {
+  Vue.component('datetime', Datetime);
+}
+
+// Install by default if using the script tag
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(plugin);
+}
+
+var version = '1.0.0-beta.10';
+
+exports['default'] = plugin;
+exports.Datetime = Datetime;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var date_fns_start_of_month__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/start_of_month */ "./node_modules/date-fns/start_of_month/index.js");
+/* harmony import */ var date_fns_start_of_month__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(date_fns_start_of_month__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var date_fns_end_of_month__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/end_of_month */ "./node_modules/date-fns/end_of_month/index.js");
+/* harmony import */ var date_fns_end_of_month__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(date_fns_end_of_month__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var date_fns_each_day__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/each_day */ "./node_modules/date-fns/each_day/index.js");
+/* harmony import */ var date_fns_each_day__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(date_fns_each_day__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var date_fns_get_day__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/get_day */ "./node_modules/date-fns/get_day/index.js");
+/* harmony import */ var date_fns_get_day__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(date_fns_get_day__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var date_fns_start_of_day__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns/start_of_day */ "./node_modules/date-fns/start_of_day/index.js");
+/* harmony import */ var date_fns_start_of_day__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(date_fns_start_of_day__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var date_fns_is_equal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! date-fns/is_equal */ "./node_modules/date-fns/is_equal/index.js");
+/* harmony import */ var date_fns_is_equal__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(date_fns_is_equal__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'datetime-picker',
+  props: {
+    format: {
+      type: String,
+      default: 'YYYY-MM-DD h:i:s',
+    },
+    name: {
+      type: String
+    },
+    width: {
+      type: String
+    },
+    value: {
+      type: String,
+      default: new Date()
+    },
+    firstDayOfWeek: {
+      default: 0,
+      validator: function(value) {
+        try {
+          const val = parseInt(value, 10)
+          return val >= 0 && val <= 1
+        } catch (e) {
+          console.warn(e.message)
+          return false
+        }
+      },
+      message: 'Only 0 (Sunday) and 1 (Monday) are supported.'
+    }
+  },
+  data () {
+    return {
+      date: this.value,
+      hideCal: true,
+      activePort: null,
+      timeStamp: new Date(),
+      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      days: [],
+      monthIndex: 0,
+      hourIndex: 0,
+      minuteIndex: 0,
+      year: 2017,
+      portsHolder: [],
+      minute: '00',
+      hour: '01',
+      day: 1,
+      minuteSelectorVisible: false,
+      hourSelectorVisible: false,
+      period: 'AM'
+    }
+  },
+  methods: {
+	  leftMonth () {
+      let index = this.months.indexOf(this.month)
+      if (index === 0) {
+        this.monthIndex = 11
+      } else {
+        this.monthIndex = index - 1
+      }
+      this.updateCalendar()
+    },
+    rightMonth () {
+      let index = this.months.indexOf(this.month)
+      if (index === 11) {
+        this.monthIndex = 0
+      } else {
+        this.monthIndex = index + 1
+      }
+      this.updateCalendar()
+    },
+    rightYear () {
+      this.year++
+      this.updateCalendar()
+    },
+    leftYear () {
+      this.year--
+      this.updateCalendar()
+    },
+    updateActivePortFromWeek (week, weekIndex) {
+      const currentActive = date_fns_start_of_day__WEBPACK_IMPORTED_MODULE_5___default()(this.timeStamp);
+      const index = week.findIndex(day => date_fns_is_equal__WEBPACK_IMPORTED_MODULE_6___default()(currentActive, day));
+      if (index !== -1) {
+        this.activePort = weekIndex*7 + index;
+      }
+    },
+    updateCalendar () {
+      const date = new Date(this.year, this.monthIndex, 1, 0, 0, 0);
+      const weeks = [];
+      let week = null;
+      let weekDays = new Array(7);
+      // let index = 0;
+      this.activePort = null;
+      date_fns_each_day__WEBPACK_IMPORTED_MODULE_2___default()(date, date_fns_end_of_month__WEBPACK_IMPORTED_MODULE_1___default()(date)).forEach(day => {
+        const weekday = date_fns_get_day__WEBPACK_IMPORTED_MODULE_3___default()(day);
+        if (weekday === this.normalizedFirstDayOfWeek) {
+          if (week) {
+            weeks.push(week);
+            // Add those days that were not part of the month to the index
+            // index += week.filter(d => d === null).length;
+            this.updateActivePortFromWeek(weekDays, weeks.length - 1);
+            weekDays = new Array(7);
+          }
+          week = new Array(7);
+        } else if (week === null) {
+          week = new Array(7);
+        }
+        const idx = (weekday - this.normalizedFirstDayOfWeek + 7) % 7
+        week[idx] = date_fns_format__WEBPACK_IMPORTED_MODULE_4___default()(day, 'DD');
+        weekDays[idx] = day;
+      });
+      if (week && week.some(n => n)) {
+        weeks.push(week);
+        this.updateActivePortFromWeek(weekDays, weeks.length - 1);
+      }
+      this.weeks = weeks;
+    },
+    setDay (index, port) {
+      if (port) {
+        this.activePort = index;
+        this.day = parseInt(port, 10);
+        this.timeStamp = new Date(this.year, this.monthIndex, this.day);
+      }
+    },
+    setMinute (index, closeAfterSet) {
+      this.minuteIndex = index
+      this.minute = this.minutes[index]
+      if (closeAfterSet) {
+        this.minuteSelectorVisible = false
+      }
+    },
+    setHour (index, closeAfterSet) {
+      this.hourIndex = index
+      this.hour = this.hours[index]
+      if (closeAfterSet) {
+        this.hourSelectorVisible = false
+      }
+    },
+    showHourSelector () {
+      this.hourSelectorVisible = true
+      this.minuteSelectorVisible = false
+    },
+    showMinuteSelector () {
+      this.minuteSelectorVisible = true
+      this.hourSelectorVisible = false
+    },
+    keyIsDown (event) {
+      let key = event.which || event.keycode
+      if (key === 38) {
+        if (this.minuteSelectorVisible && this.minuteIndex > 0) {
+          this.setMinute(this.minuteIndex - 1, false)
+          this.scrollTopMinute()
+        } else if (this.hourSelectorVisible && this.hourIndex > 0) {
+          this.setHour(this.hourIndex - 1, false)
+          this.scrollTopHour()
+        }
+      } else if (key === 40) {
+        if (this.minuteSelectorVisible && this.minuteIndex < this.minutes.length - 1) {
+          this.setMinute(this.minuteIndex + 1, false)
+          this.scrollTopMinute()
+        } else if (this.hourSelectorVisible && this.hourIndex < this.hours.length - 1) {
+          this.setHour(this.hourIndex + 1, false)
+          this.scrollTopHour()
+        }
+      } else if (key === 13) {
+        this.minuteSelectorVisible = false
+        this.hourSelectorVisible = false
+      }
+	  if (this.minuteSelectorVisible || this.hourSelectorVisible) {
+		event.preventDefault()
+		this.minuteSelectorVisible = false
+        this.hourSelectorVisible = false
+	  }
+    },
+    scrollTopMinute () {
+      let mHeight = this.$refs.minuteScroller.scrollHeight
+      let wHeight = this.$refs.minuteScrollerWrapper.clientHeight
+      let top = mHeight * (this.minuteIndex / (this.minutes.length - 1)) - (wHeight / 2)
+      this.$refs.minuteScroller.scrollTop = top
+    },
+    scrollTopHour () {
+      let mHeight = this.$refs.hourScroller.scrollHeight
+      let wHeight = this.$refs.hourScrollerWrapper.clientHeight
+      let top = mHeight * (this.hourIndex / (this.hours.length - 1)) - (wHeight / 2)
+      this.$refs.hourScroller.scrollTop = top
+    },
+    changePeriod () {
+      this.period = this.period === 'AM' ? 'PM' : 'AM'
+    },
+    calendarClicked (event) {
+      if (event.target.id !== 'j-hour' && event.target.id !== 'j-minute') {
+        this.minuteSelectorVisible = false
+        this.hourSelectorVisible = false
+      }
+      event.cancelBubble = true
+      if (event.stopPropagation) {
+        event.stopPropagation()
+      }
+    },
+    documentClicked (event) {
+      if (event.target.id !== 'tj-datetime-input') {
+        this.hideCal = true
+      }
+    },
+    toggleCal () {
+      this.hideCal = !this.hideCal
+    },
+    setDate () {
+      let d = null
+      if (this.dateFormat.indexOf('H') !== -1) {
+        this.periodStyle = 24;
+        this.period = null;
+      } else {
+        this.periodStyle = 12;
+      }
+      let h = this.hour + ''
+      if (this.periodStyle === 12) {
+        if (h === '12') {
+          if (this.period === 'AM') {
+            h = '00'
+          } else {
+            h = '12'
+          }
+        } else if (this.period === 'PM' && parseInt(h) < 12) {
+          h = parseInt(h) + 12
+          h = '' + h
+        }
+      }
+      d = this.dateFormat
+      d = d.replace('YYYY', this.year)
+      d = d.replace('DD', this.day < 10 ? '0' + this.day : this.day)
+      let m = this.monthIndex + 1
+      d = d.replace('MM', m < 10 ? '0' + m : m)
+	    this.minute += ''
+      d = d.replace(this.periodStyle === 24 ? 'H' : 'h', h.length < 2 ? '0' + h : '' + h )
+      d = d.replace('i', this.minute.length < 2 ? '0' + this.minute : '' + this.minute)
+      d = d.replace('s', '00')
+      this.$emit('input', d)
+      this.date = d
+      this.hideCal = true
+    },
+    makeDateObject (val) {
+      // handle support for eu date format
+      let dateAndTime = val.split(' ')
+      let arr = []
+      if (this.format.indexOf('-') !== -1) {
+        arr = dateAndTime[0].split('-')
+      } else {
+        arr = dateAndTime[0].split('/')
+      }
+      let year = 0
+      let month = 0
+      let day = 0
+      if (this.format.indexOf('DD/MM/YYYY') === 0 || this.format.indexOf('DD-MM-YYYY') === 0) {
+        year = arr[2]
+        month = arr[1]
+        day = arr[0]
+      } else if (this.format.indexOf('YYYY/MM/DD') === 0 || this.format.indexOf('YYYY-MM-DD') === 0) {
+        year = arr[0]
+        month = arr[1]
+        day = arr[2]
+      } else {
+        year = arr[2]
+        month = arr[0]
+        day = arr[1]
+      }
+
+      if(dateAndTime.length === 2 && dateAndTime[1]){
+        var splitTime = dateAndTime[1].split(':')
+        return new Date(parseInt(year), parseInt(month)-1, parseInt(day), parseInt(splitTime[0]), parseInt(splitTime[1]), parseInt(splitTime[2]))
+      } else {
+        return new Date(parseInt(year), parseInt(month)-1, parseInt(day))
+      }
+
+    }
+  },
+  created () {
+  	if (this.value) {
+  		try {
+  			this.timeStamp = this.makeDateObject(this.value)
+  		} catch (e) {
+        this.timeStamp = new Date()
+        console.log(e);
+  		}
+  	}
+
+    this.year = this.timeStamp.getFullYear()
+    this.monthIndex = this.timeStamp.getMonth()
+    this.day = this.timeStamp.getDate()
+    this.hour = this.timeStamp.getHours()
+    this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour
+    this.minute = this.timeStamp.getMinutes()
+    this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute
+    this.updateCalendar()
+    days.forEach((day, idx) => {
+      this.days[(idx - this.normalizedFirstDayOfWeek + 7) % 7] = day;
+    });
+    document.addEventListener('keydown', this.keyIsDown)
+    document.addEventListener('click', this.documentClicked)
+    this.setDate()
+  },
+  watch: {
+    value (newVal, oldVal) {
+      if (newVal) {
+        this.value = newVal;
+    		try {
+          this.timeStamp = this.makeDateObject(this.value)
+          let old = this.makeDateObject(oldVal)
+          if (oldVal === this.timeStamp) {
+            return
+          }
+    		} catch (e) {
+          console.warn(e.message +'. Current date is being used.')
+          this.timeStamp = new Date()
+    		}
+    	}
+      this.year = this.timeStamp.getFullYear()
+      this.monthIndex = this.timeStamp.getMonth()
+      this.day = this.timeStamp.getDate()
+      this.hour = this.timeStamp.getHours()
+      this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour
+      this.minute = this.timeStamp.getMinutes()
+      this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute
+      this.updateCalendar()
+      this.setDate()
+    }
+  },
+  destroyed: function () {
+    document.removeEventListener('keydown', this.keyIsDown)
+    document.removeEventListener('click', this.documentClicked)
+  },
+  computed: {
+    normalizedFirstDayOfWeek: function() {
+      return parseInt(this.firstDayOfWeek, 10);
+    },
+    ports: {
+      get: function () {
+        let p = []
+        if (this.portsHolder.length === 0) {
+          for (let i = 0; i < 42; i++) {
+            p.push('')
+          }
+        } else {
+          p = this.portsHolder
+        }
+        return p
+      },
+      set: function (newValue) {
+        this.portsHolder = newValue
+      }
+    },
+    month () {
+      return this.months[this.monthIndex]
+    },
+    dateTime () {
+      return this.timeStamp.getFullYear() + '-' + (this.timeStamp.getMonth() + 1) + '-' + this.timeStamp.getUTCDay()
+    },
+    minutes () {
+      let arr = []
+      for (let i = 0; i < 60; i++) {
+        i < 10 ? arr.push('0' + i) : arr.push('' + i)
+      }
+      return arr
+    },
+    hours () {
+      let arr = []
+      if (this.periodStyle === 24) {
+        for (let i = 0; i < this.periodStyle; i++) {
+          i < 10 ? arr.push('0' + i) : arr.push('' + i)
+        }
+      } else {
+        for (let i = 1; i <= this.periodStyle; i++) {
+          i < 10 ? arr.push('0' + i) : arr.push('' + i)
+        }
+      }
+      return arr
+    },
+    dateFormat () {
+      let f = 'YYYY-MM-DD h:i:s'
+      let allowedFormats = [
+        'YYYY-MM-DD h:i:s', 'DD-MM-YYYY h:i:s', 'MM-DD-YYYY h:i:s',
+        'YYYY-MM-DD H:i:s', 'DD-MM-YYYY H:i:s', 'MM-DD-YYYY H:i:s',
+        'YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY',
+        'YYYY/MM/DD', 'DD/MM/YYYY', 'MM/DD/YYYY', 'h:i:s', 'H:i:s',
+        'YYYY/MM/DD h:i:s', 'DD/MM/YYYY h:i:s', 'MM/DD/YYYY h:i:s',
+        'YYYY/MM/DD H:i:s', 'DD/MM/YYYY H:i:s', 'MM/DD/YYYY H:i:s'
+      ]
+      if (this.format) {
+        f = this.format
+      }
+      if (allowedFormats.indexOf(f) < 0) {
+        console.warn('Invalid date format supplied. Current default date format is being used.')
+        // return default date format if date format is invalid
+        return 'YYYY-MM-DD h:i:s'
+      } else {
+        return f
+      }
+    },
+    hideTime () {
+      return this.dateFormat.indexOf('h:i:s') === -1 && this.dateFormat.indexOf('H:i:s') === -1
+    },
+    hideDate () {
+      return this.dateFormat === 'h:i:s' || this.dateFormat === 'H:i:s'
+    }
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "datetime-picker",
+      style: { width: _vm.width },
+      on: {
+        click: function($event) {
+          return _vm.calendarClicked($event)
+        }
+      }
+    },
+    [
+      _c("div", [
+        _c("input", {
+          attrs: {
+            type: "text",
+            id: "tj-datetime-input",
+            name: _vm.name,
+            autocomplete: "off"
+          },
+          domProps: { value: _vm.date },
+          on: { click: _vm.toggleCal }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "calender-div", class: { noDisplay: _vm.hideCal } },
+          [
+            _c("div", { class: { noDisplay: _vm.hideDate } }, [
+              _c("div", { staticClass: "year-month-wrapper" }, [
+                _c("div", { staticClass: "month-setter" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "nav-l",
+                      attrs: { type: "button" },
+                      on: { click: _vm.leftYear }
+                    },
+                    [_vm._v("<")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "year" }, [
+                    _vm._v(_vm._s(_vm.year))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "nav-r",
+                      attrs: { type: "button" },
+                      on: { click: _vm.rightYear }
+                    },
+                    [_vm._v(">")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "month-setter" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "nav-l",
+                      attrs: { type: "button" },
+                      on: { click: _vm.leftMonth }
+                    },
+                    [_vm._v("<")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "month" }, [
+                    _vm._v(_vm._s(_vm.month))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "nav-r",
+                      attrs: { type: "button" },
+                      on: {
+                        click: _vm.rightMonth,
+                        mousedown: function($event) {}
+                      }
+                    },
+                    [_vm._v(">")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "headers" },
+                _vm._l(_vm.days, function(port) {
+                  return _c("span", { staticClass: "days" }, [
+                    _vm._v(_vm._s(port))
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                _vm._l(_vm.weeks, function(week, weekIndex) {
+                  return _c(
+                    "div",
+                    { staticClass: "week" },
+                    _vm._l(week, function(day, dayIndex) {
+                      return _c(
+                        "span",
+                        {
+                          staticClass: "port",
+                          class: {
+                            activePort:
+                              weekIndex * 7 + dayIndex === _vm.activePort
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.setDay(weekIndex * 7 + dayIndex, day)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n              " + _vm._s(day) + "\n            "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "time-picker",
+                class: { noDisplay: _vm.hideTime }
+              },
+              [
+                _c("div", { staticClass: "hour-selector" }, [
+                  _c(
+                    "div",
+                    {
+                      attrs: { id: "j-hour" },
+                      on: { click: _vm.showHourSelector }
+                    },
+                    [_vm._v(_vm._s(_vm.hour))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "hourScrollerWrapper",
+                      staticClass: "scroll-hider",
+                      class: { showSelector: _vm.hourSelectorVisible }
+                    },
+                    [
+                      _c(
+                        "ul",
+                        { ref: "hourScroller" },
+                        _vm._l(_vm.hours, function(h, index) {
+                          return _c(
+                            "li",
+                            {
+                              class: { active: index == _vm.hourIndex },
+                              on: {
+                                click: function($event) {
+                                  return _vm.setHour(index, true)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(h))]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "minute-selector" }, [
+                  _c(
+                    "div",
+                    {
+                      attrs: { id: "j-minute" },
+                      on: { click: _vm.showMinuteSelector }
+                    },
+                    [_vm._v(_vm._s(_vm.minute))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "minuteScrollerWrapper",
+                      staticClass: "scroll-hider",
+                      class: { showSelector: _vm.minuteSelectorVisible }
+                    },
+                    [
+                      _c(
+                        "ul",
+                        { ref: "minuteScroller" },
+                        _vm._l(_vm.minutes, function(m, index) {
+                          return _c(
+                            "li",
+                            {
+                              class: { active: index == _vm.minuteIndex },
+                              on: {
+                                click: function($event) {
+                                  return _vm.setMinute(index, true)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(m))]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.periodStyle === 12
+                  ? _c("div", { staticClass: "time-separator" }, [
+                      _c("span", [_vm._v(":")])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.periodStyle === 12
+                  ? _c("div", { staticClass: "minute-selector" }, [
+                      _c("div", { on: { click: _vm.changePeriod } }, [
+                        _vm._v(_vm._s(_vm.period))
+                      ])
+                    ])
+                  : _vm._e()
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "okButton",
+                attrs: { type: "button" },
+                on: { click: _vm.setDate }
+              },
+              [_vm._v("OK")]
+            )
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "time-separator" }, [
+      _c("span", [_vm._v(":")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/404NotFound.vue?vue&type=template&id=4f4e454c&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/404NotFound.vue?vue&type=template&id=4f4e454c& ***!
@@ -62730,6 +75996,1244 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Barang Hilang")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Data Barang Hilang\n                    "),
+                      _c("i", { staticClass: "fas fa-hand-holding-usd fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.barangHilangs.data, function(barangHilang) {
+                        return _c("tr", { key: barangHilang.id }, [
+                          _c("td", [_vm._v(_vm._s(barangHilang.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(barangHilang.get_user.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(barangHilang.get_ruangan.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(barangHilang.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(barangHilang.keterangan))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("myDateTime")(
+                                  barangHilang.waktu_penemuan
+                                )
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            barangHilang.status == "New"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(barangHilang.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            barangHilang.status == "Sudah Diambil"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(barangHilang.status))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editModal(barangHilang)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-edit blue" })]
+                              ),
+                              _vm._v(
+                                "\n                        /\n                        "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteBarangHilangs(
+                                        barangHilang.id
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-trash red" })]
+                              ),
+                              _vm._v(
+                                "\n                         /\n                        "
+                              ),
+                              barangHilang.status == "Sudah Diambil"
+                                ? _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: {
+                                          path:
+                                            "/barang-hilang/" + barangHilang.id
+                                        }
+                                      }
+                                    },
+                                    [
+                                      barangHilang.status == "Sudah Diambil"
+                                        ? _c("i", {
+                                            staticClass: "fa fa-check green"
+                                          })
+                                        : _vm._e()
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              barangHilang.status == "New"
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.diambilModal(barangHilang)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      barangHilang.status == "New"
+                                        ? _c("i", {
+                                            staticClass: "fa fa-check red"
+                                          })
+                                        : _vm._e()
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.barangHilangs },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode && !_vm.diambil,
+                        expression: "!editMode && !diambil"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.diambil,
+                        expression: "diambil"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Data Hilang Diambil")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode
+                        ? _vm.updateBarangHilangs()
+                        : _vm.createBarangHilangs()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.id_ruangan,
+                                expression: "form.id_ruangan"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("id_ruangan")
+                            },
+                            attrs: { name: "id_ruangan", id: "id_ruangan" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "id_ruangan",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Barang")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.ruangans, function(ruangan) {
+                              return _c(
+                                "option",
+                                { domProps: { value: ruangan.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(ruangan.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "id_ruangan" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.diambil,
+                            expression: "!diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Nama Barang"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keterangan,
+                              expression: "form.keterangan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("keterangan")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "keterangan",
+                            placeholder: "keterangan"
+                          },
+                          domProps: { value: _vm.form.keterangan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "keterangan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "keterangan" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.diambil,
+                            expression: "!diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("datetime", {
+                          attrs: { format: "YYYY-MM-DD H:i:s", width: "300px" },
+                          model: {
+                            value: _vm.form.waktu_penemuan,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "waktu_penemuan", $$v)
+                            },
+                            expression: "form.waktu_penemuan"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.diambil,
+                            expression: "diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.npm,
+                              expression: "form.npm"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("npm") },
+                          attrs: {
+                            type: "text",
+                            name: "npm",
+                            placeholder: "NPM"
+                          },
+                          domProps: { value: _vm.form.npm },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "npm", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "npm" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.diambil,
+                            expression: "diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.phone,
+                              expression: "form.phone"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("phone") },
+                          attrs: {
+                            type: "number",
+                            name: "phone",
+                            placeholder: "No HP"
+                          },
+                          domProps: { value: _vm.form.phone },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "phone", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "phone" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.diambil,
+                            expression: "diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name_mhs,
+                              expression: "form.name_mhs"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("name_mhs")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "name_mhs",
+                            placeholder: "Nama Mahasiswa"
+                          },
+                          domProps: { value: _vm.form.name_mhs },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "name_mhs",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name_mhs" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.diambil,
+                            expression: "diambil"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "col-sm-2 control-label",
+                            attrs: { for: "inputName2" }
+                          },
+                          [_vm._v("Foto")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-10" },
+                          [
+                            _c("input", {
+                              staticClass: "form-control-file",
+                              class: {
+                                "is-invalid": _vm.form.errors.has("foto")
+                              },
+                              attrs: {
+                                name: "foto",
+                                type: "file",
+                                id: "exampleFormControlFile1"
+                              },
+                              on: { change: _vm.fotoMhs }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "foto" }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode && !_vm.diambil,
+                            expression: "!editMode && !diambil"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.diambil,
+                            expression: "diambil"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Diambil")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Petugas")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Ruangan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama Barang")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Keterangan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Waktu Penemuan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Catatan Beli")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Catatan Beli \n                    "),
+                      _c("i", { staticClass: "fas fa-plus-square fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.catatanBelis.data, function(catatanBeli) {
+                        return _c("tr", { key: catatanBeli.id }, [
+                          _c("td", [_vm._v(_vm._s(catatanBeli.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(catatanBeli.get_user.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(catatanBeli.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(catatanBeli.harga))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(catatanBeli.jumlah))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            catatanBeli.status == "New"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(catatanBeli.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            catatanBeli.status == "Lunas"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(catatanBeli.status))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(catatanBeli)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deletecatatanBelis(
+                                      catatanBeli.id
+                                    )
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            catatanBeli.status == "Lunas"
+                              ? _c("a", { attrs: { title: "Sudah Lunas" } }, [
+                                  catatanBeli.status == "Lunas"
+                                    ? _c("i", {
+                                        staticClass: "fa fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            catatanBeli.status == "New"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selesaiCatatanBeli(
+                                          catatanBeli.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    catatanBeli.status == "New"
+                                      ? _c("i", {
+                                          staticClass: "fa fa-check red"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.catatanBelis },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode
+                        ? _vm.updateCatatanBelis()
+                        : _vm.createCatatanBelis()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Nama Yang diBeli"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.harga,
+                              expression: "form.harga"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("harga") },
+                          attrs: {
+                            type: "number",
+                            name: "harga",
+                            placeholder: "Harga"
+                          },
+                          domProps: { value: _vm.form.harga },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "harga", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "harga" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.jumlah,
+                            expression: "form.jumlah"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.form.errors.has("jumlah") },
+                        attrs: {
+                          type: "number",
+                          name: "jumlah",
+                          placeholder: "Jumlah"
+                        },
+                        domProps: { value: _vm.form.jumlah },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "jumlah", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Petugas")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Harga")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Jumlah")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
@@ -62755,6 +77259,696 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 mt-5" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Detail Barang Hilang " + _vm._s(this.form.name))
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "card card-widget widget-user" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "widget-user-header text-white",
+                  staticStyle: { "background-color": "coral" }
+                },
+                [
+                  _c("h3", { staticClass: "widget-user-username" }, [
+                    _vm._v(_vm._s(this.form.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "widget-user-desc" }, [
+                    _vm._v(_vm._s(this.form.type))
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "widget-user-image" }, [
+                _c("img", {
+                  staticClass: "img-circle",
+                  attrs: { src: _vm.getProfilePhoto(), alt: "User Avatar" }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            !_vm.editMode
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-app",
+                    on: { click: _vm.changeEditMode }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-edit" }),
+                    _vm._v(" Edit\n            ")
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.editMode,
+                      expression: "!editMode"
+                    }
+                  ],
+                  staticClass: "col-md-2"
+                },
+                [
+                  _vm._v("\n          Nama Barang"),
+                  _c("br"),
+                  _vm._v("\n          Petugas Input"),
+                  _c("br"),
+                  _vm._v("\n          Ruangan"),
+                  _c("br"),
+                  _vm._v("\n          Keterangan"),
+                  _c("br"),
+                  _vm._v("\n          Waktu Penemuan"),
+                  _c("br"),
+                  _vm._v("\n          Waktu Diambil"),
+                  _c("br"),
+                  _vm._v("\n          Status"),
+                  _c("br"),
+                  _vm._v("\n          NPM"),
+                  _c("br"),
+                  _vm._v("\n          Nama Mahasiswa"),
+                  _c("br"),
+                  _vm._v("\n          No HP\n        ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.editMode,
+                      expression: "!editMode"
+                    }
+                  ],
+                  staticClass: "col-md-10"
+                },
+                [
+                  _vm._v("\n          : " + _vm._s(this.form.name)),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.get_user.name)),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.get_ruangan.name)),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.keterangan)),
+                  _c("br"),
+                  _vm._v(
+                    "\n          : " +
+                      _vm._s(_vm._f("myDateTime")(this.form.waktu_penemuan))
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n          : " +
+                      _vm._s(_vm._f("myDateTime")(this.form.waktu_diambil))
+                  ),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.status)),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.npm)),
+                  _c("br"),
+                  _vm._v("\n          : " + _vm._s(this.form.name_mhs)),
+                  _c("br"),
+                  _vm._v(
+                    "\n          : " + _vm._s(this.form.phone) + "\n        "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.editMode,
+                      expression: "editMode"
+                    }
+                  ],
+                  staticClass: "col-md-12"
+                },
+                [
+                  _c("form", [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Nama Barang")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name,
+                                expression: "form.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("name")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "name",
+                              placeholder: "Nama Barang"
+                            },
+                            domProps: { value: _vm.form.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "name", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "name" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Ruangan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.id_ruangan,
+                                  expression: "form.id_ruangan"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.form.errors.has("id_ruangan")
+                              },
+                              attrs: { name: "id_ruangan", id: "id_ruangan" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "id_ruangan",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Pilih Ruangan")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.ruangans, function(ruangan) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: ruangan.id } },
+                                  [
+                                    _vm._v(
+                                      "\n            " +
+                                        _vm._s(ruangan.name) +
+                                        "\n        "
+                                    )
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "id_ruangan" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Keterangan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.keterangan,
+                                expression: "form.keterangan"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("keterangan")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "keterangan",
+                              placeholder: "keterangan"
+                            },
+                            domProps: { value: _vm.form.keterangan },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "keterangan",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "keterangan" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Waktu Penemuan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("datetime", {
+                            attrs: {
+                              type: "datetime",
+                              format: "yyyy-MM-dd HH:mm:ss"
+                            },
+                            model: {
+                              value: _vm.form.waktu_penemuan,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "waktu_penemuan", $$v)
+                              },
+                              expression: "form.waktu_penemuan"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Waktu Diambil")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("datetime", {
+                            attrs: {
+                              type: "datetime",
+                              format: "yyyy-MM-dd HH:mm:ss"
+                            },
+                            model: {
+                              value: _vm.form.waktu_diambil,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "waktu_diambil", $$v)
+                              },
+                              expression: "form.waktu_diambil"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("NPM")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.npm,
+                                expression: "form.npm"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: { "is-invalid": _vm.form.errors.has("npm") },
+                            attrs: {
+                              type: "text",
+                              name: "npm",
+                              placeholder: "NPM"
+                            },
+                            domProps: { value: _vm.form.npm },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "npm", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "npm" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("No HP")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.phone,
+                                expression: "form.phone"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("phone")
+                            },
+                            attrs: {
+                              type: "number",
+                              name: "phone",
+                              placeholder: "No HP"
+                            },
+                            domProps: { value: _vm.form.phone },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "phone", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "phone" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Nama Mahasiswa")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name_mhs,
+                                expression: "form.name_mhs"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("name_mhs")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "name_mhs",
+                              placeholder: "Nama Mahasiswa"
+                            },
+                            domProps: { value: _vm.form.name_mhs },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "name_mhs",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "name_mhs" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 control-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Foto")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            staticClass: "form-control-file",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("foto")
+                            },
+                            attrs: {
+                              name: "foto",
+                              type: "file",
+                              id: "exampleFormControlFile1"
+                            },
+                            on: { change: _vm.updateProfile }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "foto" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.editMode
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-app",
+                            on: { click: _vm.changeEditMode }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-edit" }),
+                            _vm._v(" Cancel Edit\n            ")
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-app",
+                        on: { click: _vm.updateDetailBarang }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-save" }),
+                        _vm._v(" Save\n            ")
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-tools" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-tool",
+          attrs: {
+            type: "button",
+            "data-widget": "collapse",
+            "data-toggle": "tooltip",
+            title: "Collapse"
+          }
+        },
+        [_c("i", { staticClass: "fa fa-minus" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-tool",
+          attrs: {
+            type: "button",
+            "data-widget": "remove",
+            "data-toggle": "tooltip",
+            title: "Remove"
+          }
+        },
+        [_c("i", { staticClass: "fa fa-times" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -63251,6 +78445,1990 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Koperasi.vue?vue&type=template&id=57696109&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Koperasi.vue?vue&type=template&id=57696109& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Koperasi Simpan Pinjam")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Data Koperasi\n                    "),
+                      _c("i", { staticClass: "fas fa-hand-holding-usd fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.koperasis.data, function(koperasi) {
+                        return _c("tr", { key: koperasi.id }, [
+                          _c("td", [_vm._v(_vm._s(koperasi.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(koperasi.get_user.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(koperasi.get_user_pinjam.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(koperasi.keterangan))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(koperasi.jumlah))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            koperasi.status == "New"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(koperasi.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            koperasi.status == "Sudah Di Bayar"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(koperasi.status))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(koperasi)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deletekoperasis(koperasi.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            ),
+                            _vm._v(
+                              "\n                         /\n                        "
+                            ),
+                            koperasi.status == "Sudah Di Bayar"
+                              ? _c("a", [
+                                  koperasi.status == "Sudah Di Bayar"
+                                    ? _c("i", {
+                                        staticClass: "fa fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            koperasi.status == "New"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selesaiKoperasi(koperasi.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    koperasi.status == "New"
+                                      ? _c("i", {
+                                          staticClass: "fa fa-check red"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.koperasis },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode
+                        ? _vm.updateKoperasis()
+                        : _vm.createKoperasis()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.id_user_pinjam,
+                                expression: "form.id_user_pinjam"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has(
+                                "id_user_pinjam"
+                              )
+                            },
+                            attrs: {
+                              name: "id_user_pinjam",
+                              id: "id_user_pinjam"
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "id_user_pinjam",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Pegawai")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.user, function(users) {
+                              return _c(
+                                "option",
+                                { domProps: { value: users.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(users.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "id_user_pinjam" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keterangan,
+                              expression: "form.keterangan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("keterangan")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "keterangan",
+                            placeholder: "Alasan"
+                          },
+                          domProps: { value: _vm.form.keterangan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "keterangan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "keterangan" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.jumlah,
+                              expression: "form.jumlah"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("jumlah")
+                          },
+                          attrs: {
+                            min: "0",
+                            type: "number",
+                            name: "jumlah",
+                            placeholder: "Jumlah dalam Rp"
+                          },
+                          domProps: { value: _vm.form.jumlah },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "jumlah", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "jumlah" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Petugas")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama Peminjam")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Alasan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Jumlah")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Masalah Laboran")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Masalah Lab \n                    "),
+                      _c("i", {
+                        staticClass: "fas fa-exclamation-triangle fa-fw"
+                      })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.masalahLabs.data, function(masalahLab) {
+                        return _c("tr", { key: masalahLab.id }, [
+                          _c("td", [_vm._v(_vm._s(masalahLab.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(masalahLab.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(masalahLab.ruangan))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(masalahLab.keterangan))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            masalahLab.status == "New"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(masalahLab.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            masalahLab.status == "Proses"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [_vm._v(_vm._s(masalahLab.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            masalahLab.status == "Selesai"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(masalahLab.status))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(masalahLab.solusi_solved))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(masalahLab)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deletemasalahLabs(masalahLab.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            masalahLab.status == "Selesai"
+                              ? _c("a", [
+                                  masalahLab.status == "Selesai"
+                                    ? _c("i", {
+                                        staticClass: "fas fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            masalahLab.status == "Proses"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.finishMasalah(masalahLab)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    masalahLab.status == "Proses"
+                                      ? _c("i", {
+                                          staticClass: "fas fa-play-circle blue"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            masalahLab.status == "New"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.startMasalahLab(
+                                          masalahLab.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    masalahLab.status == "New"
+                                      ? _c("i", {
+                                          staticClass: "fas fa-play-circle red"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.masalahLabs },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode
+                        ? _vm.updatemasalahLabs()
+                        : _vm.createmasalahLabs()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.id_thnajaran,
+                                expression: "form.id_thnajaran"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("id_thnajaran")
+                            },
+                            attrs: { name: "id_thnajaran", id: "id_thnajaran" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "id_thnajaran",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Tahun Ajaran")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.tahunAjaran, function(thnajaran) {
+                              return _c(
+                                "option",
+                                { domProps: { value: thnajaran.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(thnajaran.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "id_thnajaran" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      _vm._l(_vm.ruangan, function(ruangans) {
+                        return _c(
+                          "p-check",
+                          {
+                            key: ruangans.id,
+                            staticClass: "p-default p-curve p-thick p-smooth",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("ruangan")
+                            },
+                            attrs: {
+                              name: "ruangan[]",
+                              color: "danger-o",
+                              value: ruangans.id
+                            },
+                            model: {
+                              value: _vm.form.ruangan,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "ruangan", $$v)
+                              },
+                              expression: "form.ruangan"
+                            }
+                          },
+                          [_vm._v(_vm._s(ruangans.name))]
+                        )
+                      }),
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Nama Problem"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keterangan,
+                              expression: "form.keterangan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("keterangan")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "keterangan",
+                            placeholder: "Keterangan"
+                          },
+                          domProps: { value: _vm.form.keterangan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "keterangan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "keterangan" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm.form.status == "Selesai"
+                      ? _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.editMode,
+                                expression: "editMode"
+                              }
+                            ],
+                            staticClass: "form-group"
+                          },
+                          [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.solusi_solved,
+                                  expression: "form.solusi_solved"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.form.errors.has(
+                                  "solusi_solved"
+                                )
+                              },
+                              attrs: {
+                                type: "text",
+                                name: "solusi_solved",
+                                placeholder: "Solusi Solved"
+                              },
+                              domProps: { value: _vm.form.solusi_solved },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "solusi_solved",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "solusi_solved" }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "finishMasalahLab",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "finishMasalahLabLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.finishMasalahLab()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.solusi_solved,
+                              expression: "form.solusi_solved"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("solusi_solved")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "solusi_solved",
+                            placeholder: "Solusi Solved"
+                          },
+                          domProps: { value: _vm.form.solusi_solved },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "solusi_solved",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "solusi_solved" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keterangan,
+                              expression: "form.keterangan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("keterangan")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "keterangan",
+                            placeholder: "Keterangan"
+                          },
+                          domProps: { value: _vm.form.keterangan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "keterangan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "keterangan" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Ruangan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Keterangan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Solusi Solved")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "finishMasalahLabLabel" } },
+        [_vm._v("Masalah Selesai")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "submit" } },
+        [_vm._v("Simpan")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Peminjaman Inventory")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Data Peminjaman\n                    "),
+                      _c("i", { staticClass: "fas fa-hand-holding-usd fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.peminjamanInventories.data, function(
+                        peminjamanInventory
+                      ) {
+                        return _c("tr", { key: peminjamanInventory.id }, [
+                          _c("td", [_vm._v(_vm._s(peminjamanInventory.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(peminjamanInventory.get_user.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(peminjamanInventory.get_user_pinjam.name)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(peminjamanInventory.get_inventory.name)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(peminjamanInventory.jumlah))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(peminjamanInventory.keterangan))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            peminjamanInventory.status == "Dipinjam"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [_vm._v(_vm._s(peminjamanInventory.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            peminjamanInventory.status == "Diminta"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-primary" },
+                                  [_vm._v(_vm._s(peminjamanInventory.status))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            peminjamanInventory.status == "Sudah Dikembalikan"
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v(_vm._s(peminjamanInventory.status))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(peminjamanInventory)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(
+                              "\n                        /\n                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deletepeminjamanInventories(
+                                      peminjamanInventory.id
+                                    )
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            ),
+                            _vm._v(
+                              "\n                         /\n                        "
+                            ),
+                            peminjamanInventory.status == "Sudah Dikembalikan"
+                              ? _c("a", [
+                                  peminjamanInventory.status ==
+                                  "Sudah Dikembalikan"
+                                    ? _c("i", {
+                                        staticClass: "fa fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            peminjamanInventory.status == "Diminta"
+                              ? _c("a", [
+                                  peminjamanInventory.status == "Diminta"
+                                    ? _c("i", {
+                                        staticClass: "fa fa-check green"
+                                      })
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            peminjamanInventory.status == "Dipinjam"
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selesaipeminjamanInventory(
+                                          peminjamanInventory.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    peminjamanInventory.status == "Dipinjam"
+                                      ? _c("i", {
+                                          staticClass: "fa fa-check red"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.peminjamanInventories },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode
+                        ? _vm.updatePeminjamanInventories()
+                        : _vm.createPeminjamanInventories()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.id_user_pinjam,
+                                expression: "form.id_user_pinjam"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has(
+                                "id_user_pinjam"
+                              )
+                            },
+                            attrs: {
+                              name: "id_user_pinjam",
+                              id: "id_user_pinjam"
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "id_user_pinjam",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Pegawai")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.user, function(users) {
+                              return _c(
+                                "option",
+                                { domProps: { value: users.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(users.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "id_user_pinjam" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.id_inventory,
+                                expression: "form.id_inventory"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("id_inventory")
+                            },
+                            attrs: { name: "id_inventory", id: "id_inventory" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "id_inventory",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Barang")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.inventories, function(inventory) {
+                              return _c(
+                                "option",
+                                { domProps: { value: inventory.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(inventory.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "id_inventory" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keterangan,
+                              expression: "form.keterangan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("keterangan")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "keterangan",
+                            placeholder: "Alasan"
+                          },
+                          domProps: { value: _vm.form.keterangan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "keterangan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "keterangan" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.jumlah,
+                              expression: "form.jumlah"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("jumlah")
+                          },
+                          attrs: {
+                            min: "0",
+                            type: "number",
+                            name: "jumlah",
+                            placeholder: "Jumlah"
+                          },
+                          domProps: { value: _vm.form.jumlah },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "jumlah", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "jumlah" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "p-radio",
+                          {
+                            staticClass: "p-default p-curve",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("jumlah")
+                            },
+                            attrs: {
+                              value: _vm.form.status,
+                              name: "status",
+                              value: "Dipinjam",
+                              color: "info-o"
+                            },
+                            model: {
+                              value: _vm.form.status,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "status", $$v)
+                              },
+                              expression: "form.status"
+                            }
+                          },
+                          [_vm._v("Pinjam")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "p-radio",
+                          {
+                            staticClass: "p-default p-curve",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("jumlah")
+                            },
+                            attrs: {
+                              value: _vm.form.status,
+                              name: "status",
+                              value: "Diminta",
+                              color: "info-o"
+                            },
+                            model: {
+                              value: _vm.form.status,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "status", $$v)
+                              },
+                              expression: "form.status"
+                            }
+                          },
+                          [_vm._v("Minta")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "p-radio",
+                          {
+                            staticClass: "p-default p-curve",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("jumlah")
+                            },
+                            attrs: {
+                              value: _vm.form.status,
+                              name: "status",
+                              value: "Sudah Dikembalikan",
+                              color: "info-o"
+                            },
+                            model: {
+                              value: _vm.form.status,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "status", $$v)
+                              },
+                              expression: "form.status"
+                            }
+                          },
+                          [_vm._v("Sudah Dikembalikan")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Petugas")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama Peminjam")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nama Barang")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Jumlah")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Keterangan")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PermintaanAplikasi.vue?vue&type=template&id=24938b5c&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PermintaanAplikasi.vue?vue&type=template&id=24938b5c& ***!
@@ -63386,7 +80564,7 @@ var render = function() {
                               "\n                        /\n                        "
                             ),
                             permintaanAplikasi.status == "Selesai"
-                              ? _c("a", { attrs: { href: "#" } }, [
+                              ? _c("a", [
                                   permintaanAplikasi.status == "Selesai"
                                     ? _c("i", {
                                         staticClass: "fa fa-check green"
@@ -65243,6 +82421,448 @@ var staticRenderFns = [
       _c("th", [_vm._v("Waktu Mulai")]),
       _vm._v(" "),
       _c("th", [_vm._v("Waktu Berakhir")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdminOrUser()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Uang Kas")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("Tambah Data Uang Kas \n                    "),
+                      _c("i", { staticClass: "fas fa-hand-holding-usd fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.uangKass.data, function(uangKas) {
+                        return _c("tr", { key: uangKas.id }, [
+                          _c("td", [_vm._v(_vm._s(uangKas.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(uangKas.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(uangKas.kas_masuk))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(uangKas.kas_keluar))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(uangKas.saldo))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              uangKas.id_pembelian == null &&
+                              uangKas.id_koperasi == null
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editModal(uangKas)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-edit blue"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              uangKas.id_pembelian != null
+                                ? _c(
+                                    "router-link",
+                                    { attrs: { to: "/catatan-beli" } },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-edit blue"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              uangKas.id_koperasi != null
+                                ? _c(
+                                    "router-link",
+                                    { attrs: { to: "/koperasi" } },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-edit blue"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(
+                                "\n                        /\n                        "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteUangKass(uangKas.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-trash red" })]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.uangKass },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrUser() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Tambah Data")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Edit Data")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editMode ? _vm.updateUangKass() : _vm.createUangKass()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Nama"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.kas_masuk,
+                              expression: "form.kas_masuk"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("kas_masuk")
+                          },
+                          attrs: {
+                            min: "0",
+                            type: "number",
+                            name: "kas_masuk",
+                            placeholder: "Kas Masuk"
+                          },
+                          domProps: { value: _vm.form.kas_masuk },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "kas_masuk",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "kas_masuk" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.kas_keluar,
+                              expression: "form.kas_keluar"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("kas_keluar")
+                          },
+                          attrs: {
+                            type: "number",
+                            name: "kas_keluar",
+                            placeholder: "Kas Keluar"
+                          },
+                          domProps: { value: _vm.form.kas_keluar },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "kas_keluar",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "kas_keluar" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Tambah Baru")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Kas Masuk")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Kas Keluar")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Saldo")]),
       _vm._v(" "),
       _c("th", [_vm._v("Modify")])
     ])
@@ -81362,6 +98982,93 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue":
+/*!*******************************************************************!*\
+  !*** ./node_modules/vuejs-datetimepicker/src/datetime_picker.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true& */ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true&");
+/* harmony import */ var _datetime_picker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./datetime_picker.vue?vue&type=script&lang=js& */ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& */ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&");
+/* harmony import */ var _vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _datetime_picker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "4bd11526",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "node_modules/vuejs-datetimepicker/src/datetime_picker.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib??vue-loader-options!./datetime_picker.vue?vue&type=script&lang=js& */ "./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&":
+/*!****************************************************************************************************************************!*\
+  !*** ./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../style-loader!../../css-loader??ref--6-1!../../vue-loader/lib/loaders/stylePostLoader.js!../../postcss-loader/src??ref--6-2!../../vue-loader/lib??vue-loader-options!./datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=style&index=0&id=4bd11526&scoped=true&lang=css&");
+/* harmony import */ var _style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_style_loader_index_js_css_loader_index_js_ref_6_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_2_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_style_index_0_id_4bd11526_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../vue-loader/lib??vue-loader-options!./datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vuejs-datetimepicker/src/datetime_picker.vue?vue&type=template&id=4bd11526&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_datetime_picker_vue_vue_type_template_id_4bd11526_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -81422,6 +99129,426 @@ module.exports = function(module) {
 	}
 	return module;
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/weekstart/dist/es-module/api.js":
+/*!******************************************************!*\
+  !*** ./node_modules/weekstart/dist/es-module/api.js ***!
+  \******************************************************/
+/*! exports provided: getWeekStartByRegion, getWeekStartByLocale */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale; });
+function getWeekStartByRegion(regionCode, regionDayMap) {
+    var code = regionDayMap[typeof regionCode === 'string' ? regionCode.toUpperCase() : regionCode];
+    return typeof code === 'number' ? code : 1;
+}
+
+function getWeekStartByLocale(locale, langRegionMap, regionDayMap) {
+    if (locale) {
+        var data = locale.toLowerCase().split(/[-_]/);
+        var language = data[0];
+        var country;
+        if (data[1] && data[1].length === 4) {
+            language += "_" + (data[1]);
+            country = data[2];
+        } else {
+            country = data[1];
+        }
+        if (!country) {
+            country = langRegionMap[language];
+        }
+        if (country) {
+            return getWeekStartByRegion(country.match(/^\d+$/) ? Number(country) : country, regionDayMap);
+        }
+    }
+    return 1;
+}
+
+
+//# sourceMappingURL=api.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/weekstart/dist/es-module/langRegionMap.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/weekstart/dist/es-module/langRegionMap.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var langRegionMap = {
+    en: 'US',
+    zh: 'CN',
+    zh_hans: 'CN',
+    hans: 'CN',
+    wuu: 'CN',
+    hsn: 'CN',
+    hak: 'CN',
+    nan: 'CN',
+    gan: 'CN',
+    hi: 'IN',
+    te: 'IN',
+    mr: 'IN',
+    ta: 'IN',
+    gu: 'IN',
+    kn: 'IN',
+    or: 'IN',
+    ml: 'IN',
+    pa_guru: 'IN',
+    bho: 'IN',
+    awa: 'IN',
+    as: 'IN',
+    mwr: 'IN',
+    mai: 'IN',
+    mag: 'IN',
+    bgc: 'IN',
+    hne: 'IN',
+    dcc: 'IN',
+    dz: 'BT',
+    tn: 'BW',
+    am: 'ET',
+    om: 'ET',
+    quc: 'GT',
+    id: 'ID',
+    jv: 'ID',
+    su: 'ID',
+    mad: 'ID',
+    ms_arab: 'ID',
+    ga: 'IE',
+    he: 'IL',
+    jam: 'JM',
+    ja: 'JP',
+    km: 'KH',
+    ko: 'KR',
+    lo: 'LA',
+    mh: 'MH',
+    my: 'MM',
+    mt: 'MT',
+    ne: 'NP',
+    fil: 'PH',
+    ceb: 'PH',
+    ilo: 'PH',
+    ur: 'PK',
+    pa: 'PK',
+    pa_arab: 'PK',
+    arab: 'PK',
+    lah: 'PK',
+    ps: 'PK',
+    sd: 'PK',
+    sd_arab: 'PK',
+    skr: 'PK',
+    gn: 'PY',
+    th: 'TH',
+    tts: 'TH',
+    aeb: 'TN',
+    zh_hant: 'TW',
+    hant: 'TW',
+    sm: 'WS',
+    zu: 'ZA',
+    sn: 'ZW',
+    arq: 'DZ',
+    ar: 'EG',
+    arz: 'EG',
+    fa: 'IR',
+    az_arab: 'IR',
+    ary: 'MA',
+    bn: 'BD',
+    rkt: 'BD',
+    dv: 'MV'
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (langRegionMap);
+//# sourceMappingURL=langRegionMap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/weekstart/dist/es-module/main.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/weekstart/dist/es-module/main.js ***!
+  \*******************************************************/
+/*! exports provided: getWeekStartByRegion, getWeekStartByLocale */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale$1; });
+/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api.js */ "./node_modules/weekstart/dist/es-module/api.js");
+/* harmony import */ var _langRegionMap_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./langRegionMap.js */ "./node_modules/weekstart/dist/es-module/langRegionMap.js");
+/* harmony import */ var _regionDayMap_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./regionDayMap.js */ "./node_modules/weekstart/dist/es-module/regionDayMap.js");
+
+
+
+
+function getWeekStartByRegion$1(regionCode) {
+    return Object(_api_js__WEBPACK_IMPORTED_MODULE_0__["getWeekStartByRegion"])(regionCode, _regionDayMap_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
+}
+
+function getWeekStartByLocale$1(locale) {
+    return Object(_api_js__WEBPACK_IMPORTED_MODULE_0__["getWeekStartByLocale"])(locale, _langRegionMap_js__WEBPACK_IMPORTED_MODULE_1__["default"], _regionDayMap_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
+}
+
+
+//# sourceMappingURL=main.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/weekstart/dist/es-module/regionDayMap.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/weekstart/dist/es-module/regionDayMap.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var regionDayMap = {
+    AG: 0,
+    ATG: 0,
+    28: 0,
+    AR: 0,
+    ARG: 0,
+    32: 0,
+    AS: 0,
+    ASM: 0,
+    16: 0,
+    AU: 0,
+    AUS: 0,
+    36: 0,
+    BR: 0,
+    BRA: 0,
+    76: 0,
+    BS: 0,
+    BHS: 0,
+    44: 0,
+    BT: 0,
+    BTN: 0,
+    64: 0,
+    BW: 0,
+    BWA: 0,
+    72: 0,
+    BZ: 0,
+    BLZ: 0,
+    84: 0,
+    CA: 0,
+    CAN: 0,
+    124: 0,
+    CN: 0,
+    CHN: 0,
+    156: 0,
+    CO: 0,
+    COL: 0,
+    170: 0,
+    DM: 0,
+    DMA: 0,
+    212: 0,
+    DO: 0,
+    DOM: 0,
+    214: 0,
+    ET: 0,
+    ETH: 0,
+    231: 0,
+    GT: 0,
+    GTM: 0,
+    320: 0,
+    GU: 0,
+    GUM: 0,
+    316: 0,
+    HK: 0,
+    HKG: 0,
+    344: 0,
+    HN: 0,
+    HND: 0,
+    340: 0,
+    ID: 0,
+    IDN: 0,
+    360: 0,
+    IE: 0,
+    IRL: 0,
+    372: 0,
+    IL: 0,
+    ISR: 0,
+    376: 0,
+    IN: 0,
+    IND: 0,
+    356: 0,
+    JM: 0,
+    JAM: 0,
+    388: 0,
+    JP: 0,
+    JPN: 0,
+    392: 0,
+    KE: 0,
+    KEN: 0,
+    404: 0,
+    KH: 0,
+    KHM: 0,
+    116: 0,
+    KR: 0,
+    KOR: 0,
+    410: 0,
+    LA: 0,
+    LA0: 0,
+    418: 0,
+    MH: 0,
+    MHL: 0,
+    584: 0,
+    MM: 0,
+    MMR: 0,
+    104: 0,
+    MO: 0,
+    MAC: 0,
+    446: 0,
+    MT: 0,
+    MLT: 0,
+    470: 0,
+    MX: 0,
+    MEX: 0,
+    484: 0,
+    MZ: 0,
+    MOZ: 0,
+    508: 0,
+    NI: 0,
+    NIC: 0,
+    558: 0,
+    NP: 0,
+    NPL: 0,
+    524: 0,
+    NZ: 0,
+    NZL: 0,
+    554: 0,
+    PA: 0,
+    PAN: 0,
+    591: 0,
+    PE: 0,
+    PER: 0,
+    604: 0,
+    PH: 0,
+    PHL: 0,
+    608: 0,
+    PK: 0,
+    PAK: 0,
+    586: 0,
+    PR: 0,
+    PRI: 0,
+    630: 0,
+    PY: 0,
+    PRY: 0,
+    600: 0,
+    SA: 0,
+    SAU: 0,
+    682: 0,
+    SG: 0,
+    SGP: 0,
+    702: 0,
+    SV: 0,
+    SLV: 0,
+    222: 0,
+    TH: 0,
+    THA: 0,
+    764: 0,
+    TN: 0,
+    TUN: 0,
+    788: 0,
+    TT: 0,
+    TTO: 0,
+    780: 0,
+    TW: 0,
+    TWN: 0,
+    158: 0,
+    UM: 0,
+    UMI: 0,
+    581: 0,
+    US: 0,
+    USA: 0,
+    840: 0,
+    VE: 0,
+    VEN: 0,
+    862: 0,
+    VI: 0,
+    VIR: 0,
+    850: 0,
+    WS: 0,
+    WSM: 0,
+    882: 0,
+    YE: 0,
+    YEM: 0,
+    887: 0,
+    ZA: 0,
+    ZAF: 0,
+    710: 0,
+    ZW: 0,
+    ZWE: 0,
+    716: 0,
+    AE: 6,
+    ARE: 6,
+    784: 6,
+    AF: 6,
+    AFG: 6,
+    4: 6,
+    BH: 6,
+    BHR: 6,
+    48: 6,
+    DJ: 6,
+    DJI: 6,
+    262: 6,
+    DZ: 6,
+    DZA: 6,
+    12: 6,
+    EG: 6,
+    EGY: 6,
+    818: 6,
+    IQ: 6,
+    IRQ: 6,
+    368: 6,
+    IR: 6,
+    IRN: 6,
+    364: 6,
+    JO: 6,
+    JOR: 6,
+    400: 6,
+    KW: 6,
+    KWT: 6,
+    414: 6,
+    LY: 6,
+    LBY: 6,
+    434: 6,
+    MA: 6,
+    MAR: 6,
+    504: 6,
+    OM: 6,
+    OMN: 6,
+    512: 6,
+    QA: 6,
+    QAT: 6,
+    634: 6,
+    SD: 6,
+    SDN: 6,
+    729: 6,
+    SY: 6,
+    SYR: 6,
+    760: 6,
+    BD: 5,
+    BGD: 5,
+    50: 5,
+    MV: 5,
+    MDV: 5,
+    462: 5
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (regionDayMap);
+//# sourceMappingURL=regionDayMap.js.map
 
 
 /***/ }),
@@ -81508,6 +99635,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_7__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -81568,6 +99697,27 @@ var routes = [{
   path: '/permintaan-aplikasi',
   component: __webpack_require__(/*! ./components/PermintaanAplikasi.vue */ "./resources/js/components/PermintaanAplikasi.vue").default
 }, {
+  path: '/masalah-lab',
+  component: __webpack_require__(/*! ./components/MasalahLab.vue */ "./resources/js/components/MasalahLab.vue").default
+}, {
+  path: '/uang-kas',
+  component: __webpack_require__(/*! ./components/UangKas.vue */ "./resources/js/components/UangKas.vue").default
+}, {
+  path: '/catatan-beli',
+  component: __webpack_require__(/*! ./components/CatatanBeli.vue */ "./resources/js/components/CatatanBeli.vue").default
+}, {
+  path: '/koperasi',
+  component: __webpack_require__(/*! ./components/Koperasi.vue */ "./resources/js/components/Koperasi.vue").default
+}, {
+  path: '/barang-hilang',
+  component: __webpack_require__(/*! ./components/BarangHilang.vue */ "./resources/js/components/BarangHilang.vue").default
+}, {
+  path: '/barang-hilang/:id',
+  component: __webpack_require__(/*! ./components/DetailBarangHilang.vue */ "./resources/js/components/DetailBarangHilang.vue").default
+}, {
+  path: '/peminjaman-inventory',
+  component: __webpack_require__(/*! ./components/PeminjamanInventory.vue */ "./resources/js/components/PeminjamanInventory.vue").default
+}, {
   path: '*',
   component: __webpack_require__(/*! ./components/404NotFound.vue */ "./resources/js/components/404NotFound.vue").default
 }];
@@ -81580,8 +99730,16 @@ Vue.filter('upText', function (text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 });
 Vue.filter('myDate', function (created) {
+  moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('id');
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('MMMM Do YYYY');
 });
+Vue.filter('myDateTime', function (created) {
+  moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('id');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('dddd MMM YYYY, h:mm');
+  ;
+});
+
+Vue.component('datetime', vue_datetime__WEBPACK_IMPORTED_MODULE_7__["Datetime"]);
 window.Fire = new Vue();
 /**
  * The following block of code may be used to automatically register your
@@ -81607,10 +99765,20 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app',
   router: router,
+  components: {
+    "vue-datetime-picker": __webpack_require__(/*! vue-datetime-picker */ "./node_modules/vue-datetime-picker/dist/vue-datetime-picker.min.js")
+  },
   data: {
     search: ''
   },
   methods: {
+    formatDatetime: function formatDatetime(datetime) {
+      if (datetime === null) {
+        return "[null]";
+      } else {
+        return datetime.format("YYYY-MM-DD HH:mm:ss");
+      }
+    },
     searchit: _.debounce(function () {
       Fire.$emit('searching');
     }, 500)
@@ -81748,6 +99916,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/BarangHilang.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/BarangHilang.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BarangHilang.vue?vue&type=template&id=20052321& */ "./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321&");
+/* harmony import */ var _BarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BarangHilang.vue?vue&type=script&lang=js& */ "./resources/js/components/BarangHilang.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/BarangHilang.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/BarangHilang.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/BarangHilang.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BarangHilang.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BarangHilang.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BarangHilang.vue?vue&type=template&id=20052321& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BarangHilang.vue?vue&type=template&id=20052321&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarangHilang_vue_vue_type_template_id_20052321___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CatatanBeli.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/CatatanBeli.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CatatanBeli.vue?vue&type=template&id=5f279a7b& */ "./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b&");
+/* harmony import */ var _CatatanBeli_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CatatanBeli.vue?vue&type=script&lang=js& */ "./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CatatanBeli_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CatatanBeli.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CatatanBeli_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CatatanBeli.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CatatanBeli.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CatatanBeli_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CatatanBeli.vue?vue&type=template&id=5f279a7b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CatatanBeli.vue?vue&type=template&id=5f279a7b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CatatanBeli_vue_vue_type_template_id_5f279a7b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Dashboard.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/Dashboard.vue ***!
@@ -81812,6 +100118,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_040e2ab9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_040e2ab9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/DetailBarangHilang.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/DetailBarangHilang.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailBarangHilang.vue?vue&type=template&id=21133352& */ "./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352&");
+/* harmony import */ var _DetailBarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailBarangHilang.vue?vue&type=script&lang=js& */ "./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DetailBarangHilang.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _DetailBarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/DetailBarangHilang.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DetailBarangHilang.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./DetailBarangHilang.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DetailBarangHilang.vue?vue&type=template&id=21133352& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DetailBarangHilang.vue?vue&type=template&id=21133352&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailBarangHilang_vue_vue_type_template_id_21133352___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -82019,6 +100412,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Inventory_vue_vue_type_template_id_5a6294fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Inventory_vue_vue_type_template_id_5a6294fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Koperasi.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Koperasi.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Koperasi.vue?vue&type=template&id=57696109& */ "./resources/js/components/Koperasi.vue?vue&type=template&id=57696109&");
+/* harmony import */ var _Koperasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Koperasi.vue?vue&type=script&lang=js& */ "./resources/js/components/Koperasi.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Koperasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Koperasi.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Koperasi.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Koperasi.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Koperasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Koperasi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Koperasi.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Koperasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Koperasi.vue?vue&type=template&id=57696109&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Koperasi.vue?vue&type=template&id=57696109& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Koperasi.vue?vue&type=template&id=57696109& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Koperasi.vue?vue&type=template&id=57696109&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Koperasi_vue_vue_type_template_id_57696109___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/MasalahLab.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/MasalahLab.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MasalahLab.vue?vue&type=template&id=7408a1f2& */ "./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2&");
+/* harmony import */ var _MasalahLab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MasalahLab.vue?vue&type=script&lang=js& */ "./resources/js/components/MasalahLab.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MasalahLab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MasalahLab.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MasalahLab.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/MasalahLab.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MasalahLab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MasalahLab.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MasalahLab.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MasalahLab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./MasalahLab.vue?vue&type=template&id=7408a1f2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MasalahLab.vue?vue&type=template&id=7408a1f2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MasalahLab_vue_vue_type_template_id_7408a1f2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PeminjamanInventory.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/PeminjamanInventory.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PeminjamanInventory.vue?vue&type=template&id=eace4f8a& */ "./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a&");
+/* harmony import */ var _PeminjamanInventory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PeminjamanInventory.vue?vue&type=script&lang=js& */ "./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PeminjamanInventory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PeminjamanInventory.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeminjamanInventory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PeminjamanInventory.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PeminjamanInventory.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeminjamanInventory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PeminjamanInventory.vue?vue&type=template&id=eace4f8a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PeminjamanInventory.vue?vue&type=template&id=eace4f8a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeminjamanInventory_vue_vue_type_template_id_eace4f8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -82295,6 +100895,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TahunAjaran_vue_vue_type_template_id_c75e6480___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TahunAjaran_vue_vue_type_template_id_c75e6480___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UangKas.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/UangKas.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UangKas.vue?vue&type=template&id=204d77bd& */ "./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd&");
+/* harmony import */ var _UangKas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UangKas.vue?vue&type=script&lang=js& */ "./resources/js/components/UangKas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UangKas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UangKas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UangKas.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/UangKas.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UangKas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UangKas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UangKas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UangKas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UangKas.vue?vue&type=template&id=204d77bd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UangKas.vue?vue&type=template&id=204d77bd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UangKas_vue_vue_type_template_id_204d77bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

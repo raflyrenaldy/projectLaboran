@@ -58,6 +58,13 @@ let routes = [
   { path: '/ruangan', component: require('./components/Ruangan.vue').default },
   { path: '/inventory', component: require('./components/Inventory.vue').default },
   { path: '/permintaan-aplikasi', component: require('./components/PermintaanAplikasi.vue').default },
+  { path: '/masalah-lab', component: require('./components/MasalahLab.vue').default },
+  { path: '/uang-kas', component: require('./components/UangKas.vue').default },
+  { path: '/catatan-beli', component: require('./components/CatatanBeli.vue').default },
+  { path: '/koperasi', component: require('./components/Koperasi.vue').default },
+  { path: '/barang-hilang', component: require('./components/BarangHilang.vue').default },
+  { path: '/barang-hilang/:id', component: require('./components/DetailBarangHilang.vue').default },
+  { path: '/peminjaman-inventory', component: require('./components/PeminjamanInventory.vue').default },
   { path: '*', component: require('./components/404NotFound.vue').default }
 ]
 
@@ -70,8 +77,17 @@ Vue.filter('upText',function(text){
     return text.charAt(0).toUpperCase() + text.slice(1)
 });
 Vue.filter('myDate',function(created){
-    return moment(created).format('MMMM Do YYYY');
+  moment.locale('id'); 
+  return moment(created).format('MMMM Do YYYY');
 });
+Vue.filter('myDateTime',function(created){
+  moment.locale('id'); 
+  return moment(created).format('dddd MMM YYYY, h:mm');;
+});
+import { Datetime } from 'vue-datetime';
+ 
+Vue.component('datetime', Datetime);
+
 
 
 window.Fire = new Vue();
@@ -118,10 +134,20 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     router,
+    components: {
+      "vue-datetime-picker": require("vue-datetime-picker")
+    },
     data:{
       search: ''
     },
     methods:{
+      formatDatetime: function(datetime) {
+        if (datetime === null) {
+          return "[null]";
+        } else {
+          return datetime.format("YYYY-MM-DD HH:mm:ss");
+        }
+      },
       searchit: _.debounce(()=>{
         Fire.$emit('searching');
       },500)

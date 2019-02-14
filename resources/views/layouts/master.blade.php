@@ -45,7 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="./img/logo.png" alt="Laboran Logo" class="brand-image img-circle elevation-3"
+      <img src="../img/logo.png" alt="Laboran Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Laboran</span>
     </a>
@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image">
+          <img src="../img/profile.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::User()->name}}</a>
@@ -92,6 +92,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/barang-hilang" class="nav-link">
+              <i class="nav-icon fas fa-door-closed red"></i>
+              <p>
+                Barang Hilang
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/inventory" class="nav-link">
               <i class="nav-icon fas fa-boxes blue"></i>
               <p>
@@ -100,15 +108,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/peminjaman-inventory" class="nav-link">
+              <i class="nav-icon fas fa-boxes red"></i>
+              <p>
+                Peminjaman Inv
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/permintaan-aplikasi" class="nav-link">
-              <i class="nav-icon fas fa-boxes blue"></i>
+              <i class="nav-icon fab fa-intercom green"></i>
               <p>
                 Permintaan App
               </p>
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/masalah-lab" class="nav-link">
+              <i class="nav-icon fas fa-exclamation-triangle green"></i>
+              <p>
+                Masalah Lab
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/uang-kas" class="nav-link">
+              <i class="nav-icon fas fa-money-bill-alt teal"></i>
+              <p>
+                Uang Kas
+              </p>
+            </router-link>
+          </li>
+           <li class="nav-item">
+            <router-link to="/catatan-beli" class="nav-link">
+              <i class="nav-icon fas fa-money-bill-alt orange"></i>
+              <p>
+                Catatan Beli
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/koperasi" class="nav-link">
+              <i class="nav-icon fas fa-money-bill-alt cyan"></i>
+              <p>
+                Koperasi
+              </p>
+            </router-link>
+          </li>
           @can('isAdmin')
-          <li class="nav-item has-treeview menu-open">
+          <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs blue"></i>
               <p>

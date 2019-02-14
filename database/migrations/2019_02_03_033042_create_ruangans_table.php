@@ -17,7 +17,7 @@ class CreateRuangansTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('jumlah_kursi');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

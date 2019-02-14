@@ -4,10 +4,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Permintaan Aplikasi</h3>
+                <h3 class="card-title">Catatan Beli</h3>
 
                 <div class="card-tools">
-                <button class="btn btn-success" @click="newModal">Tambah Permintaan Aplikasi 
+                <button class="btn btn-success" @click="newModal">Tambah Catatan Beli 
                     <i class="fas fa-plus-square fa-fw"></i>
                 </button>
                 </div>
@@ -18,40 +18,36 @@
                   <tbody><tr>
                     <th>ID</th>
                     <th>Petugas</th>
-                    <th>Tahun Ajaran</th>
-                    <th>Ruangan</th>
-                    <th>Nama Aplikasi</th>
-                    <th>Nama Dosen</th>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
                     <th>Status</th>
-                    <th>Deadline</th>
                     <th>Modify</th>
                   </tr>
-                  <tr v-for="permintaanAplikasi in permintaanAplikasis.data" :key="permintaanAplikasi.id">
-                    <td>{{permintaanAplikasi.id}}</td>
-                    <td>{{permintaanAplikasi.get_user.name}}</td>
-                    <td>{{permintaanAplikasi.get_thnajaran.name}}</td>
-                    <td>{{permintaanAplikasi.get_ruangan.name}}</td>
-                    <td>{{permintaanAplikasi.name }}</td>
-                    <td>{{permintaanAplikasi.name_dosen }}</td>
+                  <tr v-for="catatanBeli in catatanBelis.data" :key="catatanBeli.id">
+                    <td>{{catatanBeli.id}}</td>
+                    <td>{{catatanBeli.get_user.name}}</td>
+                    <td>{{catatanBeli.name }}</td>
+                    <td>{{catatanBeli.harga }}</td>
+                    <td>{{catatanBeli.jumlah }}</td>
                     <td>
-                      <span v-if="permintaanAplikasi.status == 'New'" class="badge badge-warning">{{permintaanAplikasi.status }}</span>
-                      <span v-if="permintaanAplikasi.status == 'Selesai'" class="badge badge-info">{{permintaanAplikasi.status }}</span>
+                      <span v-if="catatanBeli.status == 'New'" class="badge badge-warning">{{catatanBeli.status }}</span>
+                      <span v-if="catatanBeli.status == 'Lunas'" class="badge badge-info">{{catatanBeli.status }}</span>
                     </td>
-                    <td>{{permintaanAplikasi.deadline | myDate }}</td>
                     <td>
-                        <a href="#" @click="editModal(permintaanAplikasi)">
+                        <a href="#" @click="editModal(catatanBeli)">
                             <i class="fa fa-edit blue"></i>
                         </a>
                         /
-                        <a href="#" @click="deletepermintaanAplikasis(permintaanAplikasi.id)">
+                        <a href="#" @click="deletecatatanBelis(catatanBeli.id)">
                             <i class="fa fa-trash red"></i>
                         </a>
                         /
-                        <a v-if="permintaanAplikasi.status == 'Selesai'">
-                            <i v-if="permintaanAplikasi.status == 'Selesai'" class="fa fa-check green"></i>
+                        <a v-if="catatanBeli.status == 'Lunas'" title="Sudah Lunas" >
+                            <i v-if="catatanBeli.status == 'Lunas'" class="fa fa-check green"></i>
                             </a>
-                        <a href="#" v-if="permintaanAplikasi.status == 'New'" @click="selesaiPermintaanAplikasi(permintaanAplikasi.id)">
-                            <i v-if="permintaanAplikasi.status == 'New'" class="fa fa-check red"></i>
+                        <a href="#" v-if="catatanBeli.status == 'New'" @click="selesaiCatatanBeli(catatanBeli.id)">
+                            <i v-if="catatanBeli.status == 'New'" class="fa fa-check red"></i>
                         </a>
                     </td>
                   </tr>                 
@@ -59,7 +55,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <pagination :data="permintaanAplikasis" @pagination-change-page="getResults"></pagination>
+                <pagination :data="catatanBelis" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
             <!-- /.card -->
@@ -79,47 +75,24 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form @submit.prevent="editMode ? updatepermintaanAplikasis() : createpermintaanAplikasis()">
-      <div class="modal-body"> 
-    <div class="form-group">
-            <select name="id_thnajaran" v-model="form.id_thnajaran" id="id_thnajaran" class="form-control" :class="{ 'is-invalid': form.errors.has('id_thnajaran') }">
-            <option value="">Pilih Tahun Ajaran</option>
-            <option v-for="thnajaran in tahunAjaran" v-bind:value="thnajaran.id">
-                {{ thnajaran.name }}
-            </option>
-            </select>
-            <has-error :form="form" field="id_thnajaran"></has-error>
-    </div>
-    <div class="form-group">
-                 
-     <p-check name="id_ruangan[]" v-model="form.id_ruangan" class="p-default p-curve p-thick p-smooth" :class="{ 'is-invalid': form.errors.has('id_ruangan') }" color="danger-o" v-for="ruangans in ruangan" v-bind:key="ruangans.id" v-bind:value="ruangans.id" v-show="!editMode">{{ ruangans.name }}</p-check>
-     <div class="form-group" v-show="editMode">
-            <select name="id_ruangan" v-model="form.id_ruangan" id="id_ruangan" class="form-control" :class="{ 'is-invalid': form.errors.has('id_ruangan') }">
-            <option value="">Pilih Ruangan</option>
-            <option v-for="ruangans in ruangan" v-bind:value="ruangans.id">
-                {{ ruangans.name }}
-            </option>
-            </select>
-            <has-error :form="form" field="id_ruangan"></has-error>
-    </div>
-    </div>
+      <form @submit.prevent="editMode ? updateCatatanBelis() : createCatatanBelis()">
+      <div class="modal-body">  
   
            
      <div class="form-group">
-      <input v-model="form.name" type="text" name="name" placeholder="Nama Aplikasi" 
+      <input v-model="form.name" type="text" name="name" placeholder="Nama Yang diBeli" 
         class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
       <has-error :form="form" field="name"></has-error>
     </div>
 
      <div class="form-group">
-      <input v-model="form.name_dosen" type="text" name="name_dosen" placeholder="Nama Dosen" 
-        class="form-control" :class="{ 'is-invalid': form.errors.has('name_dosen') }">
-      <has-error :form="form" field="name_dosen"></has-error>
+      <input v-model="form.harga" type="number" name="harga" placeholder="Harga" 
+        class="form-control" :class="{ 'is-invalid': form.errors.has('harga') }">
+      <has-error :form="form" field="harga"></has-error>
     </div>
     <div class="form-group">
-      <input v-model="form.deadline" type="date" name="deadline" placeholder="deadline" 
-        class="form-control" :class="{ 'is-invalid': form.errors.has('deadline') }">
-      <has-error :form="form" field="deadline"></has-error>
+      <input v-model="form.jumlah" type="number" name="jumlah" placeholder="Jumlah" 
+        class="form-control" :class="{ 'is-invalid': form.errors.has('jumlah') }">
     </div>
       </div>
       <div class="modal-footer">
@@ -140,25 +113,21 @@
         data() {
             return{
                 editMode: false,
-                ruangan: [],
-                tahunAjaran: [],
-                permintaanAplikasis: {},
+                catatanBelis: {},
                 form: new Form({
                     id: '',
                     id_user : '',
-                    id_ruangan : [],
-                    id_thnajaran : '',
                     name : '',
-                    name_dosen : '',
-                    status : '',
-                    deadline : ''
+                    harga : '',
+                    jumlah : '',
+                    status : ''
                 })
             }
         },
         methods: {
-          selesaiPermintaanAplikasi(id){
+          selesaiCatatanBeli(id){
             this.$Progress.start();
-            this.form.get('api/permintaanAplikasi/finish/'+id)
+            this.form.get('api/catatanBeli/finish/'+id)
             .then(()=>{
                Fire.$emit('AfterCreated');
                
@@ -179,14 +148,14 @@
             });
           },
           getResults(page = 1) {
-            axios.get('api/permintaanAplikasi?page=' + page)
+            axios.get('api/catatanBeli?page=' + page)
               .then(response => {
-                this.permintaanAplikasis = response.data;
+                this.catatanBelis = response.data;
               });
           }, 
-          updatepermintaanAplikasis(){
+          updateCatatanBelis(){
             this.$Progress.start();
-            this.form.put('api/permintaanAplikasi/'+this.form.id)
+            this.form.put('api/catatanBeli/'+this.form.id)
 
             .then(() => {
               Fire.$emit('AfterCreated');
@@ -214,13 +183,13 @@
             $('#addNew').modal('show');
             
           },
-          editModal(permintaanAplikasi){
+          editModal(catatanBeli){
             this.editMode = true;
             this.form.reset();
             $('#addNew').modal('show');
-            this.form.fill(permintaanAplikasi);
+            this.form.fill(catatanBeli);
           },
-          deletepermintaanAplikasis(id){
+          deletecatatanBelis(id){
             Swal.fire({
                 title: 'Apakah Anda Yakin??',
                 text: "Anda Akan Menghapus Data ini!",
@@ -233,7 +202,7 @@
 
                 if(result.value) {
                       //send request to the server
-                      this.form.delete('api/permintaanAplikasi/'+id).then(()=>{
+                      this.form.delete('api/catatanBeli/'+id).then(()=>{
                         Fire.$emit('AfterCreated');                 
                         Swal.fire(
                           'Sudah Dihapus!',
@@ -247,27 +216,21 @@
                 }                
               })
           },
-          loadRuangan(){
-              axios.get("api/app/ruangan").then(({data}) => (this.ruangan = data));
-          },
-          loadThnAjaran(){
-              axios.get("api/app/thnajaran").then(({data}) => (this.tahunAjaran = data));
-          },
-          loadpermintaanAplikasis(){
+          loadcatatanBelis(){
            if(this.$gate.isAdminOrUser()){
-            axios.get("api/permintaanAplikasi").then(({data}) => (this.permintaanAplikasis = data));
+            axios.get("api/catatanBeli").then(({data}) => (this.catatanBelis = data));
             }
           },
-          createpermintaanAplikasis(){
+          createCatatanBelis(){
             this.$Progress.start();
-            this.form.post('api/permintaanAplikasi')
+            this.form.post('api/catatanBeli')
             .then(()=>{
             Fire.$emit('AfterCreated');
             $('#addNew').modal('hide')
 
             Toast.fire({
               type: 'success',
-              title: 'permintaanAplikasi Berhasil Dibuat!'
+              title: 'catatanBeli Berhasil Dibuat!'
             })
             this.$Progress.finish()
 
@@ -282,19 +245,17 @@
         mounted() {
             Fire.$on('searching',()=>{
               let query = this.$parent.search;
-              axios.get('api/findpermintaanAplikasi?q=' + query)
+              axios.get('api/findCatatanBeli?q=' + query)
               .then((data)=>{
-                this.permintaanAplikasis = data.data
+                this.catatanBelis = data.data
               })
               .catch(()=>{
 
               });
             });
-            this.loadpermintaanAplikasis();
-            this.loadRuangan();
-            this.loadThnAjaran();
+            this.loadcatatanBelis();
             Fire.$on('AfterCreated',() =>{
-              this.loadpermintaanAplikasis();
+              this.loadcatatanBelis();
             });
             // setInterval(() => this.loadUsers(),3000);
         }

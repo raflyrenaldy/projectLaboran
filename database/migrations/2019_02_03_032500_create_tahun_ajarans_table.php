@@ -18,7 +18,7 @@ class CreateTahunAjaransTable extends Migration
             $table->string('name');
             $table->date('waktu_mulai');
             $table->date('waktu_berakhir');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

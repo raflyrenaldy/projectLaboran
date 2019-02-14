@@ -4,11 +4,11 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Permintaan Aplikasi</h3>
+                <h3 class="card-title">Koperasi Simpan Pinjam</h3>
 
                 <div class="card-tools">
-                <button class="btn btn-success" @click="newModal">Tambah Permintaan Aplikasi 
-                    <i class="fas fa-plus-square fa-fw"></i>
+                <button class="btn btn-success" @click="newModal">Tambah Data Koperasi
+                    <i class="fas fa-hand-holding-usd fa-fw"></i>
                 </button>
                 </div>
               </div>
@@ -18,40 +18,36 @@
                   <tbody><tr>
                     <th>ID</th>
                     <th>Petugas</th>
-                    <th>Tahun Ajaran</th>
-                    <th>Ruangan</th>
-                    <th>Nama Aplikasi</th>
-                    <th>Nama Dosen</th>
+                    <th>Nama Peminjam</th>
+                    <th>Alasan</th>
+                    <th>Jumlah</th>
                     <th>Status</th>
-                    <th>Deadline</th>
                     <th>Modify</th>
                   </tr>
-                  <tr v-for="permintaanAplikasi in permintaanAplikasis.data" :key="permintaanAplikasi.id">
-                    <td>{{permintaanAplikasi.id}}</td>
-                    <td>{{permintaanAplikasi.get_user.name}}</td>
-                    <td>{{permintaanAplikasi.get_thnajaran.name}}</td>
-                    <td>{{permintaanAplikasi.get_ruangan.name}}</td>
-                    <td>{{permintaanAplikasi.name }}</td>
-                    <td>{{permintaanAplikasi.name_dosen }}</td>
+                  <tr v-for="koperasi in koperasis.data" :key="koperasi.id">
+                    <td>{{koperasi.id}}</td>
+                    <td>{{koperasi.get_user.name}}</td>
+                    <td>{{koperasi.get_user_pinjam.name }}</td>
+                    <td>{{koperasi.keterangan }}</td>
+                    <td>{{koperasi.jumlah }}</td>
                     <td>
-                      <span v-if="permintaanAplikasi.status == 'New'" class="badge badge-warning">{{permintaanAplikasi.status }}</span>
-                      <span v-if="permintaanAplikasi.status == 'Selesai'" class="badge badge-info">{{permintaanAplikasi.status }}</span>
+                      <span v-if="koperasi.status == 'New'" class="badge badge-warning">{{koperasi.status }}</span>
+                      <span v-if="koperasi.status == 'Sudah Di Bayar'" class="badge badge-info">{{koperasi.status }}</span>
                     </td>
-                    <td>{{permintaanAplikasi.deadline | myDate }}</td>
                     <td>
-                        <a href="#" @click="editModal(permintaanAplikasi)">
+                        <a href="#" @click="editModal(koperasi)">
                             <i class="fa fa-edit blue"></i>
                         </a>
                         /
-                        <a href="#" @click="deletepermintaanAplikasis(permintaanAplikasi.id)">
+                        <a href="#" @click="deletekoperasis(koperasi.id)">
                             <i class="fa fa-trash red"></i>
                         </a>
-                        /
-                        <a v-if="permintaanAplikasi.status == 'Selesai'">
-                            <i v-if="permintaanAplikasi.status == 'Selesai'" class="fa fa-check green"></i>
+                         /
+                        <a v-if="koperasi.status == 'Sudah Di Bayar'">
+                            <i v-if="koperasi.status == 'Sudah Di Bayar'" class="fa fa-check green"></i>
                             </a>
-                        <a href="#" v-if="permintaanAplikasi.status == 'New'" @click="selesaiPermintaanAplikasi(permintaanAplikasi.id)">
-                            <i v-if="permintaanAplikasi.status == 'New'" class="fa fa-check red"></i>
+                        <a href="#" v-if="koperasi.status == 'New'" @click="selesaiKoperasi(koperasi.id)">
+                            <i v-if="koperasi.status == 'New'" class="fa fa-check red"></i>
                         </a>
                     </td>
                   </tr>                 
@@ -59,7 +55,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <pagination :data="permintaanAplikasis" @pagination-change-page="getResults"></pagination>
+                <pagination :data="koperasis" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
             <!-- /.card -->
@@ -79,47 +75,28 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form @submit.prevent="editMode ? updatepermintaanAplikasis() : createpermintaanAplikasis()">
-      <div class="modal-body"> 
-    <div class="form-group">
-            <select name="id_thnajaran" v-model="form.id_thnajaran" id="id_thnajaran" class="form-control" :class="{ 'is-invalid': form.errors.has('id_thnajaran') }">
-            <option value="">Pilih Tahun Ajaran</option>
-            <option v-for="thnajaran in tahunAjaran" v-bind:value="thnajaran.id">
-                {{ thnajaran.name }}
+      <form @submit.prevent="editMode ? updateKoperasis() : createKoperasis()">
+      <div class="modal-body">        
+          <div class="form-group">
+            <select name="id_user_pinjam" v-model="form.id_user_pinjam" id="id_user_pinjam" class="form-control" :class="{ 'is-invalid': form.errors.has('id_user_pinjam') }">
+            <option value="">Pilih Pegawai</option>
+            <option v-for="users in user" v-bind:value="users.id">
+                {{ users.name }}
             </option>
             </select>
-            <has-error :form="form" field="id_thnajaran"></has-error>
-    </div>
-    <div class="form-group">
-                 
-     <p-check name="id_ruangan[]" v-model="form.id_ruangan" class="p-default p-curve p-thick p-smooth" :class="{ 'is-invalid': form.errors.has('id_ruangan') }" color="danger-o" v-for="ruangans in ruangan" v-bind:key="ruangans.id" v-bind:value="ruangans.id" v-show="!editMode">{{ ruangans.name }}</p-check>
-     <div class="form-group" v-show="editMode">
-            <select name="id_ruangan" v-model="form.id_ruangan" id="id_ruangan" class="form-control" :class="{ 'is-invalid': form.errors.has('id_ruangan') }">
-            <option value="">Pilih Ruangan</option>
-            <option v-for="ruangans in ruangan" v-bind:value="ruangans.id">
-                {{ ruangans.name }}
-            </option>
-            </select>
-            <has-error :form="form" field="id_ruangan"></has-error>
-    </div>
-    </div>
-  
-           
-     <div class="form-group">
-      <input v-model="form.name" type="text" name="name" placeholder="Nama Aplikasi" 
-        class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-      <has-error :form="form" field="name"></has-error>
+            <has-error :form="form" field="id_user_pinjam"></has-error>
     </div>
 
      <div class="form-group">
-      <input v-model="form.name_dosen" type="text" name="name_dosen" placeholder="Nama Dosen" 
-        class="form-control" :class="{ 'is-invalid': form.errors.has('name_dosen') }">
-      <has-error :form="form" field="name_dosen"></has-error>
+      <input v-model="form.keterangan" type="text" name="keterangan" placeholder="Alasan" 
+        class="form-control" :class="{ 'is-invalid': form.errors.has('keterangan') }">
+      <has-error :form="form" field="keterangan"></has-error>
     </div>
-    <div class="form-group">
-      <input v-model="form.deadline" type="date" name="deadline" placeholder="deadline" 
-        class="form-control" :class="{ 'is-invalid': form.errors.has('deadline') }">
-      <has-error :form="form" field="deadline"></has-error>
+
+     <div class="form-group">
+      <input v-model="form.jumlah" min="0" type="number" name="jumlah" placeholder="Jumlah dalam Rp" 
+        class="form-control" :class="{ 'is-invalid': form.errors.has('jumlah') }">
+      <has-error :form="form" field="jumlah"></has-error>
     </div>
       </div>
       <div class="modal-footer">
@@ -140,31 +117,28 @@
         data() {
             return{
                 editMode: false,
-                ruangan: [],
-                tahunAjaran: [],
-                permintaanAplikasis: {},
+                user: [],
+                koperasis: {},
                 form: new Form({
                     id: '',
-                    id_user : '',
-                    id_ruangan : [],
-                    id_thnajaran : '',
-                    name : '',
-                    name_dosen : '',
-                    status : '',
-                    deadline : ''
+                    id_user: '',
+                    id_user_pinjam: '',
+                    keterangan : '',
+                    jumlah : '',
+                    status : ''
                 })
             }
         },
         methods: {
-          selesaiPermintaanAplikasi(id){
+            selesaiKoperasi(id){
             this.$Progress.start();
-            this.form.get('api/permintaanAplikasi/finish/'+id)
+            this.form.get('api/koperasi/finish/'+id)
             .then(()=>{
                Fire.$emit('AfterCreated');
                
             Swal.fire(
                           'Selesai!',
-                          'Aplikasi ini sudah Selesai!',
+                          'Sudah Sudah Di Bayar!',
                           'success'
                         )
             this.$Progress.finish();
@@ -179,14 +153,14 @@
             });
           },
           getResults(page = 1) {
-            axios.get('api/permintaanAplikasi?page=' + page)
+            axios.get('api/koperasi?page=' + page)
               .then(response => {
-                this.permintaanAplikasis = response.data;
+                this.koperasis = response.data;
               });
           }, 
-          updatepermintaanAplikasis(){
+          updateKoperasis(){
             this.$Progress.start();
-            this.form.put('api/permintaanAplikasi/'+this.form.id)
+            this.form.put('api/koperasi/'+this.form.id)
 
             .then(() => {
               Fire.$emit('AfterCreated');
@@ -208,19 +182,22 @@
             });            
 
           },
+          loadUser(){
+              axios.get("api/app/user").then(({data}) => (this.user = data));
+          },
           newModal(){
             this.editMode = false;
             this.form.reset();
             $('#addNew').modal('show');
             
           },
-          editModal(permintaanAplikasi){
+          editModal(koperasi){
             this.editMode = true;
             this.form.reset();
             $('#addNew').modal('show');
-            this.form.fill(permintaanAplikasi);
+            this.form.fill(koperasi);
           },
-          deletepermintaanAplikasis(id){
+          deletekoperasis(id){
             Swal.fire({
                 title: 'Apakah Anda Yakin??',
                 text: "Anda Akan Menghapus Data ini!",
@@ -233,7 +210,7 @@
 
                 if(result.value) {
                       //send request to the server
-                      this.form.delete('api/permintaanAplikasi/'+id).then(()=>{
+                      this.form.delete('api/koperasi/'+id).then(()=>{
                         Fire.$emit('AfterCreated');                 
                         Swal.fire(
                           'Sudah Dihapus!',
@@ -247,27 +224,21 @@
                 }                
               })
           },
-          loadRuangan(){
-              axios.get("api/app/ruangan").then(({data}) => (this.ruangan = data));
-          },
-          loadThnAjaran(){
-              axios.get("api/app/thnajaran").then(({data}) => (this.tahunAjaran = data));
-          },
-          loadpermintaanAplikasis(){
+          loadkoperasis(){
            if(this.$gate.isAdminOrUser()){
-            axios.get("api/permintaanAplikasi").then(({data}) => (this.permintaanAplikasis = data));
+            axios.get("api/koperasi").then(({data}) => (this.koperasis = data));
             }
           },
-          createpermintaanAplikasis(){
+          createKoperasis(){
             this.$Progress.start();
-            this.form.post('api/permintaanAplikasi')
+            this.form.post('api/koperasi')
             .then(()=>{
             Fire.$emit('AfterCreated');
             $('#addNew').modal('hide')
 
             Toast.fire({
               type: 'success',
-              title: 'permintaanAplikasi Berhasil Dibuat!'
+              title: 'koperasi Berhasil Dibuat!'
             })
             this.$Progress.finish()
 
@@ -282,19 +253,18 @@
         mounted() {
             Fire.$on('searching',()=>{
               let query = this.$parent.search;
-              axios.get('api/findpermintaanAplikasi?q=' + query)
+              axios.get('api/findKoperasi?q=' + query)
               .then((data)=>{
-                this.permintaanAplikasis = data.data
+                this.koperasis = data.data
               })
               .catch(()=>{
 
               });
             });
-            this.loadpermintaanAplikasis();
-            this.loadRuangan();
-            this.loadThnAjaran();
+            this.loadUser();
+            this.loadkoperasis();
             Fire.$on('AfterCreated',() =>{
-              this.loadpermintaanAplikasis();
+              this.loadkoperasis();
             });
             // setInterval(() => this.loadUsers(),3000);
         }

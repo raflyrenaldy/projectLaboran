@@ -15,3 +15,4 @@
 #https://github.com/vuejs/awesome-vue -nice
 #https://docs.laravel-enso.com/packages/vue-datatable.html#features -nice
 #https://github.com/gilbitron/laravel-vue-pagination
+#https://hamed-ehtesham.github.io/pretty-checkbox-vue/

@@ -18,7 +18,7 @@ class permintaanAplikasiController extends Controller
      */
     public function index()
     {        
-        return permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->latest()->paginate(5);
+        return permintaanAplikasi::with('get_user','get_thnajaran','get_ruangan')->orderBy('status','asc')->paginate(5);
     }
 
     public function search()

@@ -12,6 +12,7 @@ $fa-font-path:"../webfonts";
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
+@import '~vue-datetime/dist/vue-datetime.css';
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

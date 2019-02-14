@@ -25,7 +25,7 @@ class CreateMasalahLabsTable extends Migration
             $table->string('yang_bertugas')->nullable();
             $table->string('solusi_solved')->nullable();
             $table->string('ruangan');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
             $table->foreign('id_user')
                 ->references('id')
