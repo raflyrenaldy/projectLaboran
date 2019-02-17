@@ -250,12 +250,12 @@ class koperasiController extends Controller
     		$uangKas = uangKas::where('id_koperasi','=',$koperasi->id)->first();
             $uangKas->kas_masuk = $koperasi->jumlah;
             $uangKas->kas_keluar = 0;
-            $uangKas->name = $uangKas->name .' [Lunas]';
-                $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$uangKas->id)->first();
-                $lastSaldo = $getLastSaldo->saldo;
-                $saldoNow = $lastSaldo + $koperasi->jumlah;
+            // $uangKas->name = $uangKas->name .' [Lunas]';
+            //     $getLastSaldo = uangKas::orderBy('id', 'desc')->where('id','<',$uangKas->id)->first();
+            //     $lastSaldo = $getLastSaldo->saldo;
+            //     $saldoNow = $lastSaldo + $koperasi->jumlah;
 
-            $uangKas->saldo = $saldoNow;
+            $uangKas->saldo = $uangKas->saldo + $koperasi->jumlah;
             $uangKas->save();
 
             $updateAnotherSaldo = uangKas::orderBy('id','asc')->where('id','>',$uangKas->id)->get();

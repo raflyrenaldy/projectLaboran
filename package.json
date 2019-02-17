@@ -27,15 +27,18 @@
     },
     "dependencies": {
         "admin-lte": "^3.0.0-alpha.2",
+        "laravel-echo": "^1.5.3",
         "laravel-vue-pagination": "^2.2.0",
         "luxon": "^1.11.2",
         "moment": "^2.24.0",
+        "pusher-js": "^4.4.0",
         "sweetalert2": "^8.0.6",
         "vform": "^1.0.0",
         "vue-datetime": "^1.0.0-beta.10",
         "vue-datetime-picker": "^0.2.1",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.0.2",
+        "vue-strap": "^1.1.40",
         "vuejs-datetimepicker": "^1.1.9",
         "weekstart": "^1.0.0"
     }

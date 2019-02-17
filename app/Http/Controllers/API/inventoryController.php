@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Component\inventory;
 use Auth;
+use App\Events\sendInventories;
 
 class inventoryController extends Controller
 {
@@ -52,12 +53,17 @@ class inventoryController extends Controller
             'jumlah' => 'required'
         ]);
             
-        return inventory::create([
+        $inventory = inventory::create([
     		'id_user' => Auth('api')->User()->id,
     		'name' => $request->input('name'),
     		'jumlah' => $request->input('jumlah'),
     		'keterangan' => $request->input('keterangan')
-    	]);
+        ]);
+        
+        $inventory = Inventory::with('get_user')->latest()->first();
+        broadcast(new sendInventories($inventory))->toOthers();
+
+        return $inventory;
     }
 
     /**

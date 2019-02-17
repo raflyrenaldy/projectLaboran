@@ -182,20 +182,23 @@
           },
           loadInventories(){
            if(this.$gate.isAdminOrUser()){
-            axios.get("api/inventory").then(({data}) => (this.Inventories = data));
+            axios.get("api/inventory")
+            .then(({data}) => (this.Inventories = data));
             }
           },
           createInventories(){
             this.$Progress.start();
             this.form.post('api/inventory')
             .then(()=>{
-            Fire.$emit('AfterCreated');
+            // Fire.$emit('AfterCreated');
             $('#addNew').modal('hide')
 
             Toast.fire({
               type: 'success',
               title: 'inventory Berhasil Dibuat!'
             })
+            this.Inventories.unshift(response.data);
+
             this.$Progress.finish()
 
             })
@@ -207,6 +210,11 @@
           }
         },
         mounted() {
+          Echo.private('inventories')
+            .listen('sendInventories',(e) =>{
+              console.log(e);
+              this.Inventories.unshift(e);
+            })
             Fire.$on('searching',()=>{
               let query = this.$parent.search;
               axios.get('api/findInventory?q=' + query)
@@ -217,6 +225,7 @@
 
               });
             });
+            
             this.loadInventories();
             Fire.$on('AfterCreated',() =>{
               this.loadInventories();
